@@ -150,15 +150,19 @@
       <div class="stage-head">
         <div class="eyebrow">Project · 데이터 시각화 프로그램으로 우리나라의 미래 기후 그리기</div>
         <h2 class="display">SSP 시나리오, 우리는 어느 길을 갈까?</h2>
-        <p>기상청 자료를 시각화하면 시나리오에 따라 미래가 크게 달라집니다. 버튼을 눌러 SSP1-2.6(친환경 성장)과 SSP5-8.5(화석연료 의존)의 차이를 비교해 보세요.</p>
+        <p>슬라이더를 움직여 탄소 감축 노력을 조절하면, 2100년 우리나라의 해수 온도와 해수면이 어떻게 달라지는지 실시간으로 확인할 수 있습니다. 노력의 정도에 따라 SSP1-2.6(친환경 성장)부터 SSP5-8.5(화석연료 의존)까지 5가지 경로 중 어디에 해당하는지도 함께 보여줍니다.</p>
       </div>
       <div class="stage-card">
         <div class="controls">
+          <div class="ctrl-group" style="flex:2">
+            <div class="ctrl-label">탄소 감축 노력<span class="val" id="c8-pct-val">100</span>%</div>
+            <input type="range" id="c8-pct" min="0" max="100" step="1" value="100">
+          </div>
           <div class="ctrl-group">
-            <div class="ctrl-label">기후변화 시나리오</div>
+            <div class="ctrl-label">빠른 이동</div>
             <div class="seg" id="c8-seg">
-              <button class="on" data-s="good">SSP1-2.6 (감축 성공)</button>
-              <button data-s="bad">SSP5-8.5 (감축 실패)</button>
+              <button class="on" data-s="good">SSP1-2.6</button>
+              <button data-s="bad">SSP5-8.5</button>
             </div>
           </div>
         </div>
@@ -344,22 +348,33 @@ function buildCardGrid(gridId, detailId, items) {
   buildCardGrid("c7-grid", "c7-detail", items);
 })();
 
-/* TAB8 프로젝트: SSP 시나리오 canvas */
+/* TAB8 프로젝트: SSP 시나리오 canvas — 슬라이더로 탄소 감축 노력을 직접 조절 */
 (function () {
   var canvas = document.getElementById("c8");
   var ctx = window.setupCanvas(canvas);
-  var scenarios = {
-    good: { label: "SSP1-2.6 (감축 성공)", temp: 2.07, sea: 0.72,
-      info: "재생에너지 기술 발달로 화석 연료 사용을 최소화하고 지속 가능한 성장을 이루는 경우, 2100년 우리나라 해수 온도는 2020년 대비 <b>2.07 °C</b>, 해수면은 현재 대비 <b>0.72 m</b> 상승할 것으로 예측된다." },
-    bad: { label: "SSP5-8.5 (감축 실패)", temp: 4.93, sea: 1.1,
-      info: "산업 기술의 빠른 발전에 중심을 두어 화석 연료 사용이 높고 도시 위주의 무분별한 개발이 확대되는 경우, 2100년 우리나라 해수 온도는 2020년 대비 <b>4.93 °C</b>, 해수면은 현재 대비 <b>1.1 m</b> 상승할 것으로 예측된다." }
-  };
-  var current = "good";
+  var GOOD = { temp: 2.07, sea: 0.72 };
+  var BAD = { temp: 4.93, sea: 1.1 };
+  var levels = [
+    { min: 80, label: "SSP1-2.6 (감축 성공)", info: "재생에너지 기술 발달로 화석 연료 사용을 최소화하고 지속 가능한 성장을 이루는 경우에 가깝습니다. 기후변화 적응과 완화 모두 비용이 적게 드는 가장 이상적인 경로입니다." },
+    { min: 60, label: "SSP2-4.5 (중도 성장)", info: "현재 추세를 유지하며 기후변화 완화와 사회·경제 발전이 중간 단계로 진행되는 경우에 가깝습니다." },
+    { min: 40, label: "SSP3-7.0 (불균형 성장)", info: "급속한 인구 증가와 느린 기술 변화로 지역 갈등이 심해지고, 기후변화 완화 정책에 소극적인 경우에 가깝습니다." },
+    { min: 20, label: "SSP4 (양극화 성장)", info: "에너지 분야의 급속한 기술 개발과 느린 경제 성장이 함께 나타나는, 완화는 쉽지만 적응은 어려운 불균등한 경로에 가깝습니다." },
+    { min: 0,  label: "SSP5-8.5 (감축 실패)", info: "화석 연료에 의존해 산업 기술이 빠르게 발전하고 도시 위주의 무분별한 개발이 확대되는, 2100년 지구 평균 기온이 약 5 °C 상승하는 최악의 시나리오에 가깝습니다." }
+  ];
 
-  function draw() {
+  function levelFor(pct) {
+    for (var i = 0; i < levels.length; i++) { if (pct >= levels[i].min) { return levels[i]; } }
+    return levels[levels.length - 1];
+  }
+  function currentVals(pct) {
+    var t = pct / 100;
+    return { temp: BAD.temp + (GOOD.temp - BAD.temp) * t, sea: BAD.sea + (GOOD.sea - BAD.sea) * t };
+  }
+
+  function draw(pct) {
     var w = canvas._w, h = canvas._h;
     ctx.clearRect(0, 0, w, h);
-    var s = scenarios[current];
+    var s = currentVals(pct);
     var pad = { l: 60, r: 30, t: 30, b: 50 };
     var plotW = w - pad.l - pad.r, plotH = h - pad.t - pad.b;
     var maxV = 5.5;
@@ -381,27 +396,45 @@ function buildCardGrid(gridId, detailId, items) {
       ctx.fillStyle = window.cssVar("--ink");
       ctx.font = "bold 15px sans-serif";
       ctx.textAlign = "center";
-      ctx.fillText(b.val, x + bw / 2, y - 10);
+      ctx.fillText(b.val.toFixed(2), x + bw / 2, y - 10);
       ctx.fillStyle = window.cssVar("--mist");
       ctx.font = "12px sans-serif";
       ctx.fillText(b.label, x + bw / 2, h - pad.b + 20);
     });
   }
-  draw();
-  window.addEventListener("resize", draw);
 
-  function setScenario(key) {
-    current = key;
-    draw();
-    document.getElementById("c8-info").innerHTML = "<h4>" + scenarios[key].label + "</h4><p>" + scenarios[key].info + "</p>";
+  function update(pct) {
+    draw(pct);
+    var lv = levelFor(pct);
+    var s = currentVals(pct);
+    document.getElementById("c8-pct-val").textContent = pct;
+    document.getElementById("c8-info").innerHTML = "<h4>" + lv.label + "</h4><p>탄소 감축 노력 " + pct + "% 수준에서는 2100년 우리나라 해수 온도가 2020년 대비 약 <b>" + s.temp.toFixed(2) + " °C</b>, 해수면은 현재 대비 약 <b>" + s.sea.toFixed(2) + " m</b> 상승할 것으로 추정됩니다. " + lv.info + "</p>";
   }
+
+  var slider = document.getElementById("c8-pct");
+  function syncButtons(pct) {
+    document.querySelectorAll("#c8-seg button").forEach(function (x) {
+      var xPct = x.getAttribute("data-s") === "good" ? 100 : 0;
+      x.classList.toggle("on", xPct === pct);
+    });
+  }
+  slider.addEventListener("input", function () {
+    var pct = +slider.value;
+    update(pct);
+    syncButtons(pct);
+  });
+  window.addEventListener("resize", function () { update(+slider.value); });
+
   document.querySelectorAll("#c8-seg button").forEach(function (b) {
     b.addEventListener("click", function () {
-      document.querySelectorAll("#c8-seg button").forEach(function (x) { x.classList.toggle("on", x === b); });
-      setScenario(b.getAttribute("data-s"));
+      var pct = b.getAttribute("data-s") === "good" ? 100 : 0;
+      slider.value = pct;
+      update(pct);
+      syncButtons(pct);
     });
   });
-  setScenario("good");
+
+  update(100);
 })();
 
 })();
