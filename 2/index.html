@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>기후위기와 환경생태 변화 — 기후환경생태 스테이션</title>
+<link rel="stylesheet" href="../assets/theme.css">
+<style>
+  .compare3 { grid-template-columns: repeat(2, 1fr); }
+  @media (max-width: 900px) { .compare3 { grid-template-columns: 1fr; } }
+  .legend { display:flex; gap:18px; flex-wrap:wrap; font-size:12.5px; color:var(--mist); margin-top:10px; }
+  .legend span { display:inline-flex; align-items:center; gap:6px; }
+  .legend i { width:12px; height:12px; border-radius:3px; display:inline-block; }
+</style>
+</head>
+<body>
+
+<div class="app">
+  <nav class="rail" id="rail">
+    <div class="brand">
+      <a class="home" href="../">← 기후변화와 환경생태</a>
+      <div class="eyebrow" style="margin-top:8px">Ⅱ · 기후위기와 환경생태 변화</div>
+      <h1 class="display">달라지는<br>지구와 생태계</h1>
+    </div>
+    <button class="tab-btn active" data-tab="0"><span class="num">01</span> 기후위기의 원인과 심각성</button>
+    <button class="tab-btn" data-tab="1"><span class="num">02</span> 기후변화와 해수면 상승</button>
+    <button class="tab-btn" data-tab="2"><span class="num">03</span> 극한 기상 현상과 환경생태</button>
+    <button class="tab-btn" data-tab="3"><span class="num">04</span> 미래의 기후와 생태계 변화</button>
+    <button class="tab-btn" data-tab="4"><span class="num">05</span> 기후변화와 개화 시기</button>
+    <button class="tab-btn" data-tab="5"><span class="num">06</span> 기후변화와 곤충의 개체 수</button>
+    <button class="tab-btn" data-tab="6"><span class="num">07</span> 기후변화와 수생태계의 변화</button>
+    <button class="tab-btn" data-tab="7"><span class="num">08</span> 기후변화와 곤충 매개 감염병</button>
+    <button class="tab-btn" data-tab="8"><span class="num">09</span> 창의적 문제 해결</button>
+  </nav>
+
+  <main>
+    <!-- TAB0 -->
+    <section class="tab-panel" data-panel="0">
+      <div class="stage-head">
+        <div class="eyebrow">01 · 인간의 활동이 만든 위기</div>
+        <h2 class="display">기후위기의 원인과 심각성</h2>
+        <p>산업화 이후 인간의 활동으로 배출된 온실 기체가 지구 온난화를 가속하며 기후위기를 일으켰습니다. IPCC는 2011년~2020년 지구 평균 기온이 산업화 이전보다 약 1.1 °C 높았다고 발표했습니다.</p>
+      </div>
+      <div class="stage-card">
+        <div class="compare-wrap compare3" id="c0-wrap"></div>
+        <div class="card-grid" id="c0-grid" style="margin-top:16px"></div>
+        <div class="detail-panel" id="c0-detail">카드를 클릭하면 자세한 설명이 나타납니다.</div>
+      </div>
+    </section>
+
+    <!-- TAB1 -->
+    <section class="tab-panel" data-panel="1" hidden>
+      <div class="stage-head">
+        <div class="eyebrow">02 · 빙하가 녹고, 바닷물이 팽창하다</div>
+        <h2 class="display">기후변화와 해수면 상승</h2>
+        <p>세 가지 모형실험 중 어떤 것이 해수면을 상승시킬까요? 카드를 눌러 실험 결과와 해수면 상승이 우리 생활·생태계에 미치는 영향을 확인해 보세요.</p>
+      </div>
+      <div class="stage-card">
+        <div class="card-grid" id="c1-grid"></div>
+        <div class="detail-panel" id="c1-detail">카드를 클릭하면 자세한 설명이 나타납니다.</div>
+      </div>
+    </section>
+
+    <!-- TAB2 -->
+    <section class="tab-panel" data-panel="2" hidden>
+      <div class="stage-head">
+        <div class="eyebrow">03 · 점점 강해지는 날씨</div>
+        <h2 class="display">극한 기상 현상과 환경생태</h2>
+        <p>기후위기로 태풍, 가뭄, 폭염, 폭우, 한파의 강도가 점점 세지고 있습니다. 대표적인 극한 기상 현상 5가지를 카드로 살펴보세요.</p>
+      </div>
+      <div class="stage-card">
+        <div class="card-grid" id="c2-grid"></div>
+        <div class="detail-panel" id="c2-detail">카드를 클릭하면 자세한 설명이 나타납니다.</div>
+      </div>
+    </section>
+
+    <!-- TAB3 -->
+    <section class="tab-panel" data-panel="3" hidden>
+      <div class="stage-head">
+        <div class="eyebrow">04 · 다섯 갈래로 갈리는 미래</div>
+        <h2 class="display">미래의 기후와 생태계 변화</h2>
+        <p>기후변화 시나리오(SSP)는 인구·경제·기술·정책의 변화를 가정해 미래 기후를 예측합니다. 사회의 노력에 따라 5가지 경로로 나뉩니다.</p>
+      </div>
+      <div class="stage-card">
+        <div class="card-grid" id="c3-grid"></div>
+        <div class="detail-panel" id="c3-detail">카드를 클릭하면 자세한 설명이 나타납니다.</div>
+      </div>
+    </section>
+
+    <!-- TAB4 -->
+    <section class="tab-panel" data-panel="4" hidden>
+      <div class="stage-head">
+        <div class="eyebrow">05 · 빨라지는 봄</div>
+        <h2 class="display">기후변화와 개화 시기</h2>
+        <p>최근 30년 동안 개나리·진달래·벚나무의 개화 시기는 지역마다 최대 11일까지 빨라졌습니다. 지도에서 지역을 눌러 변화 폭을 확인하고, 생태계 엇박자 현상도 알아보세요.</p>
+      </div>
+      <div class="stage-card">
+        <div class="card-grid" id="c4-grid"></div>
+        <div class="detail-panel" id="c4-detail">카드를 클릭하면 자세한 설명이 나타납니다.</div>
+      </div>
+    </section>
+
+    <!-- TAB5 -->
+    <section class="tab-panel" data-panel="5" hidden>
+      <div class="stage-head">
+        <div class="eyebrow">06 · 사라지는 꽃가루받이</div>
+        <h2 class="display">기후변화와 곤충의 개체 수</h2>
+        <p>2021년 말~2022년 초 겨울, 우리나라 곳곳에서 꿀벌이 집단으로 사라지거나 폐사했습니다. 지역별 피해 현황과 원인을 카드로 확인해 보세요.</p>
+      </div>
+      <div class="stage-card">
+        <div class="controls">
+          <div class="ctrl-group">
+            <div class="ctrl-label">2021~2022년 꿀벌 군집 피해율</div>
+          </div>
+        </div>
+        <div class="canvas-wrap"><canvas id="c5"></canvas></div>
+        <div class="card-grid" id="c5-grid" style="margin-top:16px"></div>
+        <div class="detail-panel" id="c5-detail">카드를 클릭하면 자세한 설명이 나타납니다.</div>
+      </div>
+    </section>
+
+    <!-- TAB6 -->
+    <section class="tab-panel" data-panel="6" hidden>
+      <div class="stage-head">
+        <div class="eyebrow">07 · 초록빛과 붉은빛으로 물드는 물</div>
+        <h2 class="display">기후변화와 수생태계의 변화</h2>
+        <p>수온이 상승하면 조류가 대량 증식하는 물꽃 현상(녹조·적조)이 심해집니다. 카드를 눌러 원인과 생물다양성에 미치는 영향을 확인해 보세요.</p>
+      </div>
+      <div class="stage-card">
+        <div class="card-grid" id="c6-grid"></div>
+        <div class="detail-panel" id="c6-detail">카드를 클릭하면 자세한 설명이 나타납니다.</div>
+      </div>
+    </section>
+
+    <!-- TAB7 -->
+    <section class="tab-panel" data-panel="7" hidden>
+      <div class="stage-head">
+        <div class="eyebrow">08 · 넓어지는 매개 곤충의 서식지</div>
+        <h2 class="display">기후변화와 곤충 매개 감염병</h2>
+        <p>기후변화로 모기 등 매개 곤충의 서식지와 활동 기간이 넓어지면서 곤충 매개 감염병의 발생 지역도 변하고 있습니다.</p>
+      </div>
+      <div class="stage-card">
+        <div class="card-grid" id="c7-grid"></div>
+        <div class="detail-panel" id="c7-detail">카드를 클릭하면 자세한 설명이 나타납니다.</div>
+      </div>
+    </section>
+
+    <!-- TAB8 프로젝트 -->
+    <section class="tab-panel" data-panel="8" hidden>
+      <div class="stage-head">
+        <div class="eyebrow">Project · 데이터 시각화 프로그램으로 우리나라의 미래 기후 그리기</div>
+        <h2 class="display">SSP 시나리오, 우리는 어느 길을 갈까?</h2>
+        <p>기상청 자료를 시각화하면 시나리오에 따라 미래가 크게 달라집니다. 버튼을 눌러 SSP1-2.6(친환경 성장)과 SSP5-8.5(화석연료 의존)의 차이를 비교해 보세요.</p>
+      </div>
+      <div class="stage-card">
+        <div class="controls">
+          <div class="ctrl-group">
+            <div class="ctrl-label">기후변화 시나리오</div>
+            <div class="seg" id="c8-seg">
+              <button class="on" data-s="good">SSP1-2.6 (감축 성공)</button>
+              <button data-s="bad">SSP5-8.5 (감축 실패)</button>
+            </div>
+          </div>
+        </div>
+        <div class="canvas-wrap"><canvas id="c8"></canvas></div>
+        <div class="legend">
+          <span><i style="background:var(--teal)"></i>해수 온도 상승 (2020년 대비, °C)</span>
+          <span><i style="background:var(--coral)"></i>해수면 상승 (현재 대비, m)</span>
+        </div>
+        <div class="info-card" id="c8-info" style="margin-top:16px"></div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<button class="theme-toggle" id="themeToggle">라이트 모드</button>
+
+<script src="../assets/theme.js"></script>
+<script>
+(function () {
+"use strict";
+
+function buildCardGrid(gridId, detailId, items) {
+  var grid = document.getElementById(gridId);
+  var detail = document.getElementById(detailId);
+  items.forEach(function (it, i) {
+    var btn = document.createElement("button");
+    btn.className = "pick-card" + (i === 0 ? " on" : "");
+    btn.innerHTML = '<div class="pc-ico">' + it.ico + '</div><div class="pc-name">' + it.name + '</div><div class="pc-sub">' + it.sub + '</div>';
+    btn.addEventListener("click", function () {
+      grid.querySelectorAll(".pick-card").forEach(function (b) { b.classList.toggle("on", b === btn); });
+      detail.innerHTML = "<h4>" + it.ico + " " + it.name + "</h4>" + it.detail;
+    });
+    grid.appendChild(btn);
+  });
+  if (items.length) { detail.innerHTML = "<h4>" + items[0].ico + " " + items[0].name + "</h4>" + items[0].detail; }
+}
+
+/* TAB0 원인과 심각성 */
+(function () {
+  var wrap = document.getElementById("c0-wrap");
+  var cols = [
+    { name: "자연적 원인", html: "태양 활동 변화, 지구 공전 궤도 변화, 수륙 분포 변화, 화산 분출 등. 오랜 기간에 걸쳐 서서히 기후에 영향을 준다." },
+    { name: "인위적 원인", html: "화석 연료 사용에 따른 <b>온실 기체 배출</b>, 에어로졸 배출, 토지 이용 변화, 산림 파괴. 최근 수십 년의 급격한 기후변화는 이 원인으로만 설명된다." }
+  ];
+  cols.forEach(function (c) {
+    var col = document.createElement("div");
+    col.className = "compare-col";
+    col.innerHTML = "<h4>" + c.name + "</h4><p>" + c.html + "</p>";
+    wrap.appendChild(col);
+  });
+
+  var items = [
+    { ico: "🏭", name: "6대 온실 기체", sub: "이산화 탄소가 가장 크게 기여", detail: "이산화 탄소, 메테인, 산화 이질소, 수소플루오린화 탄소, 사플루오린화 탄소, 육플루오린화 황. 이산화 탄소는 온실 효과가 다른 기체보다 작지만 <b>대기 중 농도가 압도적으로 높아</b> 온실 효과 기여도가 가장 크다. 2021년 3월 대기 중 이산화 탄소 농도는 417 ppm으로 산업화 이전(278 ppm)의 1.5배에 달했다." },
+    { ico: "🦣", name: "시베리아 탄저균 확산", sub: "심각성을 보여주는 사례 ①", detail: "2016년 러시아 시베리아의 영구 동토층이 이상 고온으로 녹으면서, 오래전 죽은 동물 사체에 있던 탄저균이 노출되어 순록 2,300여 마리가 떼죽음을 당하고 주민 8명이 감염되었다." },
+    { ico: "🌊", name: "파키스탄 훈자 홍수", sub: "심각성을 보여주는 사례 ②", detail: "2022년 5월, 폭염으로 빙하가 녹으면서 홍수가 발생해 하사바드 강을 가로지르는 다리가 붕괴되었다." },
+    { ico: "🔥", name: "브라질 판타날 화재", sub: "심각성을 보여주는 사례 ③", detail: "2023년 11월, 폭염과 엘니뇨 현상이 겹쳐 대기가 건조해지며 대형 화재가 발생해 습지가 황폐해졌다." },
+    { ico: "🏜️", name: "말리의 사막화", sub: "심각성을 보여주는 사례 ④", detail: "강우량이 줄어 사막화가 진행된 말리의 텔라 지역은 농업이 불가능해져 많은 주민이 난민이 되었다." },
+    { ico: "📊", name: "기후시스템 6대 핵심 지표", sub: "1850~2018년 지속적 변화", detail: "IPCC에 따르면 기권·빙권·생물권·수권에서 <b>이산화 탄소 농도, 강수량, 빙하 면적, 표면 온도, 해수면, 해수 열용량</b>이 1850년 이후 지속적으로 변화해 왔다." }
+  ];
+  buildCardGrid("c0-grid", "c0-detail", items);
+})();
+
+/* TAB1 해수면 상승 */
+(function () {
+  var items = [
+    { ico: "🧊", name: "모형실험 (가) 해빙", sub: "해수면 변화 없음", detail: "얼음(해빙)을 넣기 전과 녹은 후 물의 높이에 <b>변화가 없었다.</b> 바다 위에 떠 있는 해빙이나 빙붕이 녹아도 이미 물에 잠긴 부피만큼 녹는 것이므로 해수면은 상승하지 않는다." },
+    { ico: "⛰️", name: "모형실험 (나) 빙하", sub: "해수면 상승 ①", detail: "육지의 얼음(빙하)을 넣고 녹인 후 물의 높이가 <b>높아졌다.</b> 그린란드와 남극 대륙의 빙상이 녹아 바다로 흘러들면 해수면이 상승한다." },
+    { ico: "🌡️", name: "모형실험 (다) 열팽창", sub: "해수면 상승 ②", detail: "물의 온도가 상승하자 부피가 증가하며 높이가 높아졌다. 지구 온난화로 바닷물이 열을 흡수해 <b>열팽창</b>하는 것도 해수면 상승의 원인이다. 1993~2020년 해수면 상승(91.3 mm)의 약 1/3은 열팽창, 약 2/3는 빙하 융해에 의한 것이다." },
+    { ico: "🇹🇻", name: "SSP 시나리오와 미래 해수면", sub: "우리나라 전망", detail: "온실 기체 저감 정책이 실현되어도 2100년 우리나라 해수면은 현재보다 <b>0.72 m</b> 상승할 전망이다. 저감 없이 현재 추세가 지속되면 <b>1.1 m</b> 상승할 것으로 예측된다." },
+    { ico: "🏘️", name: "생활에 미치는 영향", sub: "침수·염분 피해·해안 침식", detail: "해안 저지대의 거주지와 기반 시설이 물에 잠기고, 바닷물이 하천·지하수에 침투해 식수 부족과 농작물 피해가 발생한다. 파도가 해안을 더 거슬러 올라가 침식과 범람도 심해진다." },
+    { ico: "🐠", name: "연안생태계에 미치는 영향", sub: "맹그로브·염습지·산호초 피해", detail: "맹그로브 숲, 염습지, 산호초는 해안을 보호하고 탄소를 저장하는 중요한 서식처다. 해수면 상승으로 범람이 심화되고 수심·염분이 변하며 햇빛이 줄어들면 연안생태계가 불안정해진다." }
+  ];
+  buildCardGrid("c1-grid", "c1-detail", items);
+})();
+
+/* TAB2 극한 기상 현상 */
+(function () {
+  var items = [
+    { ico: "🌀", name: "슈퍼 태풍", sub: "최대 풍속 54 m/s 이상", detail: "따뜻해진 바닷물에서 증발이 활발해지고 수증기가 응결할 때 방출되는 잠열(태풍의 에너지원)이 커져 세력이 급격히 강화된다. 2013년 태풍 하이옌은 순간 최대 풍속 약 105 m/s를 기록했다." },
+    { ico: "🏜️", name: "메가 가뭄", sub: "10년~수십 년 지속되는 가뭄", detail: "미국 남서부는 2000년부터 20년 이상 가뭄이 지속되어 <b>1,200년 만에 가장 건조한 가뭄</b>으로 기록되었다. 기온 상승으로 토양 수분 증발이 촉진되어 인간 활동이 가뭄을 심화시킨다." },
+    { ico: "🥵", name: "열파(폭염)", sub: "이상 고온이 수일~수주 지속", detail: "고온다습한 북태평양 고기압이 우리나라 부근에 오래 자리 잡으면 발생한다. 2023년 우리나라 여름철(6~8월) 평균 기온은 24.7 °C로 1973년 관측 이래 가장 높았다." },
+    { ico: "🌧️", name: "집중 호우", sub: "짧은 시간 많은 비", detail: "장마 전선 발달, 태풍, 대기 불안정에 의한 강한 상승 기류로 발생한다. 2022년 8월 서울은 시간당 최대 141.5 mm의 비가 내려 1942년 기록(118.6 mm)을 80년 만에 넘어섰다." },
+    { ico: "❄️", name: "한파와 폭설", sub: "북극 이상 고온의 역설", detail: "겨울철 시베리아 고기압 확장으로 북서풍이 강해지면 한파가 몰아친다. 최근에는 <b>북극의 이상 고온</b>으로 제트 기류가 약해져 북극의 찬 공기가 중위도까지 자주 내려오고 있다." }
+  ];
+  buildCardGrid("c2-grid", "c2-detail", items);
+})();
+
+/* TAB3 SSP 시나리오 */
+(function () {
+  var items = [
+    { ico: "🌱", name: "SSP1-2.6", sub: "친환경 성장 발전", detail: "재생 에너지 기술 발달로 화석 연료 사용을 최소화하고 지속 가능한 성장을 이루는 <b>가장 이상적인 경로</b>. 기후변화 적응과 완화 모두 비용이 적게 든다." },
+    { ico: "⚖️", name: "SSP2-4.5", sub: "중도 성장 경로", detail: "SSP1과 SSP3의 중간 상황으로, 현재 추세를 유지하며 기후변화 완화와 사회·경제 발전이 중간 단계로 진행되는 경우를 가정한다." },
+    { ico: "⚔️", name: "SSP3-7.0", sub: "불균형 성장 경로", detail: "급속한 인구 증가와 느린 기술 변화로 지역 갈등이 심해지고, 기후변화 완화 정책에 소극적이어서 <b>적응과 완화가 매우 어려운</b> 경로다." },
+    { ico: "🏗️", name: "SSP4", sub: "양극화 성장 경로", detail: "에너지 분야의 급속한 기술 개발과 느린 경제 성장을 가정한다. 기후변화 완화는 비교적 쉽지만 적응은 어려운 불균등한 경로다." },
+    { ico: "🛢️", name: "SSP5-8.5", sub: "고속 성장 경로(최악)", detail: "화석 연료에 의존해 산업 기술이 빠르게 발전하고 도시 위주의 무분별한 개발이 확대되는 경우. 2100년 지구 평균 기온이 산업화 이전보다 <b>약 5 °C</b> 상승할 것으로 예측되는 최악의 시나리오다." },
+    { ico: "🦎", name: "생태계에 미치는 영향", sub: "서식지·생물다양성 변화", detail: "온실 기체 배출이 많은 시나리오(RCP 8.5)일수록 생물 서식지 감소와 고유종 멸종 확률이 높아진다. 생물종마다 서식지 이동 속도가 달라 생태계 전체의 균형이 달라질 것으로 예측된다." }
+  ];
+  buildCardGrid("c3-grid", "c3-detail", items);
+})();
+
+/* TAB4 개화 시기 */
+(function () {
+  var items = [
+    { ico: "🌸", name: "인천 · 서울 지역", sub: "벚나무 최대 -6일", detail: "인천은 벚나무 개화 시기가 1980년대 대비 3일, 서울은 개나리 1일·진달래 6일·벚나무 6일 빨라졌다." },
+    { ico: "🌼", name: "대구 · 부산 지역", sub: "진달래 최대 -11일", detail: "대구는 진달래 개화 시기가 11일이나 빨라졌고 벚나무도 7일 빨라졌다. 부산은 개나리 4일, 벚나무 4일 빨라졌다." },
+    { ico: "🌷", name: "목포 · 강릉 지역", sub: "지역마다 다른 변화 폭", detail: "목포는 진달래 8일, 벚나무 7일 빨라졌다. 강릉은 변화 폭이 비교적 작아 개나리 1일, 벚나무 6일 빨라지는 데 그쳤다 — 지역별 기후 조건에 따라 변화 폭이 다르다." },
+    { ico: "🦋", name: "생태계 엇박자", sub: "식물과 곤충의 시간표가 어긋나다", detail: "식물은 기온 변화에 빠르게 개화 시기를 조절하지만, 곤충은 이를 따라가기 어렵다. 유럽 딱새류는 참나무 개엽 시기가 빨라지면서 먹이인 나방 애벌레와 만나는 시기를 놓치고 있다." },
+    { ico: "🍎", name: "농작물 생산에 미치는 영향", sub: "인공수분의 필요성", detail: "농작물의 약 75 %는 곤충이 수분을 매개해야 열매를 맺는다. 생태계 엇박자로 수분이 어려워지자 일부 농가에서는 사람이 직접 꽃가루를 옮기는 <b>인공수분</b>을 하고 있다." },
+    { ico: "🤧", name: "우리 생활에 미치는 영향", sub: "냉해 · 알레르기 · 먹이 부족", detail: "꽃이 일찍 핀 후 추위가 오면 냉해를 입고, 알레르기 시작 시기가 빨라지며, 꽃가루·꽃꿀을 찾는 나비 등이 먹이를 구하기 어려워진다." }
+  ];
+  buildCardGrid("c4-grid", "c4-detail", items);
+})();
+
+/* TAB5 곤충 개체 수 (꿀벌) */
+(function () {
+  var canvas = document.getElementById("c5");
+  var ctx = window.setupCanvas(canvas);
+  var data = [
+    { name: "전라남도", rate: 43.0 },
+    { name: "충청북도", rate: 19.7 },
+    { name: "제주도", rate: 15.1 },
+    { name: "경상남도", rate: 11.1 }
+  ];
+  function draw() {
+    var w = canvas._w, h = canvas._h;
+    ctx.clearRect(0, 0, w, h);
+    var pad = { l: 90, r: 30, t: 20, b: 30 };
+    var plotW = w - pad.l - pad.r, plotH = h - pad.t - pad.b;
+    var barH = plotH / data.length * 0.55;
+    var gap = plotH / data.length;
+    var maxV = 50;
+    ctx.strokeStyle = window.cssVar("--line");
+    ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(pad.l, pad.t); ctx.lineTo(pad.l, h - pad.b); ctx.lineTo(w - pad.r, h - pad.b); ctx.stroke();
+    ctx.fillStyle = window.cssVar("--mist");
+    ctx.font = "12px sans-serif";
+    ctx.textAlign = "right"; ctx.textBaseline = "middle";
+    data.forEach(function (d, i) {
+      var y = pad.t + gap * i + gap / 2;
+      ctx.fillStyle = window.cssVar("--mist");
+      ctx.textAlign = "right";
+      ctx.fillText(d.name, pad.l - 10, y);
+      var bw = (d.rate / maxV) * plotW;
+      ctx.fillStyle = window.cssVar("--coral");
+      ctx.fillRect(pad.l, y - barH / 2, bw, barH);
+      ctx.fillStyle = window.cssVar("--ink");
+      ctx.textAlign = "left";
+      ctx.fillText(d.rate + "%", pad.l + bw + 8, y);
+    });
+  }
+  draw();
+  window.addEventListener("resize", draw);
+
+  var items = [
+    { ico: "🐝", name: "꿀벌 군집 붕괴", sub: "2021~2022년 겨울 피해", detail: "농림축산식품부에 따르면 2021년 말~2022년 초 겨울 동안 월동 중이던 꿀벌 약 39만 봉군이 실종되거나 폐사했다. 전라남도는 피해율 43.0%로 가장 심각했다." },
+    { ico: "🌡️", name: "따뜻해진 겨울의 역설", sub: "헛걸음 후 갑작스런 추위", detail: "겨울철 이상 고온으로 꿀벌이 활동을 시작했다가 꽃이 없어 먹이를 얻지 못하고, 이후 기온이 갑자기 낮아지면 벌집 밖에서 살아남지 못한다." },
+    { ico: "🌸", name: "밀원 식물과의 엇박자", sub: "영양 부족으로 인한 폐사", detail: "개화 시기가 빨라지며 꿀벌의 활동 시기와 밀원 식물(꽃)의 개화 시기가 어긋나면, 꿀벌은 충분한 꽃꿀·꽃가루를 얻지 못해 영양 상태가 나빠지고 면역력이 약해진다." },
+    { ico: "🦋", name: "다른 곤충의 개체 수 감소", sub: "27년간 생물량 급감", detail: "독일의 한 자연 보호 지역에서는 27년 동안 날아다니는 곤충의 생물량이 크게 감소한 것으로 나타나, 기후변화가 꿀벌 외 다른 곤충에도 영향을 미친다는 것을 보여준다." }
+  ];
+  buildCardGrid("c5-grid", "c5-detail", items);
+})();
+
+/* TAB6 수생태계 */
+(function () {
+  var items = [
+    { ico: "🟢", name: "녹조 현상", sub: "남세균의 대량 증식", detail: "남세균(남조류)이 대량으로 증식해 물이 녹색을 띠는 현상이다. 남세균은 공기주머니로 수직 이동을 할 수 있어 여름철 성층현상이 발생한 호수에서 다른 조류와의 경쟁에 유리하다." },
+    { ico: "🔴", name: "적조 현상", sub: "와편모조류의 대량 증식", detail: "적색이나 황색을 띠는 와편모조류가 대량 증식해 물이 붉게 변하는 현상이다. 유해 남세균과 마찬가지로 독소를 배출해 어패류와 인체에 피해를 줄 수 있다." },
+    { ico: "🌡️", name: "수온 상승과 부영양화", sub: "물꽃 현상을 심화시키는 두 원인", detail: "수온이 상승하면 조류가 대량으로 증식하고, 성층현상이 강화되어 조류 증식이 더욱 촉진된다. 영양염류가 강·호수로 많이 유입되는 <b>부영양화</b>도 물꽃 현상을 일으키는 원인이다." },
+    { ico: "🐟", name: "생물다양성 감소", sub: "고유종의 서식지 축소", detail: "수온 상승과 강수량 변화로 일부 어종은 서식 가능한 호수가 줄어들며 멸종 위기에 처하고 있다. 물꽃 현상으로 빛 투과가 차단되면 수생 식물의 광합성도 어려워진다." }
+  ];
+  buildCardGrid("c6-grid", "c6-detail", items);
+})();
+
+/* TAB7 곤충 매개 감염병 */
+(function () {
+  var items = [
+    { ico: "🦟", name: "말라리아", sub: "얼룩날개모기가 매개", detail: "말라리아 원충에 감염된 암컷 얼룩날개모기가 사람의 피를 빨 때 전파된다. 아열대·열대 기후에 주로 서식하는 매개 모기의 서식지가 기후변화로 확대되고 있다." },
+    { ico: "🦟", name: "뎅기열 · 지카 · 치쿤구니야열", sub: "숲모기류가 매개", detail: "암컷 흰줄숲모기와 이집트숲모기가 각각 뎅기바이러스, 지카바이러스, 치쿤구니야바이러스를 옮겨 전파한다." },
+    { ico: "🦟", name: "일본뇌염", sub: "작은빨간집모기가 매개", detail: "일본뇌염바이러스를 옮기는 작은빨간집모기는 기온이 낮은 겨울 동안 활동을 최소화하다가 기온이 오르면 활동을 시작한다. 최근 지구 기온 상승으로 모기의 <b>출현 시점이 빨라지고 활동 기간도 길어지고</b> 있다." },
+    { ico: "🪰", name: "리슈만편모충증 · 아프리카수면병", sub: "모래파리 · 체체파리가 매개", detail: "암컷 모래파리는 리슈만편모충을, 체체파리는 파동편모충을 옮겨 각각 리슈만편모충증과 아프리카수면병을 전염시킨다." },
+    { ico: "🗺️", name: "발생 지역의 변화", sub: "매개 곤충 서식지를 따라 이동", detail: "곤충 매개 감염병의 발생 지역은 매개 곤충의 서식 지역과 밀접하다. 기후변화로 매개 곤충의 서식지가 변화하면서 감염병 발생 지역도 함께 변화하고 있다." }
+  ];
+  buildCardGrid("c7-grid", "c7-detail", items);
+})();
+
+/* TAB8 프로젝트: SSP 시나리오 canvas */
+(function () {
+  var canvas = document.getElementById("c8");
+  var ctx = window.setupCanvas(canvas);
+  var scenarios = {
+    good: { label: "SSP1-2.6 (감축 성공)", temp: 2.07, sea: 0.72,
+      info: "재생에너지 기술 발달로 화석 연료 사용을 최소화하고 지속 가능한 성장을 이루는 경우, 2100년 우리나라 해수 온도는 2020년 대비 <b>2.07 °C</b>, 해수면은 현재 대비 <b>0.72 m</b> 상승할 것으로 예측된다." },
+    bad: { label: "SSP5-8.5 (감축 실패)", temp: 4.93, sea: 1.1,
+      info: "산업 기술의 빠른 발전에 중심을 두어 화석 연료 사용이 높고 도시 위주의 무분별한 개발이 확대되는 경우, 2100년 우리나라 해수 온도는 2020년 대비 <b>4.93 °C</b>, 해수면은 현재 대비 <b>1.1 m</b> 상승할 것으로 예측된다." }
+  };
+  var current = "good";
+
+  function draw() {
+    var w = canvas._w, h = canvas._h;
+    ctx.clearRect(0, 0, w, h);
+    var s = scenarios[current];
+    var pad = { l: 60, r: 30, t: 30, b: 50 };
+    var plotW = w - pad.l - pad.r, plotH = h - pad.t - pad.b;
+    var maxV = 5.5;
+    ctx.strokeStyle = window.cssVar("--line");
+    ctx.beginPath(); ctx.moveTo(pad.l, pad.t); ctx.lineTo(pad.l, h - pad.b); ctx.lineTo(w - pad.r, h - pad.b); ctx.stroke();
+
+    var bars = [
+      { label: "해수 온도 상승 (°C)", val: s.temp, color: window.cssVar("--teal") },
+      { label: "해수면 상승 (m)", val: s.sea, color: window.cssVar("--coral") }
+    ];
+    var slot = plotW / bars.length;
+    bars.forEach(function (b, i) {
+      var bw = slot * 0.4;
+      var bh = (b.val / maxV) * plotH;
+      var x = pad.l + slot * i + slot / 2 - bw / 2;
+      var y = h - pad.b - bh;
+      ctx.fillStyle = b.color;
+      ctx.fillRect(x, y, bw, bh);
+      ctx.fillStyle = window.cssVar("--ink");
+      ctx.font = "bold 15px sans-serif";
+      ctx.textAlign = "center";
+      ctx.fillText(b.val, x + bw / 2, y - 10);
+      ctx.fillStyle = window.cssVar("--mist");
+      ctx.font = "12px sans-serif";
+      ctx.fillText(b.label, x + bw / 2, h - pad.b + 20);
+    });
+  }
+  draw();
+  window.addEventListener("resize", draw);
+
+  function setScenario(key) {
+    current = key;
+    draw();
+    document.getElementById("c8-info").innerHTML = "<h4>" + scenarios[key].label + "</h4><p>" + scenarios[key].info + "</p>";
+  }
+  document.querySelectorAll("#c8-seg button").forEach(function (b) {
+    b.addEventListener("click", function () {
+      document.querySelectorAll("#c8-seg button").forEach(function (x) { x.classList.toggle("on", x === b); });
+      setScenario(b.getAttribute("data-s"));
+    });
+  });
+  setScenario("good");
+})();
+
+})();
+</script>
+</body>
+</html>

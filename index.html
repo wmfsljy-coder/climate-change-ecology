@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>기후변화와 환경생태 — 인터랙티브 학습 도구</title>
+<link rel="stylesheet" href="assets/theme.css">
+<style>
+  body { display: block; }
+  .hero { padding: 64px 30px 30px; max-width: 1080px; margin: 0 auto; }
+  .hero .eyebrow { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--teal); font-weight: 700; }
+  .hero h1 { font-size: clamp(30px, 5vw, 46px); margin: 10px 0 14px; text-wrap: balance; }
+  .hero p { color: var(--mist); font-size: 15.5px; line-height: 1.7; max-width: 640px; margin: 0; }
+
+  .grid { max-width: 1080px; margin: 30px auto 20px; padding: 0 30px; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; }
+  .unit-card { display: block; background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 24px; text-decoration: none; color: inherit; transition: border-color .15s, transform .15s; position: relative; overflow: hidden; }
+  .unit-card:hover { border-color: var(--teal-dim); transform: translateY(-2px); }
+  .unit-card .chapter { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--teal); font-weight: 700; margin-bottom: 6px; }
+  .unit-card h3 { font-size: 20px; margin: 0 0 8px; }
+  .unit-card p { color: var(--mist); font-size: 13px; line-height: 1.6; margin: 0 0 14px; min-height: 60px; }
+  .unit-card .topics { display: flex; flex-wrap: wrap; gap: 6px; }
+  .unit-card .topics span { font-size: 10.5px; padding: 3px 8px; border-radius: 999px; background: var(--panel-2); border: 1px solid var(--line); color: var(--mist); }
+  .unit-card .go { position: absolute; top: 24px; right: 24px; color: var(--mist); font-size: 18px; }
+  .unit-card .count { position: absolute; bottom: 22px; right: 22px; font-size: 11px; color: var(--teal); font-weight: 700; }
+
+  .part-label { max-width: 1080px; margin: 0 auto; padding: 30px 30px 0; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--mist); font-weight: 700; }
+  .tips { max-width: 1080px; margin: 16px auto 70px; padding: 0 30px; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
+  .tip-card { background: var(--panel-2); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; }
+  .tip-card .num { font-family: Georgia, serif; font-size: 22px; color: var(--teal); font-weight: 700; }
+  .tip-card h4 { font-size: 14px; margin: 6px 0 4px; }
+  .tip-card p { font-size: 12.5px; color: var(--mist); line-height: 1.6; margin: 0; }
+  .back-link { max-width: 1080px; margin: 20px auto 0; padding: 0 30px; }
+  .back-link a { color: var(--mist); font-size: 12px; text-decoration: none; }
+  .back-link a:hover { color: var(--teal); }
+</style>
+</head>
+<body>
+
+<div class="back-link"><a href="https://wmfsljy-coder.github.io/science-teacher-hub/">← 지구과학 교사 웹툴 모음</a></div>
+
+<div class="hero">
+  <div class="eyebrow">고등학교 기후변화와 환경생태 · 인터랙티브 학습 도구</div>
+  <h1 class="display">기후변화와 환경생태<br>탐구 스테이션</h1>
+  <p>날씨와 기후의 차이부터 되먹임의 원리, 기후위기가 생태계와 우리 생활에 미치는 영향, 그리고 탄소중립과 국제 협약까지. 카드·타임라인·시뮬레이션을 직접 조작하며 기후변화의 원인과 대응을 익히는 인터랙티브 학습 도구입니다. 아래에서 학습할 대단원을 선택하세요.</p>
+</div>
+
+<div class="grid">
+  <a class="unit-card" href="1/">
+    <div class="chapter">Ⅰ</div>
+    <h3 class="display">기후와 환경생태의<br>특성</h3>
+    <p>날씨와 기후의 차이, 기후요소와 기후인자, 기후시스템의 되먹임 작용, 기후변화가 생태계와 생활환경에 미치는 영향을 다룹니다.</p>
+    <div class="topics"><span>양의 되먹임</span><span>음의 되먹임</span><span>생태계 영향</span><span>해상 도시</span></div>
+    <div class="go">→</div>
+    <div class="count">4개 소단원</div>
+  </a>
+  <a class="unit-card" href="2/">
+    <div class="chapter">Ⅱ</div>
+    <h3 class="display">기후위기와<br>환경생태 변화</h3>
+    <p>기후위기의 원인, 해수면 상승, 극한 기상 현상, 미래 생태계 변화, 개화 시기·곤충·수생태계·감염병 변화까지 광범위하게 다룹니다.</p>
+    <div class="topics"><span>SSP 시나리오</span><span>슈퍼 태풍</span><span>꿀벌 군집 붕괴</span><span>물꽃 현상</span></div>
+    <div class="go">→</div>
+    <div class="count">8개 소단원</div>
+  </a>
+  <a class="unit-card" href="3/">
+    <div class="chapter">Ⅲ</div>
+    <h3 class="display">기후위기에 대응하는<br>우리의 노력</h3>
+    <p>해양생태계 복원 기술, 기후 재해 대응, 탄소중립 사회와 과학기술, 국제 협약과 시민 참여까지 기후위기 대응 노력을 다룹니다.</p>
+    <div class="topics"><span>바다숲 복원</span><span>탄소중립</span><span>파리 협정</span><span>탄소중립 학교</span></div>
+    <div class="go">→</div>
+    <div class="count">4개 소단원</div>
+  </a>
+</div>
+
+<div class="part-label">이 사이트 활용법</div>
+<div class="tips">
+  <div class="tip-card">
+    <div class="num">01</div>
+    <h4>수업 중 시연</h4>
+    <p>프로젝터로 화면을 띄우고 카드·타임라인·시뮬레이션을 직접 눌러 가며 기후위기의 원인과 영향을 단계별로 설명할 수 있습니다.</p>
+  </div>
+  <div class="tip-card">
+    <div class="num">02</div>
+    <h4>학생 개별 활동</h4>
+    <p>링크를 공유하면 학생이 각자 기기로 접속해 스스로 탐색할 수 있습니다. 로그인이 필요 없습니다.</p>
+  </div>
+  <div class="tip-card">
+    <div class="num">03</div>
+    <h4>다크 · 라이트 모드</h4>
+    <p>오른쪽 위 버튼으로 화면 밝기를 전환할 수 있어, 어두운 교실이나 밝은 창가 어디서나 보기 편합니다.</p>
+  </div>
+  <div class="tip-card">
+    <div class="num">04</div>
+    <h4>탐구·프로젝트 활동과 함께</h4>
+    <p>SSP 시나리오 비교, 탄소중립 학교 만들기 등 각 단원의 카드는 교과서의 탐구·프로젝트 활동과 이어집니다.</p>
+  </div>
+</div>
+
+<button class="theme-toggle" id="themeToggle">라이트 모드</button>
+<script src="assets/theme.js"></script>
+</body>
+</html>
