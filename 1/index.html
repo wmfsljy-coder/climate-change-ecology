@@ -39,6 +39,16 @@
         <div class="card-grid" id="c0-grid" style="margin-top:16px"></div>
         <div class="detail-panel" id="c0-detail">카드를 클릭하면 자세한 설명이 나타납니다.</div>
       </div>
+      <div class="stage-card">
+        <div class="canvas-wrap"><canvas id="c0b" width="900" height="380"></canvas></div>
+        <div class="controls">
+          <div class="ctrl-group" style="flex:1 1 100%">
+            <div class="ctrl-label">평균 기간(일) — 1일(날씨)부터 3650일(10년, 기후에 가까움)까지<span class="val" id="c0b-w-val">1</span>일</div>
+            <input type="range" id="c0b-w" min="1" max="3650" step="1" value="1">
+          </div>
+        </div>
+        <div class="info-card" id="c0b-info"></div>
+      </div>
     </section>
 
     <!-- TAB1 기후시스템과 상호작용 -->
@@ -62,6 +72,16 @@
           <div class="timeline-track" id="c1-track"></div>
         </div>
         <div class="detail-panel" id="c1-detail"></div>
+      </div>
+      <div class="stage-card">
+        <div class="canvas-wrap"><canvas id="c1b" width="900" height="380"></canvas></div>
+        <div class="controls">
+          <div class="ctrl-group" style="flex:1 1 100%">
+            <div class="ctrl-label">되먹임 강도 k (한 단계마다 변화가 (1+k)배로)<span class="val" id="c1b-k-val">0.00</span></div>
+            <input type="range" id="c1b-k" min="-40" max="40" step="1" value="0">
+          </div>
+        </div>
+        <div class="info-card" id="c1b-info"></div>
       </div>
     </section>
 
@@ -183,6 +203,138 @@ function buildTimeline(trackId, detailId, items) {
       select = buildTimeline("c1-track", "c1-detail", b.getAttribute("data-f") === "pos" ? pos : neg);
     });
   });
+})();
+
+/* TAB0b 날씨-기후 평균 기간 시뮬레이터 */
+(function () {
+  var canvas = document.getElementById("c0b");
+  var ctx = setupCanvas(canvas);
+  var W = canvas._w, H = canvas._h;
+  var info = document.getElementById("c0b-info");
+  var N = 3650;
+
+  function seededRandom(seed) { var s = seed; return function () { s = (s * 9301 + 49297) % 233280; return s / 233280; }; }
+  function gaussian(rnd) { var u1 = Math.max(1e-6, rnd()), u2 = rnd(); return Math.sqrt(-2 * Math.log(u1)) * Math.cos(2 * Math.PI * u2); }
+  var rnd = seededRandom(11);
+  var daily = [];
+  for (var d = 0; d < N; d++) {
+    daily.push(15 + 10 * Math.sin(2 * Math.PI * d / 365 - Math.PI / 2) + 3 * gaussian(rnd));
+  }
+  // prefix sum for fast moving average
+  var prefix = [0];
+  for (var i = 0; i < N; i++) prefix.push(prefix[i] + daily[i]);
+  function movingAvgAt(center, win) {
+    var half = Math.floor(win / 2);
+    var lo = Math.max(0, center - half), hi = Math.min(N - 1, center + half);
+    return (prefix[hi + 1] - prefix[lo]) / (hi - lo + 1);
+  }
+
+  var win = 1;
+  document.getElementById("c0b-w").addEventListener("input", function (e) {
+    win = +e.target.value;
+    document.getElementById("c0b-w-val").textContent = win;
+    render();
+  });
+
+  function render() {
+    ctx.clearRect(0, 0, W, H);
+    ctx.fillStyle = cssVar("--panel"); ctx.fillRect(0, 0, W, H);
+    var x0 = 60, x1 = W - 30, y0 = 30, y1 = H - 50;
+    ctx.strokeStyle = cssVar("--line"); ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(x0, y1); ctx.lineTo(x1, y1); ctx.stroke();
+    var minT = -5, maxT = 30;
+    function yOf(t) { return y1 - (t - minT) / (maxT - minT) * (y1 - y0); }
+
+    // raw daily series (light)
+    ctx.beginPath();
+    for (var px = 0; px < 400; px++) {
+      var day = Math.floor(px / 400 * N);
+      var xx = x0 + px / 400 * (x1 - x0);
+      var yy = yOf(daily[day]);
+      if (px === 0) ctx.moveTo(xx, yy); else ctx.lineTo(xx, yy);
+    }
+    ctx.strokeStyle = cssVar("--mist"); ctx.globalAlpha = 0.45; ctx.lineWidth = 1; ctx.stroke(); ctx.globalAlpha = 1;
+
+    // averaged series (bold)
+    var series = [];
+    ctx.beginPath();
+    for (var px2 = 0; px2 < 400; px2++) {
+      var day2 = Math.floor(px2 / 400 * N);
+      var v = movingAvgAt(day2, win);
+      series.push(v);
+      var xx2 = x0 + px2 / 400 * (x1 - x0), yy2 = yOf(v);
+      if (px2 === 0) ctx.moveTo(xx2, yy2); else ctx.lineTo(xx2, yy2);
+    }
+    ctx.strokeStyle = cssVar("--coral"); ctx.lineWidth = 2.5; ctx.stroke();
+
+    ctx.font = "11px Segoe UI"; ctx.fillStyle = cssVar("--mist"); ctx.textAlign = "left";
+    ctx.fillText("day 0", x0, y1 + 22);
+    ctx.textAlign = "right"; ctx.fillText("day " + N + " (약 10년)", x1, y1 + 22);
+
+    var mean = series.reduce(function (a, b) { return a + b; }, 0) / series.length;
+    var variance = series.reduce(function (a, b) { return a + (b - mean) * (b - mean); }, 0) / series.length;
+    var sd = Math.sqrt(variance);
+    var rawMean = daily.reduce(function (a, b) { return a + b; }, 0) / daily.length;
+    var rawSd = Math.sqrt(daily.reduce(function (a, b) { return a + (b - rawMean) * (b - rawMean); }, 0) / daily.length);
+
+    info.innerHTML = win === 1
+      ? "평균 기간이 <b>1일</b>일 때는 매일의 기온이 그대로 나타나는 <b>날씨</b> 자체입니다. 이 하루하루 값들의 표준편차는 약 <b>" + rawSd.toFixed(2) + "°C</b>로 변동 폭이 큽니다."
+      : "평균 기간을 <b>" + win + "일</b>로 늘리면 짧은 변동은 사라지고 완만한 곡선이 됩니다. 이 평균값들의 표준편차는 약 <b>" + sd.toFixed(2) + "°C</b>로, 1일 평균(날씨)의 표준편차(" + rawSd.toFixed(2) + "°C)보다 크게 줄었습니다. 실제 기후는 <b>30년(약 10950일)</b> 평균을 사용해 변동 폭을 훨씬 더 줄인 값입니다.";
+  }
+  render();
+})();
+
+/* TAB1b 되먹임 증폭 계산기 */
+(function () {
+  var canvas = document.getElementById("c1b");
+  var ctx = setupCanvas(canvas);
+  var W = canvas._w, H = canvas._h;
+  var info = document.getElementById("c1b-info");
+  var kPct = 0;
+  document.getElementById("c1b-k").addEventListener("input", function (e) {
+    kPct = +e.target.value;
+    document.getElementById("c1b-k-val").textContent = (kPct / 100).toFixed(2);
+    render();
+  });
+
+  var STEPS = 8;
+  function series(kPctVal) {
+    var k = kPctVal / 100;
+    var vals = [1];
+    for (var n = 1; n <= STEPS; n++) vals.push(vals[n - 1] * (1 + k));
+    return vals;
+  }
+
+  function render() {
+    ctx.clearRect(0, 0, W, H);
+    ctx.fillStyle = cssVar("--panel"); ctx.fillRect(0, 0, W, H);
+    var vals = series(kPct);
+    var x0 = 60, x1 = W - 30, y0 = 30, y1 = H - 50;
+    var maxAbs = Math.max(2, Math.max.apply(null, vals.map(Math.abs)));
+    ctx.strokeStyle = cssVar("--line"); ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(x0, y1); ctx.lineTo(x1, y1); ctx.stroke();
+    function yOf(v) { return y1 - (v / maxAbs) * (y1 - y0) * 0.9; }
+    function xOf(n) { return x0 + n / STEPS * (x1 - x0); }
+
+    ctx.beginPath();
+    vals.forEach(function (v, n) {
+      var xx = xOf(n), yy = yOf(v);
+      if (n === 0) ctx.moveTo(xx, yy); else ctx.lineTo(xx, yy);
+    });
+    ctx.strokeStyle = kPct > 0 ? cssVar("--coral") : (kPct < 0 ? cssVar("--teal") : cssVar("--mist"));
+    ctx.lineWidth = 2.5; ctx.stroke();
+    vals.forEach(function (v, n) {
+      ctx.beginPath(); ctx.arc(xOf(n), yOf(v), 4, 0, 7);
+      ctx.fillStyle = kPct > 0 ? cssVar("--coral") : (kPct < 0 ? cssVar("--teal") : cssVar("--mist"));
+      ctx.fill();
+    });
+    ctx.font = "11px Segoe UI"; ctx.fillStyle = cssVar("--mist"); ctx.textAlign = "left";
+    ctx.fillText("단계 0(초기 원인)", x0, y1 + 22);
+    ctx.textAlign = "right"; ctx.fillText("단계 " + STEPS, x1, y1 + 22);
+
+    var final = vals[STEPS];
+    var kind = kPct > 0 ? "양의 되먹임(증폭)" : (kPct < 0 ? "음의 되먹임(축소)" : "되먹임 없음");
+    info.innerHTML = "되먹임 강도 k = <b>" + (kPct / 100).toFixed(2) + "</b>일 때, 초기 변화(=1)가 " + STEPS + "단계 후 <b>" + final.toFixed(2) + "배</b>가 됩니다. 이는 <b>" + kind + "</b>에 해당합니다. " + (kPct > 0 ? "수증기·온실 기체 증가처럼 초기 원인을 계속 강화하면 변화가 기하급수적으로 커집니다." : kPct < 0 ? "구름 반사처럼 초기 원인을 약화시키는 작용이 있으면 변화가 점점 줄어듭니다." : "강화도 축소도 없이 초기 변화가 그대로 유지됩니다.");
+  }
+  render();
 })();
 
 /* TAB2 기후변화 영향 6분야 */

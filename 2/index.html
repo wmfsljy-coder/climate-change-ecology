@@ -98,6 +98,16 @@
         <div class="card-grid" id="c4-grid"></div>
         <div class="detail-panel" id="c4-detail">카드를 클릭하면 자세한 설명이 나타납니다.</div>
       </div>
+      <div class="stage-card">
+        <div class="canvas-wrap"><canvas id="c4b" width="900" height="360"></canvas></div>
+        <div class="controls">
+          <div class="ctrl-group" style="flex:1 1 100%">
+            <div class="ctrl-label">지구 평균 기온 상승(°C)<span class="val" id="c4b-w-val">1.0</span>°C</div>
+            <input type="range" id="c4b-w" min="0" max="30" step="1" value="10">
+          </div>
+        </div>
+        <div class="info-card" id="c4b-info"></div>
+      </div>
     </section>
 
     <!-- TAB5 -->
@@ -116,6 +126,16 @@
         <div class="canvas-wrap"><canvas id="c5"></canvas></div>
         <div class="card-grid" id="c5-grid" style="margin-top:16px"></div>
         <div class="detail-panel" id="c5-detail">카드를 클릭하면 자세한 설명이 나타납니다.</div>
+      </div>
+      <div class="stage-card">
+        <div class="canvas-wrap"><canvas id="c5b" width="900" height="360"></canvas></div>
+        <div class="controls">
+          <div class="ctrl-group" style="flex:1 1 100%">
+            <div class="ctrl-label">겨울철 이상 고온으로 벌이 활동한 날 수<span class="val" id="c5b-d-val">0</span>일</div>
+            <input type="range" id="c5b-d" min="0" max="30" step="1" value="0">
+          </div>
+        </div>
+        <div class="info-card" id="c5b-info"></div>
       </div>
     </section>
 
@@ -276,6 +296,69 @@ function buildCardGrid(gridId, detailId, items) {
   buildCardGrid("c4-grid", "c4-detail", items);
 })();
 
+/* TAB4b 개화-곤충 엇박자 계산기 */
+(function () {
+  var canvas = document.getElementById("c4b");
+  var ctx = setupCanvas(canvas);
+  var W = canvas._w, H = canvas._h;
+  var info = document.getElementById("c4b-info");
+  var warmX10 = 10; // 0.1도 단위
+
+  document.getElementById("c4b-w").addEventListener("input", function (e) {
+    warmX10 = +e.target.value;
+    document.getElementById("c4b-w-val").textContent = (warmX10 / 10).toFixed(1);
+    render();
+  });
+
+  // 관측 사례(최대 11일, 최소 1일 정도 빨라짐)를 참고해 단순화한 선형 모형
+  var FLOWER_DAYS_PER_C = 8;   // 식물의 개화 시기는 기온 상승에 빠르게 반응
+  var INSECT_DAYS_PER_C = 3;   // 곤충의 활동 시기는 상대적으로 느리게 반응
+
+  function render() {
+    ctx.clearRect(0, 0, W, H);
+    ctx.fillStyle = cssVar("--panel"); ctx.fillRect(0, 0, W, H);
+    var warm = warmX10 / 10;
+    var flowerShift = FLOWER_DAYS_PER_C * warm;
+    var insectShift = INSECT_DAYS_PER_C * warm;
+    var gap = flowerShift - insectShift;
+
+    var x0 = 80, x1 = W - 60, y0 = 90, y1 = 220;
+    var maxShift = 30;
+    function xOf(shift) { return x0 + shift / maxShift * (x1 - x0); }
+
+    ctx.strokeStyle = cssVar("--line"); ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(x1, y0); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(x0, y1); ctx.lineTo(x1, y1); ctx.stroke();
+
+    // baseline marker (0 = 과거 기준일)
+    ctx.save(); ctx.strokeStyle = cssVar("--mist"); ctx.setLineDash([3, 3]);
+    ctx.beginPath(); ctx.moveTo(xOf(0), y0 - 20); ctx.lineTo(xOf(0), y1 + 20); ctx.stroke();
+    ctx.restore();
+    ctx.font = "10.5px Segoe UI"; ctx.fillStyle = cssVar("--mist"); ctx.textAlign = "center";
+    ctx.fillText("과거 기준일", xOf(0), y0 - 28);
+
+    // flower marker
+    ctx.beginPath(); ctx.arc(xOf(flowerShift), y0, 9, 0, 7);
+    ctx.fillStyle = cssVar("--coral"); ctx.fill();
+    ctx.fillText("🌸 개화일 (-" + flowerShift.toFixed(1) + "일)", xOf(flowerShift), y0 - 18);
+
+    // insect marker
+    ctx.beginPath(); ctx.arc(xOf(insectShift), y1, 9, 0, 7);
+    ctx.fillStyle = cssVar("--teal"); ctx.fill();
+    ctx.fillText("🦋 곤충 활동 시작일 (-" + insectShift.toFixed(1) + "일)", xOf(insectShift), y1 + 34);
+
+    // gap bracket
+    ctx.save(); ctx.strokeStyle = cssVar("--foam"); ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(xOf(flowerShift), (y0 + y1) / 2); ctx.lineTo(xOf(insectShift), (y0 + y1) / 2); ctx.stroke();
+    ctx.restore();
+    ctx.font = "700 13px Segoe UI"; ctx.fillStyle = cssVar("--foam");
+    ctx.fillText("엇박자 간격 ≈ " + gap.toFixed(1) + "일", (xOf(flowerShift) + xOf(insectShift)) / 2, (y0 + y1) / 2 - 14);
+
+    info.innerHTML = "지구 평균 기온이 <b>" + warm.toFixed(1) + "°C</b> 상승하면, 이 단순화 모형에서 개화일은 과거보다 약 <b>" + flowerShift.toFixed(1) + "일</b> 빨라지고, 곤충의 활동 시작일은 약 <b>" + insectShift.toFixed(1) + "일</b>만 빨라집니다. 두 시기의 차이인 <b>엇박자 간격이 약 " + gap.toFixed(1) + "일</b>로 벌어지며, 기온이 더 오를수록 식물과 곤충의 시간표 차이도 커집니다(실제 관측값을 단순화한 모형입니다).";
+  }
+  render();
+})();
+
 /* TAB5 곤충 개체 수 (꿀벌) */
 (function () {
   var canvas = document.getElementById("c5");
@@ -323,6 +406,53 @@ function buildCardGrid(gridId, detailId, items) {
     { ico: "🦋", name: "다른 곤충의 개체 수 감소", sub: "27년간 생물량 급감", detail: "독일의 한 자연 보호 지역에서는 27년 동안 날아다니는 곤충의 생물량이 크게 감소한 것으로 나타나, 기후변화가 꿀벌 외 다른 곤충에도 영향을 미친다는 것을 보여준다." }
   ];
   buildCardGrid("c5-grid", "c5-detail", items);
+})();
+
+/* TAB5b 꿀벌 월동 생존율 계산기 */
+(function () {
+  var canvas = document.getElementById("c5b");
+  var ctx = setupCanvas(canvas);
+  var W = canvas._w, H = canvas._h;
+  var info = document.getElementById("c5b-info");
+  var warmDays = 0;
+  document.getElementById("c5b-d").addEventListener("input", function (e) {
+    warmDays = +e.target.value;
+    document.getElementById("c5b-d-val").textContent = warmDays;
+    render();
+  });
+
+  // 이상 고온으로 활동에 나섰다가 먹이를 얻지 못해 에너지를 소모하는 정도를 단순화한 모형
+  function survivalRate(days) { return Math.max(10, 95 - 2.2 * days); }
+
+  function render() {
+    ctx.clearRect(0, 0, W, H);
+    ctx.fillStyle = cssVar("--panel"); ctx.fillRect(0, 0, W, H);
+    var surv = survivalRate(warmDays), damage = 100 - surv;
+
+    var x0 = 80, x1 = W - 60, y0 = 40, y1 = H - 60;
+    ctx.strokeStyle = cssVar("--line"); ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(x0, y1); ctx.lineTo(x1, y1); ctx.stroke();
+
+    // curve of survival rate vs warmDays
+    ctx.beginPath();
+    for (var px = 0; px <= 200; px++) {
+      var d = px / 200 * 30;
+      var s = survivalRate(d);
+      var xx = x0 + px / 200 * (x1 - x0), yy = y1 - s / 100 * (y1 - y0);
+      if (px === 0) ctx.moveTo(xx, yy); else ctx.lineTo(xx, yy);
+    }
+    ctx.strokeStyle = cssVar("--teal"); ctx.lineWidth = 2; ctx.stroke();
+
+    var curX = x0 + warmDays / 30 * (x1 - x0), curY = y1 - surv / 100 * (y1 - y0);
+    ctx.fillStyle = cssVar("--coral"); ctx.beginPath(); ctx.arc(curX, curY, 7, 0, 7); ctx.fill();
+
+    ctx.font = "11px Segoe UI"; ctx.fillStyle = cssVar("--mist"); ctx.textAlign = "left";
+    ctx.fillText("이상 고온 활동일 0일", x0, y1 + 22);
+    ctx.textAlign = "right"; ctx.fillText("30일", x1, y1 + 22);
+    ctx.save(); ctx.translate(24, (y0 + y1) / 2); ctx.rotate(-Math.PI / 2); ctx.textAlign = "center"; ctx.fillText("월동 생존율(%)", 0, 0); ctx.restore();
+
+    info.innerHTML = "겨울철 이상 고온으로 벌이 헛걸음 활동을 한 날이 <b>" + warmDays + "일</b>이면, 이 단순화 모형에서 예상 월동 생존율은 약 <b>" + surv.toFixed(0) + "%</b>(피해율 약 " + damage.toFixed(0) + "%)입니다. 실제 2021~2022년 전라남도 피해율(43.0%)은 이상 고온 활동일이 상당히 길었던 경우에 해당한다고 볼 수 있습니다(실제 관측값을 단순화한 모형입니다).";
+  }
+  render();
 })();
 
 /* TAB6 수생태계 */
