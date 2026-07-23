@@ -83,6 +83,23 @@
         </div>
         <div class="info-card" id="c1b-info"></div>
       </div>
+
+      <div class="stage-head">
+        <div class="eyebrow">🔎 미션 · 양의 되먹임 vs 음의 되먹임</div>
+        <h2 class="display" style="font-size:18px;">이 과정은 어떤 되먹임일까?</h2>
+      </div>
+      <div class="stage-card">
+        <div class="info-card" id="c1m-data"></div>
+        <div class="seg" id="c1m-choices">
+          <button data-c="pos">양의 되먹임(증폭)</button>
+          <button data-c="neg">음의 되먹임(축소)</button>
+        </div>
+        <div class="toggle-row" style="margin:14px 20px;">
+          <button class="btn" id="c1m-check">정답 확인</button>
+          <button class="btn" id="c1m-new">새 문제</button>
+        </div>
+        <div class="info-card" id="c1m-info"></div>
+      </div>
     </section>
 
     <!-- TAB2 기후변화와 생태계·생활환경 -->
@@ -335,6 +352,55 @@ function buildTimeline(trackId, detailId, items) {
     info.innerHTML = "되먹임 강도 k = <b>" + (kPct / 100).toFixed(2) + "</b>일 때, 초기 변화(=1)가 " + STEPS + "단계 후 <b>" + final.toFixed(2) + "배</b>가 됩니다. 이는 <b>" + kind + "</b>에 해당합니다. " + (kPct > 0 ? "수증기·온실 기체 증가처럼 초기 원인을 계속 강화하면 변화가 기하급수적으로 커집니다." : kPct < 0 ? "구름 반사처럼 초기 원인을 약화시키는 작용이 있으면 변화가 점점 줄어듭니다." : "강화도 축소도 없이 초기 변화가 그대로 유지됩니다.");
   }
   render();
+})();
+
+/* TAB1 미션 — 양의/음의 되먹임 구별 */
+(function () {
+  var qa = [
+    { txt: "기온이 상승해 수증기(온실 기체)가 늘어나고, 늘어난 온실 기체가 복사 에너지를 더 흡수해 기온이 더욱 상승한다.", key: "pos" },
+    { txt: "기온이 상승해 구름이 늘어나고, 늘어난 구름이 태양 빛을 더 많이 반사해 기온이 다시 낮아진다.", key: "neg" },
+    { txt: "영구 동토층이 녹으면서 메테인이 방출되어 온실 효과가 커지고 기온이 더 올라간다.", key: "pos" },
+    { txt: "해빙(빙하)이 녹아 어두운 바다 표면이 드러나면 태양 에너지 흡수가 늘어 기온이 더 상승하고 얼음이 더 빨리 녹는다.", key: "pos" },
+    { txt: "산불로 늘어난 에어로졸이 지구 반사율을 높여 기온 상승이 억제된다.", key: "neg" },
+    { txt: "기온이 상승하면 식물의 광합성이 활발해져 대기 중 이산화 탄소를 더 많이 흡수해 온실 효과가 줄어든다.", key: "neg" }
+  ];
+  var labels = { pos: "양의 되먹임(증폭)", neg: "음의 되먹임(축소)" };
+  var dataBox = document.getElementById("c1m-data");
+  var seg = document.getElementById("c1m-choices");
+  var checkBtn = document.getElementById("c1m-check");
+  var newBtn = document.getElementById("c1m-new");
+  var info = document.getElementById("c1m-info");
+  var current = null, picked = null;
+
+  function newQuestion() {
+    current = qa[Math.floor(Math.random() * qa.length)];
+    picked = null;
+    dataBox.innerHTML = current.txt;
+    seg.querySelectorAll("button").forEach(function (x) { x.classList.remove("on"); });
+    info.innerHTML = "";
+    info.style.color = "";
+  }
+
+  seg.querySelectorAll("button").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      picked = btn.dataset.c;
+      seg.querySelectorAll("button").forEach(function (x) { x.classList.toggle("on", x === btn); });
+    });
+  });
+
+  checkBtn.addEventListener("click", function () {
+    if (!picked) { info.innerHTML = "먼저 보기를 하나 선택하세요."; info.style.color = "var(--coral)"; return; }
+    if (picked === current.key) {
+      info.innerHTML = "✅ 정답! '" + labels[current.key] + "'입니다.";
+      info.style.color = "var(--teal)";
+    } else {
+      info.innerHTML = "❌ 틀렸습니다. 정답은 '" + labels[current.key] + "' 입니다.";
+      info.style.color = "var(--coral)";
+    }
+  });
+
+  newBtn.addEventListener("click", newQuestion);
+  newQuestion();
 })();
 
 /* TAB2 기후변화 영향 6분야 */

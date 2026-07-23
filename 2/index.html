@@ -108,6 +108,20 @@
         </div>
         <div class="info-card" id="c4b-info"></div>
       </div>
+
+      <div class="stage-head">
+        <div class="eyebrow">🔎 미션 · 개화-곤충 엇박자 계산</div>
+        <h2 class="display" style="font-size:18px;">기온이 이만큼 오르면 엇박자는 며칠?</h2>
+      </div>
+      <div class="stage-card">
+        <div class="info-card" id="c4m-data"></div>
+        <div class="seg" id="c4m-choices"></div>
+        <div class="toggle-row" style="margin:14px 20px;">
+          <button class="btn" id="c4m-check">정답 확인</button>
+          <button class="btn" id="c4m-new">새 문제</button>
+        </div>
+        <div class="info-card" id="c4m-info"></div>
+      </div>
     </section>
 
     <!-- TAB5 -->
@@ -357,6 +371,57 @@ function buildCardGrid(gridId, detailId, items) {
     info.innerHTML = "지구 평균 기온이 <b>" + warm.toFixed(1) + "°C</b> 상승하면, 이 단순화 모형에서 개화일은 과거보다 약 <b>" + flowerShift.toFixed(1) + "일</b> 빨라지고, 곤충의 활동 시작일은 약 <b>" + insectShift.toFixed(1) + "일</b>만 빨라집니다. 두 시기의 차이인 <b>엇박자 간격이 약 " + gap.toFixed(1) + "일</b>로 벌어지며, 기온이 더 오를수록 식물과 곤충의 시간표 차이도 커집니다(실제 관측값을 단순화한 모형입니다).";
   }
   render();
+})();
+
+/* TAB4 미션 — 개화-곤충 엇박자 계산 */
+(function () {
+  var FLOWER_DAYS_PER_C = 8, INSECT_DAYS_PER_C = 3;
+  var dataBox = document.getElementById("c4m-data");
+  var seg = document.getElementById("c4m-choices");
+  var checkBtn = document.getElementById("c4m-check");
+  var newBtn = document.getElementById("c4m-new");
+  var info = document.getElementById("c4m-info");
+  var warm, answer, picked = null;
+
+  function newQuestion() {
+    var warmVals = [0.5, 1, 1.5, 2, 3];
+    warm = warmVals[Math.floor(Math.random() * warmVals.length)];
+    answer = Math.round((FLOWER_DAYS_PER_C - INSECT_DAYS_PER_C) * warm * 10) / 10;
+    picked = null;
+    dataBox.innerHTML = "지구 평균 기온이 <b>" + warm + "°C</b> 상승하면(개화일은 매 1°C당 " + FLOWER_DAYS_PER_C + "일, 곤충 활동일은 매 1°C당 " + INSECT_DAYS_PER_C + "일씩 빨라짐), 개화일과 곤충 활동 시작일의 엇박자 간격은 약 며칠일까요?";
+    var opts = [answer];
+    while (opts.length < 4) {
+      var decoy = Math.max(0.5, Math.round((answer + (Math.random() - 0.5) * 10) * 10) / 10);
+      if (opts.indexOf(decoy) === -1) opts.push(decoy);
+    }
+    opts.sort(function () { return Math.random() - 0.5; });
+    seg.innerHTML = "";
+    opts.forEach(function (o) {
+      var b = document.createElement("button");
+      b.textContent = o.toFixed(1) + "일";
+      b.addEventListener("click", function () {
+        picked = o;
+        seg.querySelectorAll("button").forEach(function (x) { x.classList.toggle("on", x === b); });
+      });
+      seg.appendChild(b);
+    });
+    info.innerHTML = "";
+    info.style.color = "";
+  }
+
+  checkBtn.addEventListener("click", function () {
+    if (picked === null) { info.innerHTML = "먼저 보기를 하나 선택하세요."; info.style.color = "var(--coral)"; return; }
+    if (picked === answer) {
+      info.innerHTML = "✅ 정답! (" + FLOWER_DAYS_PER_C + " − " + INSECT_DAYS_PER_C + ") × " + warm + " = " + answer.toFixed(1) + "일";
+      info.style.color = "var(--teal)";
+    } else {
+      info.innerHTML = "❌ 틀렸습니다. (" + FLOWER_DAYS_PER_C + " − " + INSECT_DAYS_PER_C + ") × " + warm + " = " + answer.toFixed(1) + "일 입니다.";
+      info.style.color = "var(--coral)";
+    }
+  });
+
+  newBtn.addEventListener("click", newQuestion);
+  newQuestion();
 })();
 
 /* TAB5 곤충 개체 수 (꿀벌) */

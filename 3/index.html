@@ -82,6 +82,20 @@
         <div class="card-grid" id="c3-grid"></div>
         <div class="detail-panel" id="c3-detail2">카드를 클릭하면 시민 참여 방법이 나타납니다.</div>
       </div>
+
+      <div class="stage-head">
+        <div class="eyebrow">🔎 미션 · 국제 협약 · 기구 맞히기</div>
+        <h2 class="display" style="font-size:18px;">이 설명은 어떤 협약·기구일까?</h2>
+      </div>
+      <div class="stage-card">
+        <div class="info-card" id="c3m-data"></div>
+        <div class="seg" id="c3m-choices"></div>
+        <div class="toggle-row" style="margin:14px 20px;">
+          <button class="btn" id="c3m-check">정답 확인</button>
+          <button class="btn" id="c3m-new">새 문제</button>
+        </div>
+        <div class="info-card" id="c3m-info"></div>
+      </div>
     </section>
 
     <!-- TAB4 프로젝트 -->
@@ -211,6 +225,56 @@ function buildTimeline(trackId, detailId, items) {
     { ico: "🏛️", name: "비정부 기구 가입 · 정책 제안", sub: "민주 시민으로서의 참여", detail: "비정부 기구에 가입해 활동하거나, 정부나 기업에 환경 보호 정책 실천을 촉구하고 정책을 제안하는 것도 중요한 시민 참여 방법이다." }
   ];
   buildCardGrid("c3-grid", "c3-detail2", items);
+})();
+
+/* TAB3 미션 — 국제 협약·기구 맞히기 */
+(function () {
+  var labels = { iucn: "국제 자연 보전 연맹(IUCN)", unep: "유엔 환경 계획(UNEP)", paris: "파리 협정", glasgow: "글래스고 기후 합의·국제 메테인 서약", cbd: "생물다양성협약 당사국 총회(2022)" };
+  var qa = [
+    { txt: "서식지 보호를 주요 임무로 하며, 물새 서식지 보호를 위한 람사르 협약과 밀접하게 연관된 국제기구이다.", key: "iucn" },
+    { txt: "세계기상기구와 함께 IPCC(기후변화에 관한 정부 간 협의체)를 만들었고, 첫 보고서를 바탕으로 유엔기후변화협약이 체결되는 계기를 만든 기구이다.", key: "unep" },
+    { txt: "2050년까지 전 지구 탄소중립을 달성한다는 목표를 세우고 196개국이 온실 기체 감축에 동참했으나, 감축 목표를 국가가 자율적으로 정한다는 한계가 있는 협정이다.", key: "paris" },
+    { txt: "개발도상국의 기후변화 적응을 위한 금전적 지원 확대에 합의하고, 2030년까지 메테인 배출량을 2020년 대비 30% 이상 줄이기로 서약한 회의이다.", key: "glasgow" },
+    { txt: "2030년까지 지구 표면의 30% 이상을 자연 보호 구역으로 지정하기로 합의한 회의이다.", key: "cbd" }
+  ];
+  var dataBox = document.getElementById("c3m-data");
+  var seg = document.getElementById("c3m-choices");
+  var checkBtn = document.getElementById("c3m-check");
+  var newBtn = document.getElementById("c3m-new");
+  var info = document.getElementById("c3m-info");
+  var current = null, picked = null;
+
+  function newQuestion() {
+    current = qa[Math.floor(Math.random() * qa.length)];
+    picked = null;
+    dataBox.innerHTML = current.txt;
+    seg.innerHTML = "";
+    Object.keys(labels).forEach(function (k) {
+      var b = document.createElement("button");
+      b.textContent = labels[k];
+      b.addEventListener("click", function () {
+        picked = k;
+        seg.querySelectorAll("button").forEach(function (x) { x.classList.toggle("on", x === b); });
+      });
+      seg.appendChild(b);
+    });
+    info.innerHTML = "";
+    info.style.color = "";
+  }
+
+  checkBtn.addEventListener("click", function () {
+    if (!picked) { info.innerHTML = "먼저 보기를 하나 선택하세요."; info.style.color = "var(--coral)"; return; }
+    if (picked === current.key) {
+      info.innerHTML = "✅ 정답! '" + labels[current.key] + "'에 대한 설명입니다.";
+      info.style.color = "var(--teal)";
+    } else {
+      info.innerHTML = "❌ 틀렸습니다. 정답은 '" + labels[current.key] + "' 입니다.";
+      info.style.color = "var(--coral)";
+    }
+  });
+
+  newBtn.addEventListener("click", newQuestion);
+  newQuestion();
 })();
 
 /* TAB4 프로젝트 탄소중립 학교 */
