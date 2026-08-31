@@ -5,10 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>기후위기에 대응하는 우리의 노력 — 기후환경생태 스테이션</title>
 <link rel="stylesheet" href="../assets/theme.css">
-<style>
-  .compare3 { grid-template-columns: repeat(2, 1fr); }
-  @media (max-width: 900px) { .compare3 { grid-template-columns: 1fr; } }
-</style>
 </head>
 <body>
 
@@ -16,372 +12,699 @@
   <nav class="rail" id="rail">
     <div class="brand">
       <a class="home" href="../">← 기후변화와 환경생태</a>
-      <div class="eyebrow" style="margin-top:8px">Ⅲ · 기후위기에 대응하는 우리의 노력</div>
-      <h1 class="display">위기를 늦추는<br>과학과 실천</h1>
+      <div class="eyebrow">Ⅲ · 대응</div>
+      <h1 class="display">기후위기에 <br>대응하는 우리의 노력</h1>
     </div>
-    <button class="tab-btn active" data-tab="0"><span class="num">01</span> 해양생태계 복원을 위한 노력</button>
-    <button class="tab-btn" data-tab="1"><span class="num">02</span> 가속화되는 기후 재해와 대응 노력</button>
-    <button class="tab-btn" data-tab="2"><span class="num">03</span> 탄소중립 사회와 과학기술</button>
-    <button class="tab-btn" data-tab="3"><span class="num">04</span> 국제적 노력과 시민 참여</button>
-    <button class="tab-btn" data-tab="4"><span class="num">05</span> 창의적 문제 해결</button>
-    <button class="tab-btn" data-tab="5"><span class="num">06</span> 정리하기</button>
+    <button class="tab-btn active" data-tab="0"><span class="num">01</span> 산호의 백화</button>
+    <button class="tab-btn" data-tab="1"><span class="num">02</span> 기후 재해</button>
+    <button class="tab-btn" data-tab="2"><span class="num">03</span> 탄소 수지</button>
+    <button class="tab-btn" data-tab="3"><span class="num">04</span> 탄소예산 시계</button>
+    <button class="tab-btn" data-tab="4"><span class="num">05</span> 정리하기</button>
   </nav>
 
   <main>
-    <!-- TAB0 -->
-    <section class="tab-panel" data-panel="0">
-      <div class="stage-head">
-        <div class="eyebrow">01 · 사막이 된 바다를 되살리다</div>
-        <h2 class="display">해양생태계 복원을 위한 노력</h2>
-        <p>해수 온도 상승으로 해조류가 사라지고 석회조류만 남는 <b>바다 사막화(백화 현상)</b>가 확산되고 있습니다. 바다를 되살리는 과학기술을 카드로 확인해 보세요.</p>
-      
-        <span class="std-chip">12기환03-01</span><span class="std-chip">12기환03-02</span><span class="std-chip">12기환03-03</span><span class="std-chip">12기환03-04</span><div class="std-note"><b>[12기환03-01]</b> 산호의 멸종으로 인한 백화현상의 예를 통해 기후변화가 해양생태계에 미치는 영향을 설명할 수 있다.<br><b>[12기환03-02]</b> 기후변화에 따라 가속화되는 사막화, 대형산불, 지역적 가뭄과 홍수 등을 이해하고 대응 방안을 설명할 수 있다.<br><b>[12기환03-03]</b> 탄소중립 사회를 이루기 위한 탄소 저감 관련 과학기술 개발 현황을 알아보고, 그 원리를 설명할 수 있다.<br><b>[12기환03-04]</b> 기후위기와 환경생태 변화에 대응하기 위한 국제사회의 노력을 알아보고, 민주 시민으로서 참여 방안을 제안할 수 있다.</div><div class="terms"><b>백화현상</b><b>바다숲</b><b>탄소중립</b><b>파리 협정</b></div>
-      </div>
-      <div class="stage-card">
-        <div class="card-grid" id="c0-grid"></div>
-        <div class="detail-panel" id="c0-detail">카드를 클릭하면 자세한 설명이 나타납니다.</div>
-      </div>
-    </section>
 
-    <!-- TAB1 -->
-    <section class="tab-panel" data-panel="1" hidden>
-      <div class="stage-head">
-        <div class="eyebrow">02 · 예측하기 어려워진 재난</div>
-        <h2 class="display">가속화되는 기후 재해와 대응 노력</h2>
-        <p>기후변화로 물의 순환이 강화되며 사막화, 대형산불, 가뭄, 홍수 등 기후 재해의 빈도와 강도가 커지고 있습니다. 유형별 사례와 대응 노력을 확인해 보세요.</p>
+  <!-- ========== 01 산호의 백화 ========== -->
+  <section class="tab-panel" data-panel="0">
+    <div class="stage-head">
+      <span class="std-chip">12기환03-01</span><span class="std-chip">12기환03-02</span><span class="std-chip">12기환03-03</span><span class="std-chip">12기환03-04</span>
+      <div class="std-note">
+        <b>[12기환03-01]</b> 산호의 멸종으로 인한 백화현상의 예를 통해 기후변화가 해양생태계에 미치는 영향을 설명할 수 있다.<br>
+        <b>[12기환03-02]</b> 기후변화에 따라 가속화되는 사막화, 대형산불, 지역적 가뭄과 홍수 등을 이해하고 대응 방안을 설명할 수 있다.<br>
+        <b>[12기환03-03]</b> 탄소중립 사회를 이루기 위한 탄소 저감 관련 과학기술 개발 현황을 알아보고, 그 원리를 설명할 수 있다.<br>
+        <b>[12기환03-04]</b> 기후위기와 환경생태 변화에 대응하기 위한 국제사회의 노력을 알아보고, 민주 시민으로서 참여 방안을 제안할 수 있다.
       </div>
-      <div class="stage-card">
-        <div class="card-grid" id="c1-grid"></div>
-        <div class="detail-panel" id="c1-detail">카드를 클릭하면 자세한 설명이 나타납니다.</div>
-      </div>
-    </section>
+      <div class="terms"><b>백화현상</b><b>누적 열스트레스</b><b>탄소중립</b><b>탄소예산</b></div>
+      <div class="eyebrow" style="margin-top:18px">01 · 수온이 얼마나, 그리고 얼마나 오래</div>
+      <h2 class="display">산호는 왜 하얗게 변하는가</h2>
+      <p>산호는 몸속에 사는 <b>공생 조류</b>에게서 영양의 대부분을 얻습니다. 수온이 높아지면 산호가 이 조류를 몸 밖으로 내보내고, 남은 석회 골격이 비쳐 하얗게 보입니다. 문제는 <b>온도만이 아니라 그 상태가 얼마나 오래 이어지는가</b>입니다.</p>
+    </div>
 
-    <!-- TAB2 -->
-    <section class="tab-panel" data-panel="2" hidden>
-      <div class="stage-head">
-        <div class="eyebrow">03 · 배출량과 흡수량이 같아지는 사회</div>
-        <h2 class="display">탄소중립 사회와 과학기술</h2>
-        <p>탄소중립이란 온실 기체의 배출량과 흡수량이 같아 실질 배출량이 0인 상태입니다. 탄소 저감을 돕는 과학기술을 카드로 살펴보세요.</p>
+    <div class="stage-card">
+      <div class="gate" id="g0"></div>
+      <div class="canvas-wrap" style="position:relative">
+        <div class="badge-row"><span class="badge" id="t0-badge">—</span></div>
+        <canvas id="c0" width="900" height="470"></canvas>
+        <div class="veil" id="v0"><p>예상을 고르면 화면이 열립니다.</p></div>
       </div>
-      <div class="stage-card">
-        <div class="info-card" id="c2-info" style="margin-bottom:16px"></div>
-        <div class="card-grid" id="c2-grid"></div>
-        <div class="detail-panel" id="c2-detail">카드를 클릭하면 자세한 설명이 나타납니다.</div>
-      </div>
-    </section>
-
-    <!-- TAB3 -->
-    <section class="tab-panel" data-panel="3" hidden>
-      <div class="stage-head">
-        <div class="eyebrow">04 · 국제 협약에서 나의 실천까지</div>
-        <h2 class="display">국제적 노력과 시민 참여</h2>
-        <p>기후위기 대응은 국제 협약부터 개인의 실천까지 모두 함께 이루어져야 합니다. 주요 국제 협약의 흐름과 시민 참여 방법을 확인해 보세요.</p>
-      </div>
-      <div class="stage-card">
-        <div class="timeline-wrap">
-          <div class="timeline-track" id="c3-track"></div>
+      <div class="controls">
+        <div class="ctrl-group">
+          <div class="ctrl-label">평년보다 높아진 수온 <span class="val" id="t0-dtv">+1.0 °C</span></div>
+          <input type="range" id="t0-dt" min="0" max="40" step="1" value="10">
         </div>
-        <div class="detail-panel" id="c3-detail" style="margin-bottom:16px"></div>
-        <div class="card-grid" id="c3-grid"></div>
-        <div class="detail-panel" id="c3-detail2">카드를 클릭하면 시민 참여 방법이 나타납니다.</div>
-      </div>
-
-      <div class="stage-head">
-        <div class="eyebrow">🔎 미션 · 국제 협약 · 기구 맞히기</div>
-        <h2 class="display" style="font-size:18px;">이 설명은 어떤 협약·기구일까?</h2>
-      </div>
-      <div class="stage-card">
-        <div class="info-card" id="c3m-data"></div>
-        <div class="seg" id="c3m-choices"></div>
-        <div class="toggle-row" style="margin:14px 20px;">
-          <button class="btn" id="c3m-check">정답 확인</button>
-          <button class="btn" id="c3m-new">새 문제</button>
+        <div class="ctrl-group">
+          <div class="ctrl-label">그 상태가 이어진 기간 <span class="val" id="t0-wkv">4주</span></div>
+          <input type="range" id="t0-wk" min="0" max="20" step="1" value="4">
         </div>
-        <div class="info-card" id="c3m-info"></div>
       </div>
-    </section>
+      <div class="stat-row">
+        <div class="stat-box"><div class="lbl">누적 열스트레스 DHW</div><div class="num" id="t0-dhw">—</div></div>
+        <div class="stat-box"><div class="lbl">경보 단계</div><div class="num" id="t0-alert">—</div></div>
+        <div class="stat-box"><div class="lbl">공생 조류 잔존율</div><div class="num" id="t0-zoo">—</div></div>
+      </div>
+      <div class="info-card" id="t0-info"></div>
+      <p class="foot-note">
+        DHW(Degree Heating Weeks)는 그 해역의 최난월 평균 최고수온보다 1 &deg;C 이상 높은 상태가 최근 12주 동안 쌓인 양입니다.
+        국제적으로 <b>DHW 4 이상에서 백화가 시작</b>되고 <b>8 이상이면 대량 폐사</b>가 일어난다고 봅니다.
+        수온이 조금만 높아도 오래 이어지면 위험해진다는 뜻입니다.
+      </p>
+    </div>
+  </section>
 
-    <!-- TAB4 프로젝트 -->
-    <section class="tab-panel" data-panel="4" hidden>
-      <div class="stage-head">
-        <div class="eyebrow">Project · 탄소중립 학교 만들기</div>
-        <h2 class="display">우리 학교를 탄소중립 학교로</h2>
-        <p>우리나라는 2020년 '2050 탄소중립'을 선언했습니다. 우리 학교의 이산화 탄소 배출원과 흡수원을 찾고, 4단계로 탄소중립 학교 만들기 프로젝트를 진행해 보세요. 아래 계산기에서 우리 반이 실천할 항목을 직접 골라 예상 감축량도 확인해 보세요.</p>
-      </div>
-      <div class="stage-card">
-        <div class="compare-wrap compare3" id="c4-wrap"></div>
-        <div class="timeline-wrap" style="margin-top:20px">
-          <div class="timeline-track" id="c4-track"></div>
+  <!-- ========== 02 기후 재해 ========== -->
+  <section class="tab-panel" data-panel="1" hidden>
+    <div class="stage-head">
+      <div class="eyebrow">02 · 같은 강수량인데 재해가 늘어나는 까닭</div>
+      <h2 class="display">가속화되는 기후 재해</h2>
+      <p>기온이 오르면 대기가 품을 수 있는 수증기량이 늘어납니다. 그래서 <b>비가 올 때는 더 세게 오고, 오지 않을 때는 더 마릅니다.</b> 총 강수량이 같아도 가뭄과 홍수가 함께 늘어나는 이유입니다.</p>
+    </div>
+    <div class="stage-card">
+      <div class="canvas-wrap"><canvas id="c1" width="900" height="470"></canvas></div>
+      <div class="controls">
+        <div class="ctrl-group">
+          <div class="ctrl-label">기온 상승 <span class="val" id="t1-dtv">+1.5 &deg;C</span></div>
+          <input type="range" id="t1-dt" min="0" max="50" step="1" value="15">
         </div>
-        <div class="detail-panel" id="c4-detail"></div>
-
-        <div class="ctrl-label" style="margin-top:24px">우리 반 탄소중립 실천 계산기 — 실천할 항목을 눌러 선택하세요</div>
-        <div class="card-grid" id="c4-calc-grid" style="margin-top:10px"></div>
-        <div class="info-card" id="c4-calc-result" style="margin-top:16px"></div>
+        <div class="ctrl-group" style="flex:0 0 auto;min-width:0">
+          <div class="ctrl-label">보기</div>
+          <div class="seg" id="t1-mode">
+            <button class="on" data-m="rain">강수 분포</button>
+            <button data-m="fire">산불 위험</button>
+          </div>
+        </div>
       </div>
-    </section>
-
-    <section class="tab-panel" data-panel="5" hidden>
-      <div class="stage-head">
-        <div class="eyebrow">06 · 오늘 알아낸 것을 문장으로</div>
-        <h2 class="display">정리하기</h2>
-        <p>조작한 것을 말이나 글로 옮기지 않으면 남지 않습니다. 아래를 채우고 <b>답안 복사</b>를 눌러 제출하세요. 쓰는 동안 자동으로 저장됩니다.</p>
+      <div class="stat-row">
+        <div class="stat-box"><div class="lbl">대기가 품는 수증기량</div><div class="num" id="t1-cc">—</div></div>
+        <div class="stat-box"><div class="lbl">연 강수량</div><div class="num" id="t1-tot">—</div></div>
+        <div class="stat-box"><div class="lbl">비 오는 날</div><div class="num" id="t1-days">—</div></div>
+        <div class="stat-box"><div class="lbl">하루 최대 강수</div><div class="num" id="t1-max">—</div></div>
       </div>
-      <div class="stage-card" style="padding:6px 0 4px"><div id="wk"></div></div>
-    </section>
+      <div class="info-card" id="t1-info"></div>
+      <div class="miscon">
+        <span class="tag">함께 생각해 봅시다</span><br>
+        <b>총 강수량이 그대로인데 왜 가뭄과 홍수가 같이 늘어나는가</b> — 같은 양의 비가 <b>더 적은 날에 몰려</b> 내리기 때문입니다.
+        비가 오지 않는 날이 길어지면 토양과 식생이 마르고, 마른 땅에 폭우가 오면 물을 머금지 못해 그대로 흘러 홍수가 됩니다.
+        <cite>클라우지우스-클라페이롱 관계: 기온 1 &deg;C 상승당 대기가 품는 수증기량 약 7 % 증가</cite>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 03 탄소 수지 ========== -->
+  <section class="tab-panel" data-panel="2" hidden>
+    <div class="stage-head">
+      <div class="eyebrow">03 · 배출을 줄이는 것만으로는 0이 되지 않는다</div>
+      <h2 class="display">탄소중립의 수지 맞추기</h2>
+      <p><b>탄소중립</b>은 배출을 0으로 만드는 것이 아니라 <b>배출량과 흡수량을 같게</b> 만드는 것입니다. 부문별로 얼마나 줄이고 무엇으로 흡수할지 직접 맞춰 보세요.</p>
+    </div>
+    <div class="stage-card">
+      <div class="canvas-wrap"><canvas id="c2" width="900" height="490"></canvas></div>
+      <div class="controls" id="t2-controls"></div>
+      <div class="stat-row">
+        <div class="stat-box"><div class="lbl">총 배출</div><div class="num" id="t2-emit">—</div></div>
+        <div class="stat-box"><div class="lbl">총 흡수</div><div class="num" id="t2-abs">—</div></div>
+        <div class="stat-box"><div class="lbl">순배출</div><div class="num" id="t2-net">—</div></div>
+      </div>
+      <div class="info-card" id="t2-info"></div>
+      <p class="foot-note">
+        부문별 비중은 IPCC 제6차 평가보고서의 2019년 전 세계 온실가스 배출 구성(에너지 공급 34 %, 산업 24 %,
+        농업&middot;임업&middot;토지이용 22 %, 수송 15 %, 건물 6 %)을 100으로 맞춰 쓴 값입니다.
+        흡수원의 크기는 배출량에 견준 <b>상대적 규모</b>를 보여 주기 위한 것으로, 실제 국가별 수치와는 다릅니다.
+      </p>
+    </div>
+  </section>
+
+  <!-- ========== 04 탄소예산 시계 ========== -->
+  <section class="tab-panel" data-panel="3" hidden>
+    <div class="stage-head">
+      <div class="eyebrow">04 · 얼마나가 아니라 얼마나 빨리</div>
+      <h2 class="display">탄소예산 시계</h2>
+      <p>기온 상승을 1.5 &deg;C 안에서 멈추려면 앞으로 <b>더 배출할 수 있는 총량</b>이 정해져 있습니다. 이것을 <b>탄소예산</b>이라고 합니다. 중요한 것은 얼마나 줄이느냐가 아니라 <b>해마다 몇 %씩 줄이느냐</b>입니다.</p>
+    </div>
+    <div class="stage-card">
+      <div class="gate" id="g3"></div>
+      <div class="canvas-wrap" style="position:relative">
+        <div class="badge-row"><span class="badge" id="t3-badge">—</span></div>
+        <canvas id="c3" width="900" height="470"></canvas>
+        <div class="veil" id="v3"><p>예상을 고르면 그래프가 열립니다.</p></div>
+      </div>
+      <div class="controls">
+        <div class="ctrl-group">
+          <div class="ctrl-label">해마다 줄이는 비율 <span class="val" id="t3-rv">3 %</span></div>
+          <input type="range" id="t3-r" min="0" max="200" step="1" value="30">
+        </div>
+        <div class="ctrl-group" style="flex:0 0 auto;min-width:0">
+          <div class="ctrl-label">목표</div>
+          <div class="seg" id="t3-goal">
+            <button class="on" data-b="500">1.5 &deg;C · 500 Gt</button>
+            <button data-b="1150">2 &deg;C · 1150 Gt</button>
+          </div>
+        </div>
+      </div>
+      <div class="stat-row">
+        <div class="stat-box"><div class="lbl">예산이 바닥나는 시점</div><div class="num" id="t3-year">—</div></div>
+        <div class="stat-box"><div class="lbl">2050년 배출량</div><div class="num" id="t3-e50">—</div></div>
+        <div class="stat-box"><div class="lbl">넘지 않으려면 최소</div><div class="num" id="t3-need">—</div></div>
+      </div>
+      <div class="info-card" id="t3-info"></div>
+      <p class="foot-note">
+        2020년 기준 잔여 탄소예산은 1.5 &deg;C 목표에서 약 500 Gt CO&#8322;, 2 &deg;C 목표에서 약 1150 Gt CO&#8322;(50 % 확률)이며,
+        현재 연간 배출량은 약 40 Gt CO&#8322;입니다. 파리 협정이 <b>가능한 한 빨리 정점을 지나 감축</b>을 말하는 이유가 여기에 있습니다.
+      </p>
+    </div>
+  </section>
+
+  <!-- ========== 05 정리하기 ========== -->
+  <section class="tab-panel" data-panel="4" hidden>
+    <div class="stage-head">
+      <div class="eyebrow">05 · 오늘 알아낸 것을 문장으로</div>
+      <h2 class="display">정리하기</h2>
+      <p>조작한 것을 말이나 글로 옮기지 않으면 남지 않습니다. 아래를 채우고 <b>답안 복사</b>를 눌러 제출하세요. 쓰는 동안 자동으로 저장됩니다.</p>
+    </div>
+    <div class="stage-card" style="padding:6px 0 4px"><div id="wk"></div></div>
+  </section>
+
   </main>
 </div>
 
-<button class="theme-toggle" id="themeToggle">라이트 모드</button>
+<button class="theme-toggle" id="themeToggle">다크 모드</button>
 
 <script src="../assets/theme.js"></script>
 <script>
 (function () {
-"use strict";
-
-function buildCardGrid(gridId, detailId, items) {
-  var grid = document.getElementById(gridId);
-  var detail = document.getElementById(detailId);
-  items.forEach(function (it, i) {
-    var btn = document.createElement("button");
-    btn.className = "pick-card" + (i === 0 ? " on" : "");
-    btn.innerHTML = '<div class="pc-ico">' + it.ico + '</div><div class="pc-name">' + it.name + '</div><div class="pc-sub">' + it.sub + '</div>';
-    btn.addEventListener("click", function () {
-      grid.querySelectorAll(".pick-card").forEach(function (b) { b.classList.toggle("on", b === btn); });
-      detail.innerHTML = "<h4>" + it.ico + " " + it.name + "</h4>" + it.detail;
-    });
-    grid.appendChild(btn);
-  });
-  if (items.length) { detail.innerHTML = "<h4>" + items[0].ico + " " + items[0].name + "</h4>" + items[0].detail; }
-}
-
-function buildTimeline(trackId, detailId, items) {
-  var track = document.getElementById(trackId);
-  var detail = document.getElementById(detailId);
-  track.innerHTML = "";
-  var fill = document.createElement("div");
-  fill.className = "timeline-fill";
-  track.appendChild(fill);
-  var dots = [];
-  items.forEach(function (it, i) {
-    var dot = document.createElement("div");
-    dot.className = "timeline-dot" + (i === 0 ? " on" : "");
-    dot.style.left = it.pct + "%";
-    dot.innerHTML = '<span class="td-label">' + it.name + '</span>';
-    dot.addEventListener("click", function () { select(i); });
-    track.appendChild(dot);
-    dots.push(dot);
-  });
-  function select(i) {
-    dots.forEach(function (d, di) { d.classList.toggle("on", di === i); });
-    fill.style.width = items[i].pct + "%";
-    detail.innerHTML = "<h4>" + items[i].name + "</h4>" + items[i].detail;
+  "use strict";
+  function V(n) { return window.cssVar(n); }
+  function A(hex, a) {
+    hex = (hex || "#888").trim();
+    if (hex.charAt(0) !== "#") return hex;
+    if (hex.length === 4) hex = "#" + hex[1] + hex[1] + hex[2] + hex[2] + hex[3] + hex[3];
+    return "rgba(" + parseInt(hex.substr(1, 2), 16) + "," + parseInt(hex.substr(3, 2), 16) + "," + parseInt(hex.substr(5, 2), 16) + "," + a + ")";
   }
-  select(0);
-  return select;
-}
-
-/* TAB0 해양생태계 복원 */
-(function () {
-  var items = [
-    { ico: "🏜️", name: "바다 사막화(백화 현상)", sub: "해조류가 사라진 바다", detail: "해수 오염이나 <b>해수 온도 상승</b>으로 해조류가 사라지고 흰색 석회조류만 남는 현상이다. 해조류를 먹는 성게·초식성 어류의 섭식 작용도 이를 가속한다. 어민들의 해산물 수확량도 크게 감소한다." },
-    { ico: "🎣", name: "모조 주머니 시설법", sub: "해조류 씨앗을 퍼뜨리는 기술", detail: "해조류가 포자를 방출하는 시기에, 성숙한 해조류 일부를 그물주머니에 넣어 암반이나 해중림초 시설 위에 매달아 둔다. 방출된 포자가 주변 암반에 퍼져 해조류 숲을 복원한다." },
-    { ico: "🛰️", name: "위성 원격 탐사 기술", sub: "해조류 면적을 감시", detail: "암반과 해조류는 빛을 흡수·반사하는 파장이 다르다는 원리를 활용해, 위성 영상으로 해조류의 면적과 암반의 면적 변화를 넓은 범위에서 감시할 수 있다." },
-    { ico: "🌿", name: "해중림초 조성", sub: "바다숲을 되살리는 인공 구조물", detail: "인공 구조물(해중림초)을 바다에 설치해 해조류가 자리 잡을 수 있는 기반을 제공한다. 바다숲 사업의 대표적인 방법으로, 해양생물의 서식처와 생물다양성을 함께 회복시킨다." }
-  ];
-  buildCardGrid("c0-grid", "c0-detail", items);
-})();
-
-/* TAB1 기후 재해 */
-(function () {
-  var items = [
-    { ico: "🏜️", name: "사막화", sub: "강수량 감소와 인간 활동", detail: "가뭄과 인간 활동으로 토지가 황폐해져 사막처럼 변하는 현상이다. 회복까지 오랜 시간이 걸리며 농업과 식수 확보에 심각한 피해를 준다." },
-    { ico: "🔥", name: "대형산불", sub: "가뭄이 키우는 불", detail: "기온이 상승하면 산불 발생 확률이 높아진다. 가뭄으로 삼림이 건조해지면 메마른 풀과 나무 때문에 불이 쉽게 확산되고, 황폐해진 토양은 비에 더 쉽게 침식되어 홍수·산사태로 이어진다." },
-    { ico: "☀️", name: "지역적 가뭄", sub: "물 부족의 장기화", detail: "평균 이하의 강수량이 오래 지속되어 물 부족이 장기화되는 현상이다. 경제적·사회적·환경적으로 광범위한 영향을 미친다." },
-    { ico: "🌊", name: "홍수", sub: "2023년 북아메리카 서부 사례", detail: "2023년 북아메리카 서부에서는 태풍의 영향으로 하루 만에 1년 강수량의 절반에 달하는 비가 내려 84년 만의 대홍수가 발생했다. 원래 건조하고 태풍이 드문 지역이라 대응책이 부족해 피해가 컸다." },
-    { ico: "🚇", name: "대응 노력의 예", sub: "빗물 배수 터널 등 인프라 확충", detail: "홍수에 대비한 빗물 배수 터널처럼, 각 재해 유형에 맞는 예방책·복구 방안을 마련하는 것이 피해를 줄이는 핵심이다. 국제적·사회적·개인적 노력이 함께 필요하다." }
-  ];
-  buildCardGrid("c1-grid", "c1-detail", items);
-})();
-
-/* TAB2 탄소중립 */
-(function () {
-  document.getElementById("c2-info").innerHTML = "<h4>🎯 탄소중립 사회란?</h4><p>온실 기체의 <b>배출량과 흡수량이 같아</b> 실질적인 순 배출량이 0인 상태를 탄소중립이라고 하며, 이를 달성한 사회를 탄소중립 사회라고 한다. 우리나라는 2050년까지 탄소중립을 달성하는 것을 목표로, 2030년까지 2018년 대비 온실 기체 배출량 40%를 줄이는 것을 1차 목표로 설정했다.</p>";
-  var items = [
-    { ico: "🌬️", name: "풍력 발전용 터빈", sub: "화석 연료를 대체하는 발전", detail: "같은 시간에 더 많은 재생에너지를 생산해 화석 연료 사용을 줄인다. 대규모 해상 풍력 발전 단지에 적용되고 있으나 소음과 높은 설치·유지 비용이 단점이다." },
-    { ico: "☀️", name: "건물 일체형 태양광 패널", sub: "건물 자체가 발전소가 되다", detail: "건물 벽면에 얇은 태양광 패널을 설치해 건물 자체에서 전기를 생산한다. 화석 연료 사용을 줄이지만 내구성이 약해 지속적인 관리가 필요하다." },
-    { ico: "⚡", name: "수소 연료 전지", sub: "배출물이 물뿐인 에너지", detail: "가연성 기체인 수소를 자동차 연료로 사용하면 연소 후 물만 배출되어 이산화 탄소 배출을 줄인다. 다만 수소 생산에 많은 비용과 에너지가 든다." },
-    { ico: "🌽", name: "바이오 플라스틱", sub: "옥수수 줄기로 만드는 플라스틱", detail: "짚, 옥수수 줄기 등 버려지는 유기물로 플라스틱을 만들어 석유 화학 공정을 줄인다. 다 쓴 제품은 생분해되지만 내구성이 약하다. 유아용 식판, 생분해성 비닐봉지 등에 쓰인다." },
-    { ico: "🫙", name: "탄소 포집·활용 기술", sub: "이산화 탄소를 다시 자원으로", detail: "연료 연소로 배출되는 이산화 탄소를 포집해 바이오 연료나 바이오 플라스틱 등으로 재활용하는 기술이다." },
-    { ico: "🔧", name: "탄소 저감형 철강 제련 기술", sub: "탄소 대신 수소로 제련", detail: "철을 제련할 때 탄소 대신 수소와 산소를 이용하고, 신재생 에너지로 생산한 전기로 열을 가하는 기술이다." }
-  ];
-  buildCardGrid("c2-grid", "c2-detail", items);
-})();
-
-/* TAB3 국제 협약 타임라인 + 시민참여 카드 */
-(function () {
-  var timeline = [
-    { pct: 5, name: "1948 · 국제 자연 보전 연맹(IUCN) 설립", detail: "서식지 보호를 주요 임무로 하며, 물새 서식지 보호를 위한 <b>람사르 협약</b>과 밀접하게 연관되어 있다." },
-    { pct: 30, name: "1972 · 유엔 환경 계획(UNEP) 설립", detail: "세계기상기구와 함께 기후변화에 관한 정부 간 협의체(IPCC)를 만들었고, 첫 IPCC 보고서를 바탕으로 유엔기후변화협약이 체결되었다." },
-    { pct: 55, name: "2015 · 파리 협정", detail: "유엔기후변화협약 제21차 당사국 총회에서 합의. <b>2050년까지 전 지구 탄소중립을 달성</b>한다는 목표를 세우고 196개국이 온실 기체 감축에 동참했다. 다만 감축 목표를 국가가 자율적으로 정해 목표가 낮게 설정되거나 지키지 않아도 제재하기 어렵다는 한계가 있다." },
-    { pct: 78, name: "2021 · 글래스고 기후 합의 · 국제 메테인 서약", detail: "제26차 당사국 총회에서 개발도상국의 기후변화 적응을 위한 금전적 지원 확대에 합의했다. 2030년까지 전 세계 메테인 배출량을 2020년 대비 30% 이상 줄이는 국제 메테인 서약도 체결되었다." },
-    { pct: 95, name: "2022 · 생물다양성협약 당사국 총회", detail: "2030년까지 지구 표면의 30% 이상을 자연 보호 구역으로 지정하기로 합의해, 더 넓은 서식지를 복원·보전하기로 했다." }
-  ];
-  buildTimeline("c3-track", "c3-detail", timeline);
-
-  var items = [
-    { ico: "♻️", name: "분리배출 · 다회용 컵 사용", sub: "일상 속 자원 순환", detail: "일회용품 대신 다회용 컵을 사용하고 철저히 분리배출하는 것은 개인이 가장 쉽게 실천할 수 있는 방법이다." },
-    { ico: "🌡️", name: "적정 실내 온도 유지 · 채식", sub: "에너지·탄소 발자국 줄이기", detail: "냉난방 온도를 적정하게 유지하고 채식 위주의 식단을 실천하면 에너지 사용과 탄소 발자국을 줄일 수 있다." },
-    { ico: "🛍️", name: "친환경 제품 구입", sub: "탄소 발자국 인증제 활용", detail: "제품의 생산·유통·사용·폐기 전 과정의 온실 기체 배출량을 인증받은 <b>탄소 발자국 인증제</b> 제품을 구입하는 것도 실천 방법이다." },
-    { ico: "📣", name: "캠페인 참여 · SNS 공유", sub: "관심을 사회적 행동으로", detail: "환경 관련 거리 캠페인에 참여하거나, 사회관계망 서비스(SNS)에 환경 소식을 공유해 관심을 확산시킬 수 있다." },
-    { ico: "🏛️", name: "비정부 기구 가입 · 정책 제안", sub: "민주 시민으로서의 참여", detail: "비정부 기구에 가입해 활동하거나, 정부나 기업에 환경 보호 정책 실천을 촉구하고 정책을 제안하는 것도 중요한 시민 참여 방법이다." }
-  ];
-  buildCardGrid("c3-grid", "c3-detail2", items);
-})();
-
-/* TAB3 미션 — 국제 협약·기구 맞히기 */
-(function () {
-  var labels = { iucn: "국제 자연 보전 연맹(IUCN)", unep: "유엔 환경 계획(UNEP)", paris: "파리 협정", glasgow: "글래스고 기후 합의·국제 메테인 서약", cbd: "생물다양성협약 당사국 총회(2022)" };
-  var qa = [
-    { txt: "서식지 보호를 주요 임무로 하며, 물새 서식지 보호를 위한 람사르 협약과 밀접하게 연관된 국제기구이다.", key: "iucn" },
-    { txt: "세계기상기구와 함께 IPCC(기후변화에 관한 정부 간 협의체)를 만들었고, 첫 보고서를 바탕으로 유엔기후변화협약이 체결되는 계기를 만든 기구이다.", key: "unep" },
-    { txt: "2050년까지 전 지구 탄소중립을 달성한다는 목표를 세우고 196개국이 온실 기체 감축에 동참했으나, 감축 목표를 국가가 자율적으로 정한다는 한계가 있는 협정이다.", key: "paris" },
-    { txt: "개발도상국의 기후변화 적응을 위한 금전적 지원 확대에 합의하고, 2030년까지 메테인 배출량을 2020년 대비 30% 이상 줄이기로 서약한 회의이다.", key: "glasgow" },
-    { txt: "2030년까지 지구 표면의 30% 이상을 자연 보호 구역으로 지정하기로 합의한 회의이다.", key: "cbd" }
-  ];
-  var dataBox = document.getElementById("c3m-data");
-  var seg = document.getElementById("c3m-choices");
-  var checkBtn = document.getElementById("c3m-check");
-  var newBtn = document.getElementById("c3m-new");
-  var info = document.getElementById("c3m-info");
-  var current = null, picked = null;
-
-  function newQuestion() {
-    current = qa[Math.floor(Math.random() * qa.length)];
-    picked = null;
-    dataBox.innerHTML = current.txt;
-    seg.innerHTML = "";
-    Object.keys(labels).forEach(function (k) {
-      var b = document.createElement("button");
-      b.textContent = labels[k];
-      b.addEventListener("click", function () {
-        picked = k;
-        seg.querySelectorAll("button").forEach(function (x) { x.classList.toggle("on", x === b); });
-      });
-      seg.appendChild(b);
-    });
-    info.innerHTML = "";
-    info.style.color = "";
+  function mulberry(a) {
+    return function () {
+      a |= 0; a = (a + 0x6D2B79F5) | 0;
+      var t = Math.imul(a ^ (a >>> 15), 1 | a);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
   }
-
-  checkBtn.addEventListener("click", function () {
-    if (!picked) { info.innerHTML = "먼저 보기를 하나 선택하세요."; info.style.color = "var(--coral)"; return; }
-    if (picked === current.key) {
-      info.innerHTML = "✅ 정답! '" + labels[current.key] + "'에 대한 설명입니다.";
-      info.style.color = "var(--teal)";
-    } else {
-      info.innerHTML = "❌ 틀렸습니다. 정답은 '" + labels[current.key] + "' 입니다.";
-      info.style.color = "var(--coral)";
-    }
-  });
-
-  newBtn.addEventListener("click", newQuestion);
-  newQuestion();
-})();
-
-/* TAB4 프로젝트 탄소중립 학교 */
-(function () {
-  var wrap = document.getElementById("c4-wrap");
-  var cols = [
-    { name: "🚪 배출원", html: "교실, 특별실(과학실·컴퓨터실·음악실·미술실 등), 강당, 급식실, 교무실, 분리수거장 등에서 이산화 탄소 배출원을 찾을 수 있다." },
-    { name: "🌳 흡수원", html: "학교 화단, 운동장, 텃밭, 옥상의 태양광 발전판 등이 흡수원이 될 수 있다. 드론으로 옥상이나 학교 외관을 촬영해 조사할 수도 있다." }
-  ];
-  cols.forEach(function (c) {
-    var col = document.createElement("div");
-    col.className = "compare-col";
-    col.innerHTML = "<h4>" + c.name + "</h4><p>" + c.html + "</p>";
-    wrap.appendChild(col);
-  });
-
-  var steps = [
-    { pct: 10, name: "① 탐색하기", detail: "모둠별로 학교의 다양한 공간을 직접 방문해 <b>이산화 탄소 배출원과 흡수원</b>을 조사한다." },
-    { pct: 37, name: "② 토의하기", detail: "배출량을 줄이는 방안과 흡수량을 늘리는 방안을 자유롭게 제안한 뒤, 비슷한 아이디어를 묶어 모둠의 핵심 실천 주제를 정한다. 예를 들어 '에너지 절약'을 주제로 정했다면 적정 실내 온도 유지, 하교 시 전자 기기 코드 뽑기 등 구체적인 실천 사항을 정한다." },
-    { pct: 63, name: "③ 계획하기", detail: "탄소중립 학교로 바꾸기 위한 계획서를 작성하여 공유하고 발표한다." },
-    { pct: 90, name: "④ 실천하기", detail: "계획에 따라 탄소 저감 실천 활동을 하고 과정을 사진·영상으로 기록해 소감을 발표한다. 효과를 체감하려면 2주~한 달 정도 장기적으로 진행하는 것이 좋다." }
-  ];
-  buildTimeline("c4-track", "c4-detail", steps);
-
-  var practices = [
-    { ico: "\u2615", name: "다회용 컵 사용", kg: 15, detail: "일회용 종이컵 대신 다회용 컵을 사용하면 학급 기준 연간 약 15kg의 이산화 탄소 배출을 줄일 수 있습니다(추정치)." },
-    { ico: "\uD83C\uDF21\uFE0F", name: "냉난방 1도 조절", kg: 30, detail: "여름철 냉방은 1도 높이고 겨울철 난방은 1도 낮추면 학급 기준 연간 약 30kg의 이산화 탄소 배출을 줄일 수 있습니다(추정치)." },
-    { ico: "\uD83D\uDD0C", name: "전자기기 코드 뽑기", kg: 20, detail: "사용하지 않는 전자기기의 코드를 뽑아 대기전력을 차단하면 학급 기준 연간 약 20kg의 이산화 탄소 배출을 줄일 수 있습니다(추정치)." },
-    { ico: "\uD83C\uDF7D\uFE0F", name: "급식 잔반 줄이기", kg: 25, detail: "먹을 만큼만 배식받아 잔반을 줄이면 음식물 쓰레기 처리 과정에서 발생하는 온실 기체를 줄여 학급 기준 연간 약 25kg의 이산화 탄소 배출을 줄일 수 있습니다(추정치)." },
-    { ico: "\u267B\uFE0F", name: "분리배출 철저히 하기", kg: 18, detail: "재활용품을 철저히 분리배출하면 자원 재활용률이 높아져 학급 기준 연간 약 18kg의 이산화 탄소 배출을 줄일 수 있습니다(추정치)." },
-    { ico: "\uD83D\uDEB2", name: "도보·자전거·대중교통 등교", kg: 40, detail: "자가용 대신 도보·자전거·대중교통으로 등교하면 학급 기준 연간 약 40kg의 이산화 탄소 배출을 줄일 수 있습니다(추정치)." }
-  ];
-  (function () {
-    var grid = document.getElementById("c4-calc-grid");
-    var result = document.getElementById("c4-calc-result");
-    var selected = {};
-    function renderResult() {
-      var total = 0, count = 0;
-      practices.forEach(function (p, i) { if (selected[i]) { total += p.kg; count++; } });
-      if (count === 0) {
-        result.innerHTML = "<h4>\uD83C\uDF31 실천 항목을 선택해 보세요</h4><p>카드를 누르면 우리 반이 1년 동안 실천했을 때 예상되는 이산화 탄소 감축량을 계산해 드립니다.</p>";
-      } else {
-        result.innerHTML = "<h4>\uD83C\uDF31 " + count + "개 항목 실천 시 연간 예상 감축량</h4><p>선택한 실천을 <b>1년 동안 꾸준히</b> 실천하면 우리 반 기준으로 약 <b>" + total + "kg</b>의 이산화 탄소를 줄일 수 있을 것으로 추정됩니다. (실제 감축량은 학급 규모와 실천 방식에 따라 달라질 수 있습니다.)</p>";
-      }
-    }
-    practices.forEach(function (p, i) {
-      var btn = document.createElement("button");
-      btn.className = "pick-card";
-      btn.innerHTML = '<div class="pc-ico">' + p.ico + '</div><div class="pc-name">' + p.name + '</div><div class="pc-sub">' + p.detail + '</div>';
-      btn.addEventListener("click", function () {
-        selected[i] = !selected[i];
-        btn.classList.toggle("on", !!selected[i]);
-        renderResult();
-      });
-      grid.appendChild(btn);
-    });
-    renderResult();
-  })();
-})();
-
-})();
-</script>
-
-<script>
-(function () {
   window.sthUnit("cce-3");
+
+  /* ===================== 01 산호의 백화 ===================== */
+  (function () {
+    var cv = document.getElementById("c0"); if (!cv) return;
+    var ctx = window.setupCanvas(cv), W = cv._w, H = cv._h;
+    var dT = 1.0, wk = 4;
+
+    var BRANCH = (function () {
+      var r = mulberry(4242), out = [];
+      for (var i = 0; i < 24; i++) {
+        out.push({ x: 80 + r() * 450, base: 375 + r() * 28, h: 60 + r() * 105,
+                   w: 9 + r() * 8, lean: (r() - 0.5) * 26, arms: 2 + Math.floor(r() * 3), seed: r() });
+      }
+      return out;
+    })();
+
+    function dhw() { return dT >= 1 ? dT * Math.min(wk, 12) : 0; }
+    function alertOf(d) {
+      if (d <= 0) return { n: "정상", c: "--green-700", t: "수온이 백화 기준선을 넘지 않았습니다." };
+      if (d < 4) return { n: "주의", c: "--amber-700", t: "열스트레스가 쌓이고 있지만 아직 백화 기준 아래입니다." };
+      if (d < 8) return { n: "경보 1단계", c: "--coral-700", t: "백화가 시작되는 구간입니다." };
+      return { n: "경보 2단계", c: "--rose-700", t: "대량 폐사가 일어날 수 있는 구간입니다." };
+    }
+    function zoox() {
+      var d = dhw();
+      if (d <= 0) return 1;
+      return Math.max(0, Math.min(1, 1 - Math.pow(d / 10, 1.5)));
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+      var z = zoox(), d = dhw(), al = alertOf(d);
+
+      var g = ctx.createLinearGradient(0, 0, 0, H);
+      g.addColorStop(0, A(V("--brand"), 0.30)); g.addColorStop(1, A(V("--brand-700"), 0.20));
+      ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+      ctx.fillStyle = A(V("--mist"), 0.30); ctx.fillRect(0, H - 60, W, 60);
+
+      var healthy = [[255, 138, 101], [255, 179, 71], [186, 104, 200], [77, 208, 225]];
+      BRANCH.forEach(function (b, i) {
+        var base = healthy[i % 4];
+        var r = Math.round(base[0] * z + 246 * (1 - z));
+        var gg = Math.round(base[1] * z + 246 * (1 - z));
+        var bb = Math.round(base[2] * z + 240 * (1 - z));
+        ctx.strokeStyle = "rgb(" + r + "," + gg + "," + bb + ")";
+        ctx.lineCap = "round"; ctx.lineJoin = "round"; ctx.lineWidth = b.w;
+        ctx.beginPath(); ctx.moveTo(b.x, b.base); ctx.lineTo(b.x + b.lean, b.base - b.h); ctx.stroke();
+        for (var k = 0; k < b.arms; k++) {
+          var f = 0.45 + k * 0.22, px = b.x + b.lean * f, py = b.base - b.h * f, dir = (k % 2 ? 1 : -1);
+          ctx.lineWidth = b.w * 0.6;
+          ctx.beginPath(); ctx.moveTo(px, py);
+          ctx.lineTo(px + dir * (15 + b.seed * 15), py - (21 + b.seed * 17)); ctx.stroke();
+        }
+      });
+      if (z < 0.15) {
+        ctx.strokeStyle = A(V("--green-700"), 0.5); ctx.lineWidth = 2;
+        BRANCH.forEach(function (b) {
+          ctx.beginPath(); ctx.moveTo(b.x - 6, b.base - b.h * 0.5);
+          ctx.quadraticCurveTo(b.x + 10, b.base - b.h * 0.3, b.x + 4, b.base); ctx.stroke();
+        });
+      }
+
+      var bx = 600, by = 74, bw = 258, bh = 296;
+      ctx.fillStyle = A(V("--card"), 0.94); ctx.strokeStyle = A(V("--line"), 1); ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.rect(bx, by, bw, bh); ctx.fill(); ctx.stroke();
+      ctx.fillStyle = A(V("--ink"), 1); ctx.font = "800 13px 'Gothic A1',sans-serif"; ctx.textAlign = "left";
+      ctx.fillText("최근 12주 수온 편차", bx + 4, by - 12);
+
+      var iw = bw - 44, ih = bh - 66, ox = bx + 28, oy = by + 26, maxT = 4;
+      var yOf = function (t) { return oy + ih - ih * Math.min(t, maxT) / maxT; };
+      ctx.strokeStyle = A(V("--rose"), 0.85); ctx.setLineDash([5, 4]); ctx.lineWidth = 1.5;
+      ctx.beginPath(); ctx.moveTo(ox, yOf(1)); ctx.lineTo(ox + iw, yOf(1)); ctx.stroke(); ctx.setLineDash([]);
+      ctx.fillStyle = A(V("--rose-700"), 1); ctx.font = "700 11px 'Gothic A1',sans-serif";
+      ctx.fillText("+1 °C 기준선", ox + 2, yOf(1) - 6);
+
+      for (var w = 0; w < 12; w++) {
+        var val = (w >= 12 - wk) ? dT : 0;
+        var barX = ox + w * (iw / 12) + 2, barW = iw / 12 - 4;
+        ctx.fillStyle = val >= 1 ? A(V("--coral"), 0.9) : A(V("--line"), 1);
+        var top = yOf(Math.max(val, 0.06));
+        ctx.fillRect(barX, top, barW, oy + ih - top);
+      }
+      ctx.strokeStyle = A(V("--mist"), 0.7); ctx.lineWidth = 1.5;
+      ctx.beginPath(); ctx.moveTo(ox, oy + ih); ctx.lineTo(ox + iw, oy + ih); ctx.stroke();
+      ctx.fillStyle = A(V("--mist"), 1); ctx.font = "600 11px 'Gothic A1',sans-serif"; ctx.textAlign = "center";
+      ctx.fillText("12주 전", ox + 22, oy + ih + 18);
+      ctx.fillText("지금", ox + iw - 14, oy + ih + 18);
+
+      ctx.textAlign = "left"; ctx.fillStyle = A(V(al.c), 1); ctx.font = "800 15px 'Gothic A1',sans-serif";
+      ctx.fillText("DHW " + d.toFixed(1) + " · " + al.n, bx + 4, by + bh + 26);
+
+      ctx.fillStyle = A(V("--ink"), 1); ctx.font = "800 14px 'Gothic A1',sans-serif";
+      ctx.fillText(z > 0.6 ? "건강한 산호" : (z > 0.15 ? "백화 진행 중" : "백화 후 폐사"), 34, 44);
+      ctx.font = "600 11.5px 'Gothic A1',sans-serif"; ctx.fillStyle = A(V("--mist"), 1);
+      ctx.fillText("공생 조류 잔존율 " + Math.round(z * 100) + "%", 34, 64);
+    }
+
+    function refresh() {
+      var d = dhw(), al = alertOf(d), z = zoox();
+      document.getElementById("t0-dtv").textContent = "+" + dT.toFixed(1) + " °C";
+      document.getElementById("t0-wkv").textContent = wk + "주";
+      document.getElementById("t0-dhw").textContent = d.toFixed(1);
+      document.getElementById("t0-alert").textContent = al.n;
+      document.getElementById("t0-zoo").textContent = Math.round(z * 100) + "%";
+      document.getElementById("t0-badge").textContent = "+" + dT.toFixed(1) + " °C · " + wk + "주 · DHW " + d.toFixed(1);
+      var msg = "<b>" + al.n + "</b> — " + al.t;
+      if (dT > 0 && dT < 1) msg += " 편차가 1 &deg;C 미만이면 DHW로 쌓이지 않습니다.";
+      else if (d >= 4 && d < 8) msg += " 이 상태가 <b>더 이어지면</b> 되돌리기 어려워집니다.";
+      else if (d >= 8) msg += " 수온을 낮춰도 조류가 곧바로 돌아오지 않습니다. 회복에는 <b>여러 해</b>가 걸립니다.";
+      document.getElementById("t0-info").innerHTML = msg;
+      draw();
+    }
+
+    window.sthGate({
+      gate: "g0", veil: "v0", key: "coral",
+      question: "수온이 평년보다 <b>1 &deg;C</b> 높은 상태가 <b>몇 주</b> 이어지면 산호가 하얗게 변하기 시작할까요?",
+      options: ["㉠ 1주", "㉡ 4주", "㉢ 8주", "㉣ 20주 이상"],
+      onPick: function (i) {
+        var ok = (i === 1);
+        document.getElementById("t0-info").innerHTML =
+          (ok ? "<b>맞았습니다.</b> " : "<b>실제로는 4주입니다.</b> ")
+          + "1 &deg;C × 4주 = DHW 4 이고, 국제 기준에서 <b>DHW 4부터 백화가 시작</b>됩니다. 슬라이더로 직접 확인해 보세요.";
+        window.sthState("coralOK", ok ? "맞음" : "어긋남");
+      }
+    });
+
+    document.getElementById("t0-dt").addEventListener("input", function () { dT = +this.value / 10; refresh(); });
+    document.getElementById("t0-wk").addEventListener("input", function () { wk = +this.value; refresh(); });
+    cv._redraw = draw;
+    refresh();
+  })();
+
+  /* ===================== 02 기후 재해 ===================== */
+  (function () {
+    var cv = document.getElementById("c1"); if (!cv) return;
+    var ctx = window.setupCanvas(cv), W = cv._w, H = cv._h;
+    var dT = 1.5, mode = "rain";
+    var BASE = (function () {
+      var r = mulberry(20261), a = [];
+      for (var i = 0; i < 365; i++) a.push(r() < 0.28 ? Math.pow(r(), 2.2) * 45 + 1 : 0);
+      return a;
+    })();
+    var TOT0 = BASE.reduce(function (s, x) { return s + x; }, 0);
+    var DAY0 = BASE.filter(function (x) { return x > 0; }).length;
+    var MAX0 = Math.max.apply(null, BASE);
+
+    function series() {
+      var cc = Math.pow(1.07, dT);
+      var out = BASE.map(function (x) { return x > 0 ? Math.pow(x, 1 + 0.16 * dT) : 0; });
+      var s = out.reduce(function (a, b) { return a + b; }, 0);
+      var k = s > 0 ? (TOT0 * (1 + 0.02 * dT)) / s : 1;
+      out = out.map(function (x) { return x * k; }).map(function (x) { return x < 1.2 ? 0 : x; });
+      return { d: out, cc: cc };
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+      ctx.fillStyle = A(V("--card-2"), 1); ctx.fillRect(0, 0, W, H);
+      var a = series().d, ox = 62, oy = 42, iw = W - 110, ih = H - 130, t, i;
+
+      if (mode === "rain") {
+        var mx = Math.max(60, Math.max.apply(null, a));
+        ctx.strokeStyle = A(V("--line"), 1); ctx.lineWidth = 1.4;
+        for (t = 0; t <= 4; t++) {
+          var yy = oy + ih - ih * t / 4;
+          ctx.beginPath(); ctx.moveTo(ox, yy); ctx.lineTo(ox + iw, yy); ctx.stroke();
+          ctx.fillStyle = A(V("--mist"), 1); ctx.font = "600 11px 'Gothic A1',sans-serif"; ctx.textAlign = "right";
+          ctx.fillText(String(Math.round(mx * t / 4)), ox - 8, yy + 4);
+        }
+        for (i = 0; i < a.length; i++) {
+          if (a[i] <= 0) continue;
+          var x = ox + iw * i / 365, h = ih * a[i] / mx;
+          ctx.fillStyle = a[i] >= 80 ? A(V("--rose"), 0.95) : A(V("--brand"), 0.8);
+          ctx.fillRect(x, oy + ih - h, Math.max(1.6, iw / 365 - 0.4), h);
+        }
+        var hy = oy + ih - ih * 80 / mx;
+        if (hy > oy) {
+          ctx.strokeStyle = A(V("--rose"), 0.8); ctx.setLineDash([6, 4]); ctx.lineWidth = 1.5;
+          ctx.beginPath(); ctx.moveTo(ox, hy); ctx.lineTo(ox + iw, hy); ctx.stroke(); ctx.setLineDash([]);
+          ctx.fillStyle = A(V("--rose-700"), 1); ctx.font = "700 11px 'Gothic A1',sans-serif"; ctx.textAlign = "left";
+          ctx.fillText("호우 기준 80 mm/일", ox + 6, hy - 6);
+        }
+        ctx.save(); ctx.translate(18, oy + ih / 2); ctx.rotate(-Math.PI / 2);
+        ctx.textAlign = "center"; ctx.fillStyle = A(V("--mist"), 1); ctx.font = "700 11.5px 'Gothic A1',sans-serif";
+        ctx.fillText("하루 강수량 (mm)", 0, 0); ctx.restore();
+        ctx.fillStyle = A(V("--mist"), 1); ctx.font = "600 11.5px 'Gothic A1',sans-serif"; ctx.textAlign = "center";
+        ctx.fillText("1월", ox + iw * 0.04, oy + ih + 20);
+        ctx.fillText("7월", ox + iw * 0.5, oy + ih + 20);
+        ctx.fillText("12월", ox + iw * 0.96, oy + ih + 20);
+      } else {
+        var runs = [], run = 0;
+        for (i = 0; i < a.length; i++) { if (a[i] > 0) { if (run) runs.push(run); run = 0; } else run++; }
+        if (run) runs.push(run);
+        runs.sort(function (p, q) { return q - p; });
+        var show = runs.slice(0, 40), maxRun = Math.max(10, show[0] || 10);
+        ctx.fillStyle = A(V("--ink"), 1); ctx.font = "800 13px 'Gothic A1',sans-serif"; ctx.textAlign = "left";
+        ctx.fillText("연속으로 비가 오지 않은 날 (긴 순서로 40개)", ox, oy - 12);
+        for (i = 0; i < show.length; i++) {
+          var bw2 = (iw - 16) / 40, bx2 = ox + i * bw2, hh = ih * show[i] / maxRun;
+          ctx.fillStyle = show[i] >= 20 ? A(V("--coral"), 0.95) : A(V("--amber"), 0.7);
+          ctx.fillRect(bx2 + 1, oy + ih - hh, bw2 - 2, hh);
+        }
+        var dy = oy + ih - ih * 20 / maxRun;
+        ctx.strokeStyle = A(V("--coral"), 0.9); ctx.setLineDash([6, 4]); ctx.lineWidth = 1.5;
+        ctx.beginPath(); ctx.moveTo(ox, dy); ctx.lineTo(ox + iw, dy); ctx.stroke(); ctx.setLineDash([]);
+        ctx.fillStyle = A(V("--coral-700"), 1); ctx.font = "700 11.5px 'Gothic A1',sans-serif";
+        ctx.fillText("20일 이상 — 산불 위험이 커지는 구간", ox + 6, dy - 8);
+        ctx.strokeStyle = A(V("--line"), 1); ctx.lineWidth = 1.5;
+        ctx.beginPath(); ctx.moveTo(ox, oy + ih); ctx.lineTo(ox + iw, oy + ih); ctx.stroke();
+        ctx.save(); ctx.translate(18, oy + ih / 2); ctx.rotate(-Math.PI / 2);
+        ctx.textAlign = "center"; ctx.fillStyle = A(V("--mist"), 1); ctx.font = "700 11.5px 'Gothic A1',sans-serif";
+        ctx.fillText("연속 무강수 일수", 0, 0); ctx.restore();
+      }
+      ctx.fillStyle = A(V("--mist"), 1); ctx.font = "600 11.5px 'Gothic A1',sans-serif"; ctx.textAlign = "left";
+      ctx.fillText("기온 +" + dT.toFixed(1) + " °C 일 때 같은 지역의 1년", ox, H - 16);
+    }
+
+    function refresh() {
+      var s = series(), a = s.d;
+      var tot = a.reduce(function (x, y) { return x + y; }, 0);
+      var days = a.filter(function (x) { return x > 0; }).length;
+      var mx = Math.max.apply(null, a);
+      document.getElementById("t1-dtv").textContent = "+" + dT.toFixed(1) + " °C";
+      document.getElementById("t1-cc").textContent = "+" + Math.round((s.cc - 1) * 100) + "%";
+      document.getElementById("t1-tot").textContent = Math.round(tot) + " mm";
+      document.getElementById("t1-days").textContent = days + "일";
+      document.getElementById("t1-max").textContent = Math.round(mx) + " mm";
+      document.getElementById("t1-info").innerHTML =
+        "연 강수량 <b>" + Math.round(TOT0) + " → " + Math.round(tot) + " mm</b> 로 거의 그대로인데, "
+        + "비 오는 날은 <b>" + DAY0 + " → " + days + "일</b> 로 줄고 하루 최대 강수는 "
+        + "<b>" + Math.round(MAX0) + " → " + Math.round(mx) + " mm</b> 로 늘었습니다. "
+        + "같은 양의 비가 더 적은 날에 몰린 것입니다.";
+      draw();
+    }
+
+    document.getElementById("t1-dt").addEventListener("input", function () { dT = +this.value / 10; refresh(); });
+    Array.prototype.forEach.call(document.querySelectorAll("#t1-mode button"), function (b) {
+      b.addEventListener("click", function () {
+        Array.prototype.forEach.call(document.querySelectorAll("#t1-mode button"), function (o) { o.classList.remove("on"); });
+        b.classList.add("on"); mode = b.getAttribute("data-m"); draw();
+      });
+    });
+    cv._redraw = draw;
+    refresh();
+  })();
+
+  /* ===================== 03 탄소 수지 ===================== */
+  (function () {
+    var cv = document.getElementById("c2"); if (!cv) return;
+    var ctx = window.setupCanvas(cv), W = cv._w, H = cv._h;
+    var EMIT = [
+      { n: "에너지 공급", base: 34, cut: 0, c: "--coral" },
+      { n: "산업", base: 24, cut: 0, c: "--amber" },
+      { n: "농업·임업·토지", base: 22, cut: 0, c: "--green" },
+      { n: "수송", base: 15, cut: 0, c: "--violet" },
+      { n: "건물", base: 5, cut: 0, c: "--brand" }
+    ];
+    var SINK = [
+      { n: "산림 흡수", v: 0, max: 20, c: "--green" },
+      { n: "바다숲·블루카본", v: 0, max: 12, c: "--teal" },
+      { n: "탄소 포집·저장(CCUS)", v: 0, max: 15, c: "--brand" }
+    ];
+    var MAXABS = SINK.reduce(function (a, s) { return a + s.max; }, 0);
+
+    document.getElementById("t2-controls").innerHTML =
+      EMIT.map(function (e, i) {
+        return '<div class="ctrl-group"><div class="ctrl-label">' + e.n + ' 감축<span class="val" id="em' + i + '-v">0%</span></div>'
+             + '<input type="range" id="em' + i + '" min="0" max="100" step="1" value="0"></div>';
+      }).join("")
+      + SINK.map(function (s, i) {
+        return '<div class="ctrl-group"><div class="ctrl-label">' + s.n + '<span class="val" id="sk' + i + '-v">0</span></div>'
+             + '<input type="range" id="sk' + i + '" min="0" max="' + s.max + '" step="1" value="0"></div>';
+      }).join("");
+
+    function totals() {
+      var em = EMIT.reduce(function (a, e) { return a + e.base * (1 - e.cut / 100); }, 0);
+      var ab = SINK.reduce(function (a, s) { return a + s.v; }, 0);
+      return { em: em, ab: ab, net: em - ab };
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+      ctx.fillStyle = A(V("--card-2"), 1); ctx.fillRect(0, 0, W, H);
+      var t = totals(), cx = W / 2, topY = 66, scale = 2.9;
+
+      ctx.strokeStyle = A(V("--mist"), 0.55); ctx.lineWidth = 3;
+      ctx.beginPath(); ctx.moveTo(cx, topY); ctx.lineTo(cx, H - 72); ctx.stroke();
+      var tilt = Math.max(-0.2, Math.min(0.2, t.net / 130)), armL = 232;
+      var lx = cx - armL * Math.cos(tilt), ly = topY + armL * Math.sin(tilt);
+      var rx = cx + armL * Math.cos(tilt), ry = topY - armL * Math.sin(tilt);
+      ctx.strokeStyle = A(V("--ink"), 0.75); ctx.lineWidth = 5; ctx.lineCap = "round";
+      ctx.beginPath(); ctx.moveTo(lx, ly); ctx.lineTo(rx, ry); ctx.stroke();
+
+      function pan(px, py, label, sum) {
+        ctx.strokeStyle = A(V("--mist"), 0.55); ctx.lineWidth = 1.5;
+        ctx.beginPath(); ctx.moveTo(px, py); ctx.lineTo(px, py + 32); ctx.stroke();
+        ctx.fillStyle = A(V("--card"), 1); ctx.strokeStyle = A(V("--line"), 1); ctx.lineWidth = 2;
+        ctx.beginPath(); ctx.ellipse(px, py + 38, 88, 11, 0, 0, 6.2832); ctx.fill(); ctx.stroke();
+        ctx.fillStyle = A(V("--ink"), 1); ctx.font = "800 13px 'Gothic A1',sans-serif"; ctx.textAlign = "center";
+        ctx.fillText(label + "  " + sum.toFixed(0), px, py + 70);
+      }
+      var sy = ly + 34;
+      EMIT.forEach(function (e) {
+        var v = e.base * (1 - e.cut / 100); if (v < 0.4) return;
+        var h = v * scale; sy -= h;
+        ctx.fillStyle = A(V(e.c), 0.92); ctx.fillRect(lx - 60, sy, 120, h - 1.5);
+        if (h > 15) { ctx.fillStyle = A(V("--ink"), 1); ctx.font = "700 11px 'Gothic A1',sans-serif"; ctx.textAlign = "center";
+          ctx.fillText(e.n + " " + v.toFixed(0), lx, sy + h / 2 + 4); }
+      });
+      pan(lx, ly, "배출", t.em);
+      var sy2 = ry + 34;
+      SINK.forEach(function (s) {
+        if (s.v < 0.4) return;
+        var h = s.v * scale; sy2 -= h;
+        ctx.fillStyle = A(V(s.c), 0.8); ctx.fillRect(rx - 60, sy2, 120, h - 1.5);
+        if (h > 15) { ctx.fillStyle = A(V("--ink"), 1); ctx.font = "700 11px 'Gothic A1',sans-serif"; ctx.textAlign = "center";
+          ctx.fillText(s.n.split("·")[0] + " " + s.v.toFixed(0), rx, sy2 + h / 2 + 4); }
+      });
+      pan(rx, ry, "흡수", t.ab);
+
+      var ok = Math.abs(t.net) < 1.5;
+      ctx.textAlign = "center";
+      ctx.fillStyle = ok ? A(V("--green-700"), 1) : A(V("--rose-700"), 1);
+      ctx.font = "800 17px 'Gothic A1',sans-serif";
+      ctx.fillText(ok ? "탄소중립 — 순배출 0" : ("순배출 " + (t.net > 0 ? "+" : "") + t.net.toFixed(1)), cx, H - 32);
+      ctx.font = "600 11.5px 'Gothic A1',sans-serif"; ctx.fillStyle = A(V("--mist"), 1);
+      ctx.fillText("배출 100 을 기준으로 한 상대값", cx, H - 13);
+    }
+
+    function refresh() {
+      var t = totals();
+      document.getElementById("t2-emit").textContent = t.em.toFixed(1);
+      document.getElementById("t2-abs").textContent = t.ab.toFixed(1);
+      document.getElementById("t2-net").textContent = (t.net > 0 ? "+" : "") + t.net.toFixed(1);
+      var msg;
+      if (Math.abs(t.net) < 1.5) {
+        msg = "<b>수지가 맞았습니다.</b> 배출 " + t.em.toFixed(0) + " 과 흡수 " + t.ab.toFixed(0)
+            + " 이 같아졌습니다. 이것이 탄소중립입니다 — 배출이 0이 된 것이 아닙니다.";
+      } else if (t.net > 0) {
+        msg = "아직 <b>" + t.net.toFixed(0) + "</b> 만큼 남습니다. 흡수원을 모두 최대로 켜도 <b>" + MAXABS
+            + "</b> 까지가 한계이므로, 배출을 <b>" + (100 - MAXABS) + "% 이상</b> 줄이지 않으면 수지가 맞지 않습니다.";
+      } else {
+        msg = "흡수가 배출을 넘었습니다(<b>순배출 " + t.net.toFixed(0) + "</b>). 이런 상태를 <b>탄소 네거티브</b>라고 합니다.";
+      }
+      document.getElementById("t2-info").innerHTML = msg;
+      draw();
+    }
+
+    EMIT.forEach(function (e, i) {
+      document.getElementById("em" + i).addEventListener("input", function () {
+        e.cut = +this.value; document.getElementById("em" + i + "-v").textContent = e.cut + "%"; refresh();
+      });
+    });
+    SINK.forEach(function (s, i) {
+      document.getElementById("sk" + i).addEventListener("input", function () {
+        s.v = +this.value; document.getElementById("sk" + i + "-v").textContent = String(s.v); refresh();
+      });
+    });
+    cv._redraw = draw;
+    refresh();
+  })();
+
+  /* ===================== 04 탄소예산 시계 ===================== */
+  (function () {
+    var cv = document.getElementById("c3"); if (!cv) return;
+    var ctx = window.setupCanvas(cv), W = cv._w, H = cv._h;
+    var E0 = 40, budget = 500, r = 0.03, Y0 = 2020;
+
+    function cumulative(T) { return r <= 0.0001 ? E0 * T : E0 * (1 - Math.pow(1 - r, T)) / r; }
+    function exhaustYear() {
+      var cap = r > 0.0001 ? E0 / r : Infinity;
+      if (cap <= budget) return null;
+      if (r <= 0.0001) return Y0 + budget / E0;
+      return Y0 + Math.log(1 - budget * r / E0) / Math.log(1 - r);
+    }
+    function needRate() { return E0 / budget; }
+
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+      ctx.fillStyle = A(V("--card-2"), 1); ctx.fillRect(0, 0, W, H);
+      var ox = 68, oy = 40, iw = W - 122, ih = H - 112, YEARS = 60, maxE = 45, t;
+
+      ctx.strokeStyle = A(V("--line"), 1); ctx.lineWidth = 1.4;
+      for (t = 0; t <= 4; t++) {
+        var yy = oy + ih - ih * t / 4;
+        ctx.beginPath(); ctx.moveTo(ox, yy); ctx.lineTo(ox + iw, yy); ctx.stroke();
+        ctx.fillStyle = A(V("--mist"), 1); ctx.font = "600 11px 'Gothic A1',sans-serif"; ctx.textAlign = "right";
+        ctx.fillText(String(Math.round(maxE * t / 4)), ox - 8, yy + 4);
+      }
+      ctx.save(); ctx.translate(20, oy + ih / 2); ctx.rotate(-Math.PI / 2);
+      ctx.textAlign = "center"; ctx.fillStyle = A(V("--mist"), 1); ctx.font = "700 11.5px 'Gothic A1',sans-serif";
+      ctx.fillText("연간 배출량 (Gt CO₂)", 0, 0); ctx.restore();
+
+      var X = function (T) { return ox + iw * T / YEARS; };
+      var Y = function (e) { return oy + ih - ih * e / maxE; };
+      var ey = exhaustYear(), Texh = ey === null ? YEARS : Math.min(YEARS, ey - Y0);
+
+      ctx.beginPath(); ctx.moveTo(X(0), Y(0));
+      for (t = 0; t <= Texh; t += 0.5) ctx.lineTo(X(t), Y(E0 * Math.pow(1 - r, t)));
+      ctx.lineTo(X(Texh), Y(0)); ctx.closePath();
+      ctx.fillStyle = A(V("--coral"), 0.32); ctx.fill();
+
+      ctx.beginPath();
+      for (t = 0; t <= YEARS; t += 0.5) {
+        var px = X(t), py = Y(E0 * Math.pow(1 - r, t));
+        if (t === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+      }
+      ctx.strokeStyle = A(V("--coral"), 1); ctx.lineWidth = 3; ctx.stroke();
+
+      if (ey !== null && ey - Y0 <= YEARS) {
+        ctx.strokeStyle = A(V("--rose"), 1); ctx.lineWidth = 2.5; ctx.setLineDash([6, 5]);
+        ctx.beginPath(); ctx.moveTo(X(ey - Y0), oy); ctx.lineTo(X(ey - Y0), oy + ih); ctx.stroke(); ctx.setLineDash([]);
+        ctx.fillStyle = A(V("--rose-700"), 1); ctx.font = "800 13px 'Gothic A1',sans-serif"; ctx.textAlign = "center";
+        ctx.fillText(Math.round(ey) + "년 예산 소진", X(ey - Y0), oy - 12);
+      } else {
+        ctx.fillStyle = A(V("--green-700"), 1); ctx.font = "800 14px 'Gothic A1',sans-serif"; ctx.textAlign = "center";
+        ctx.fillText("예산 안에 머뭅니다 · 누적 " + cumulative(200).toFixed(0) + " Gt < " + budget + " Gt", ox + iw / 2, oy + 22);
+      }
+
+      ctx.fillStyle = A(V("--mist"), 1); ctx.font = "600 11.5px 'Gothic A1',sans-serif"; ctx.textAlign = "center";
+      [0, 15, 30, 45, 60].forEach(function (T) { ctx.fillText(String(Y0 + T), X(T), oy + ih + 20); });
+      ctx.strokeStyle = A(V("--mist"), 0.45); ctx.setLineDash([3, 4]); ctx.lineWidth = 1.2;
+      ctx.beginPath(); ctx.moveTo(X(30), oy); ctx.lineTo(X(30), oy + ih); ctx.stroke(); ctx.setLineDash([]);
+      ctx.fillStyle = A(V("--mist"), 1); ctx.font = "700 11px 'Gothic A1',sans-serif";
+      ctx.fillText("2050", X(30), oy + 14);
+      ctx.textAlign = "left"; ctx.font = "600 11.5px 'Gothic A1',sans-serif";
+      ctx.fillText("칠해진 넓이 = 그때까지 쌓인 배출량", ox, H - 14);
+    }
+
+    function refresh() {
+      var ey = exhaustYear(), need = needRate();
+      document.getElementById("t3-rv").textContent = (r * 100).toFixed(0) + " %";
+      document.getElementById("t3-year").textContent = ey === null ? "넘지 않음" : Math.round(ey) + "년";
+      document.getElementById("t3-e50").textContent = (E0 * Math.pow(1 - r, 30)).toFixed(1) + " Gt";
+      document.getElementById("t3-need").textContent = "연 " + (need * 100).toFixed(1) + " %";
+      document.getElementById("t3-badge").textContent = "연 " + (r * 100).toFixed(0) + "% 감축 · 목표 " + budget + " Gt";
+      document.getElementById("t3-info").innerHTML = ey === null
+        ? "<b>예산 안에 머뭅니다.</b> 해마다 " + (r * 100).toFixed(0) + "%씩 줄이면 아무리 오래 배출해도 누적이 "
+          + cumulative(200).toFixed(0) + " Gt 에서 멈춥니다."
+        : "<b>" + Math.round(ey) + "년</b>에 예산이 바닥납니다. 이 목표를 넘지 않으려면 <b>해마다 최소 "
+          + (need * 100).toFixed(1) + "%</b> 씩 줄여야 합니다. 곡선의 높이가 아니라 <b>칠해진 넓이</b>를 보세요.";
+      draw();
+    }
+
+    window.sthGate({
+      gate: "g3", veil: "v3", key: "budget",
+      question: "지금부터 배출을 <b>해마다 몇 %씩</b> 줄여야 1.5 &deg;C 탄소예산(500 Gt)을 넘지 않을까요?",
+      options: ["㉠ 해마다 1 %", "㉡ 해마다 3 %", "㉢ 해마다 8 %", "㉣ 해마다 20 %"],
+      onPick: function (i) {
+        var ok = (i === 2);
+        document.getElementById("t3-info").innerHTML =
+          (ok ? "<b>맞았습니다.</b> " : "<b>실제로는 약 8 %입니다.</b> ")
+          + "연 40 Gt 를 해마다 r 씩 줄이면 누적은 40/r 에서 멈춥니다. 이 값이 500 Gt 이하가 되려면 "
+          + "r ≥ 40/500 = <b>0.08</b>, 즉 <b>해마다 8 %</b>입니다. 슬라이더를 8 % 앞뒤로 움직이며 넓이를 보세요.";
+        window.sthState("budgetOK", ok ? "맞음" : "어긋남");
+      }
+    });
+
+    document.getElementById("t3-r").addEventListener("input", function () { r = +this.value / 1000; refresh(); });
+    Array.prototype.forEach.call(document.querySelectorAll("#t3-goal button"), function (b) {
+      b.addEventListener("click", function () {
+        Array.prototype.forEach.call(document.querySelectorAll("#t3-goal button"), function (o) { o.classList.remove("on"); });
+        b.classList.add("on"); budget = +b.getAttribute("data-b"); refresh();
+      });
+    });
+    cv._redraw = draw;
+    refresh();
+  })();
+
+  /* ===================== 05 정리하기 ===================== */
   window.sthWork({
     mount: "wk",
     unitLabel: "[기후변화와 환경생태 Ⅲ] 기후위기에 대응하는 우리의 노력",
+    recap: [
+      { key: "coral", label: "01 산호 백화 예상" },
+      { key: "coralOK", label: "01 결과" },
+      { key: "budget", label: "04 탄소예산 예상" },
+      { key: "budgetOK", label: "04 결과" }
+    ],
     items: [
-      {
-            "id": "w1",
-            "label": "백화현상이 일어나는 과정",
-            "hint": "수온 상승에서 산호의 백화까지를 단계로 나눠 쓰세요.",
-            "ph": ""
-      },
-      {
-            "id": "w2",
-            "label": "탄소 저감 기술 하나",
-            "hint": "고른 기술이 탄소를 어디서 어떻게 줄이는지, 원리를 한 문장으로 쓰세요.",
-            "ph": ""
-      },
-      {
-            "id": "w3",
-            "label": "내가 할 수 있는 참여",
-            "hint": "학교나 지역에서 실제로 해 볼 수 있는 일을 하나 정하고, 그것이 왜 효과가 있는지 쓰세요.",
-            "ph": ""
-      },
-      {
-            "id": "w4",
-            "label": "아직 헷갈리는 것",
-            "hint": "다음 시간에 여기서부터 시작합니다.",
-            "ph": ""
-      }
-]
+      { id: "w1", label: "온도만이 아니라 기간이 문제인 까닭",
+        hint: "01번 탭에서 수온 편차와 기간을 각각 바꿔 보고, 어느 쪽이 DHW를 더 크게 만드는지 근거와 함께 쓰세요.",
+        ph: "+2 °C 로 2주 두었을 때와 +1 °C 로 4주 두었을 때를 비교하면 …" },
+      { id: "w2", label: "가뭄과 홍수가 함께 늘어나는 까닭",
+        hint: "02번 탭의 연 강수량 · 비 오는 날 · 하루 최대 강수 세 값을 근거로 설명하세요.",
+        ph: "연 강수량은 (      ) 인데 비 오는 날은 (      ), 하루 최대 강수는 (      ) 이므로 …" },
+      { id: "w3", label: "탄소중립은 배출 0이 아니다",
+        hint: "03번 탭에서 수지를 맞춰 보고, 흡수원을 모두 켜도 배출을 몇 % 이상 줄여야 했는지 쓰세요.", ph: "" },
+      { id: "w4", label: "얼마나가 아니라 얼마나 빨리",
+        hint: "04번 탭에서 감축률을 8 % 앞뒤로 바꿔 보고, 왜 감축 속도가 총량보다 중요한지 쓰세요.", ph: "" },
+      { id: "w5", label: "내가 제안하는 참여 방안",
+        hint: "학교나 지역에서 해 볼 수 있는 일을 하나 정하고, 위 네 가지 중 무엇을 근거로 효과가 있는지 쓰세요.", ph: "" }
+    ]
+  });
+
+  window.addEventListener("theme-changed", function () {
+    if (window.redrawCanvases) window.redrawCanvases();
   });
 })();
 </script>
