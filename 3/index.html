@@ -24,6 +24,7 @@
     <button class="tab-btn" data-tab="2"><span class="num">03</span> 탄소중립 사회와 과학기술</button>
     <button class="tab-btn" data-tab="3"><span class="num">04</span> 국제적 노력과 시민 참여</button>
     <button class="tab-btn" data-tab="4"><span class="num">05</span> 창의적 문제 해결</button>
+    <button class="tab-btn" data-tab="5"><span class="num">06</span> 정리하기</button>
   </nav>
 
   <main>
@@ -33,6 +34,8 @@
         <div class="eyebrow">01 · 사막이 된 바다를 되살리다</div>
         <h2 class="display">해양생태계 복원을 위한 노력</h2>
         <p>해수 온도 상승으로 해조류가 사라지고 석회조류만 남는 <b>바다 사막화(백화 현상)</b>가 확산되고 있습니다. 바다를 되살리는 과학기술을 카드로 확인해 보세요.</p>
+      
+        <span class="std-chip">12기환03-01</span><span class="std-chip">12기환03-02</span><span class="std-chip">12기환03-03</span><span class="std-chip">12기환03-04</span><div class="std-note"><b>[12기환03-01]</b> 산호의 멸종으로 인한 백화현상의 예를 통해 기후변화가 해양생태계에 미치는 영향을 설명할 수 있다.<br><b>[12기환03-02]</b> 기후변화에 따라 가속화되는 사막화, 대형산불, 지역적 가뭄과 홍수 등을 이해하고 대응 방안을 설명할 수 있다.<br><b>[12기환03-03]</b> 탄소중립 사회를 이루기 위한 탄소 저감 관련 과학기술 개발 현황을 알아보고, 그 원리를 설명할 수 있다.<br><b>[12기환03-04]</b> 기후위기와 환경생태 변화에 대응하기 위한 국제사회의 노력을 알아보고, 민주 시민으로서 참여 방안을 제안할 수 있다.</div><div class="terms"><b>백화현상</b><b>바다숲</b><b>탄소중립</b><b>파리 협정</b></div>
       </div>
       <div class="stage-card">
         <div class="card-grid" id="c0-grid"></div>
@@ -116,6 +119,15 @@
         <div class="card-grid" id="c4-calc-grid" style="margin-top:10px"></div>
         <div class="info-card" id="c4-calc-result" style="margin-top:16px"></div>
       </div>
+    </section>
+
+    <section class="tab-panel" data-panel="5" hidden>
+      <div class="stage-head">
+        <div class="eyebrow">06 · 오늘 알아낸 것을 문장으로</div>
+        <h2 class="display">정리하기</h2>
+        <p>조작한 것을 말이나 글로 옮기지 않으면 남지 않습니다. 아래를 채우고 <b>답안 복사</b>를 눌러 제출하세요. 쓰는 동안 자동으로 저장됩니다.</p>
+      </div>
+      <div class="stage-card" style="padding:6px 0 4px"><div id="wk"></div></div>
     </section>
   </main>
 </div>
@@ -335,6 +347,42 @@ function buildTimeline(trackId, detailId, items) {
   })();
 })();
 
+})();
+</script>
+
+<script>
+(function () {
+  window.sthUnit("cce-3");
+  window.sthWork({
+    mount: "wk",
+    unitLabel: "[기후변화와 환경생태 Ⅲ] 기후위기에 대응하는 우리의 노력",
+    items: [
+      {
+            "id": "w1",
+            "label": "백화현상이 일어나는 과정",
+            "hint": "수온 상승에서 산호의 백화까지를 단계로 나눠 쓰세요.",
+            "ph": ""
+      },
+      {
+            "id": "w2",
+            "label": "탄소 저감 기술 하나",
+            "hint": "고른 기술이 탄소를 어디서 어떻게 줄이는지, 원리를 한 문장으로 쓰세요.",
+            "ph": ""
+      },
+      {
+            "id": "w3",
+            "label": "내가 할 수 있는 참여",
+            "hint": "학교나 지역에서 실제로 해 볼 수 있는 일을 하나 정하고, 그것이 왜 효과가 있는지 쓰세요.",
+            "ph": ""
+      },
+      {
+            "id": "w4",
+            "label": "아직 헷갈리는 것",
+            "hint": "다음 시간에 여기서부터 시작합니다.",
+            "ph": ""
+      }
+]
+  });
 })();
 </script>
 </body>

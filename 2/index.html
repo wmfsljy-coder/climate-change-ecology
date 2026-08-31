@@ -31,6 +31,7 @@
     <button class="tab-btn" data-tab="6"><span class="num">07</span> 기후변화와 수생태계의 변화</button>
     <button class="tab-btn" data-tab="7"><span class="num">08</span> 기후변화와 곤충 매개 감염병</button>
     <button class="tab-btn" data-tab="8"><span class="num">09</span> 창의적 문제 해결</button>
+    <button class="tab-btn" data-tab="9"><span class="num">10</span> 정리하기</button>
   </nav>
 
   <main>
@@ -40,12 +41,15 @@
         <div class="eyebrow">01 · 인간의 활동이 만든 위기</div>
         <h2 class="display">기후위기의 원인과 심각성</h2>
         <p>산업화 이후 인간의 활동으로 배출된 온실 기체가 지구 온난화를 가속하며 기후위기를 일으켰습니다. IPCC는 2011년~2020년 지구 평균 기온이 산업화 이전보다 약 1.1 °C 높았다고 발표했습니다.</p>
+      
+        <span class="std-chip">12기환02-01</span><span class="std-chip">12기환02-02</span><span class="std-chip">12기환02-03</span><span class="std-chip">12기환02-04</span><span class="std-chip">12기환02-05</span><span class="std-chip">12기환02-06</span><span class="std-chip">12기환02-07</span><span class="std-chip">12기환02-08</span><div class="std-note"><b>[12기환02-01]</b> 기후위기가 일어나는 주요 원인을 이해하고, 기후위기의 심각성을 인식할 수 있다.<br><b>[12기환02-02]</b> 빙상의 융해와 열팽창으로 인한 해수면 상승을 기후변화와 연계하여 설명할 수 있다.<br><b>[12기환02-03]</b> 극한 기상 현상의 종류와 원인을 이해하고, 극한 기상 현상이 환경생태에 미친 영향을 설명할 수 있다.<br><b>[12기환02-04]</b> 기후변화 시나리오에 따른 미래 생태계 변화 예측 보고서를 찾아보고, 미래의 기후와 생태계를 설명할 수 있다.<br><b>[12기환02-05]</b> 꽃의 개화 시기 변화 자료를 조사하고, 개화 시기 변화가 우리 생활에 끼치는 영향을 설명할 수 있다.<br><b>[12기환02-06]</b> 꿀벌을 비롯한 곤충의 개체 수 감소 원인을 기후변화와 연계하여 설명할 수 있다.<br><b>[12기환02-07]</b> 수생태계의 물꽃 현상을 이해하고, 기후변화가 수생태계의 생물다양성에 끼치는 영향을 설명할 수 있다.<br><b>[12기환02-08]</b> 곤충 매개 감염병이 새롭게 출현하거나 급격히 확산되는 현상을 기후변화와 연계하여 설명할 수 있다.</div><div class="terms"><b>SSP 시나리오</b><b>해수면 상승</b><b>물꽃 현상</b><b>매개 감염병</b></div>
       </div>
       <div class="stage-card">
         <div class="compare-wrap compare3" id="c0-wrap"></div>
         <div class="card-grid" id="c0-grid" style="margin-top:16px"></div>
         <div class="detail-panel" id="c0-detail">카드를 클릭하면 자세한 설명이 나타납니다.</div>
       </div>
+      <div class="miscon loose"><span class="tag">오개념 지도</span><br><b>부리가 커진 것은 노력의 결과가 아니다</b><br>지구의 평균 기온이 상승할수록 <b>체온을 잘 발산하기 위해 큰장수앵무의 부리가 커진다</b>고 해석하지 않도록 유의한다. 이는 <b>용불용설</b>에 기초한 것으로 옳지 않다. <b>자연 선택설</b>을 기반으로, 다양한 부리 크기를 가진 개체 중 부리가 큰 개체가 기온이 상승하는 환경에 유리하여 살아남았음을 설명해야 한다.<cite>기후변화와 환경생태 교사용 교과서, 오개념 지도</cite></div>
     </section>
 
     <!-- TAB1 -->
@@ -207,6 +211,15 @@
         </div>
         <div class="info-card" id="c8-info" style="margin-top:16px"></div>
       </div>
+    </section>
+
+    <section class="tab-panel" data-panel="9" hidden>
+      <div class="stage-head">
+        <div class="eyebrow">10 · 오늘 알아낸 것을 문장으로</div>
+        <h2 class="display">정리하기</h2>
+        <p>조작한 것을 말이나 글로 옮기지 않으면 남지 않습니다. 아래를 채우고 <b>답안 복사</b>를 눌러 제출하세요. 쓰는 동안 자동으로 저장됩니다.</p>
+      </div>
+      <div class="stage-card" style="padding:6px 0 4px"><div id="wk"></div></div>
     </section>
   </main>
 </div>
@@ -632,6 +645,42 @@ function buildCardGrid(gridId, detailId, items) {
   update(100);
 })();
 
+})();
+</script>
+
+<script>
+(function () {
+  window.sthUnit("cce-2");
+  window.sthWork({
+    mount: "wk",
+    unitLabel: "[기후변화와 환경생태 Ⅱ] 기후위기와 환경생태 변화",
+    items: [
+      {
+            "id": "w1",
+            "label": "자연 선택으로 다시 쓰기",
+            "hint": "오개념 상자의 앵무 사례를 자연 선택설의 언어로 다시 써 보세요. \"~하기 위해\"라는 표현은 쓰지 말 것.",
+            "ph": ""
+      },
+      {
+            "id": "w2",
+            "label": "해수면이 오르는 두 경로",
+            "hint": "빙상의 융해와 열팽창이 각각 어떻게 해수면을 올리는지 구분해 쓰세요.",
+            "ph": ""
+      },
+      {
+            "id": "w3",
+            "label": "시나리오가 갈리는 지점",
+            "hint": "SSP 시나리오 둘을 골라, 무엇이 달라서 결과가 갈리는지 쓰세요.",
+            "ph": ""
+      },
+      {
+            "id": "w4",
+            "label": "아직 헷갈리는 것",
+            "hint": "다음 시간에 여기서부터 시작합니다.",
+            "ph": ""
+      }
+]
+  });
 })();
 </script>
 </body>

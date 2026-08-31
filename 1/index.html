@@ -23,6 +23,7 @@
     <button class="tab-btn" data-tab="1"><span class="num">02</span> 기후시스템과 상호작용</button>
     <button class="tab-btn" data-tab="2"><span class="num">03</span> 기후변화와 생태계·생활환경</button>
     <button class="tab-btn" data-tab="3"><span class="num">04</span> 창의적 문제 해결</button>
+    <button class="tab-btn" data-tab="4"><span class="num">05</span> 정리하기</button>
   </nav>
 
   <main>
@@ -32,6 +33,8 @@
         <div class="eyebrow">01 · 순간의 상태와 오랜 평균</div>
         <h2 class="display">날씨와 기후</h2>
         <p>날씨는 순간순간 변화하지만, 기후는 30년간 날씨의 평균값입니다. 기후를 나타내는 기후요소와, 기후요소에 영향을 주는 기후인자를 카드로 확인해 보세요.</p>
+      
+        <span class="std-chip">12기환01-01</span><span class="std-chip">12기환01-02</span><span class="std-chip">12기환01-03</span><div class="std-note"><b>[12기환01-01]</b> 날씨와 기후의 특성을 이해하고, 이를 비교하여 설명할 수 있다.<br><b>[12기환01-02]</b> 기후시스템이 유지되는 되먹임 과정을 이해하고 생물권과 다른 권역 간 상호작용을 설명할 수 있다.<br><b>[12기환01-03]</b> 기후변화가 생태계와 우리의 생활환경에 영향을 미친 사례를 조사하여 발표할 수 있다.</div><div class="terms"><b>날씨와 기후</b><b>기후요소</b><b>기후인자</b><b>되먹임</b></div>
       </div>
       <div class="stage-card">
         <div class="compare-wrap compare3" id="c0-wrap"></div>
@@ -49,6 +52,7 @@
         </div>
         <div class="info-card" id="c0b-info"></div>
       </div>
+      <div class="miscon loose"><span class="tag">오개념 지도</span><br><b>같은 위도라도 기온이 다르다</b><br>영국, 아이슬란드와 같이 <b>주변에 난류가 흐르는 지역</b>은 같은 위도의 다른 지역에 비해 <b>따뜻하고 기온의 연교차가 작은</b> 경우가 많다. 그래서 약 50°N인 영국의 콘월 지역에서는 야자나무가 자란다. 위도만으로 기후를 판단하지 않도록 한다.<cite>기후변화와 환경생태 교사용 교과서, 오개념 지도</cite></div>
     </section>
 
     <!-- TAB1 기후시스템과 상호작용 -->
@@ -126,6 +130,15 @@
         <div class="card-grid" id="c3-grid"></div>
         <div class="detail-panel" id="c3-detail">카드를 클릭하면 자세한 설명이 나타납니다.</div>
       </div>
+    </section>
+
+    <section class="tab-panel" data-panel="4" hidden>
+      <div class="stage-head">
+        <div class="eyebrow">05 · 오늘 알아낸 것을 문장으로</div>
+        <h2 class="display">정리하기</h2>
+        <p>조작한 것을 말이나 글로 옮기지 않으면 남지 않습니다. 아래를 채우고 <b>답안 복사</b>를 눌러 제출하세요. 쓰는 동안 자동으로 저장됩니다.</p>
+      </div>
+      <div class="stage-card" style="padding:6px 0 4px"><div id="wk"></div></div>
     </section>
   </main>
 </div>
@@ -428,6 +441,36 @@ function buildTimeline(trackId, detailId, items) {
   buildCardGrid("c3-grid", "c3-detail", items);
 })();
 
+})();
+</script>
+
+<script>
+(function () {
+  window.sthUnit("cce-1");
+  window.sthWork({
+    mount: "wk",
+    unitLabel: "[기후변화와 환경생태 Ⅰ] 기후와 환경생태의 특성",
+    items: [
+      {
+            "id": "w1",
+            "label": "날씨와 기후를 가르는 것",
+            "hint": "두 말의 차이를 시간 규모로 설명하고, 각각의 예를 하나씩 드세요.",
+            "ph": ""
+      },
+      {
+            "id": "w2",
+            "label": "되먹임 고리 하나",
+            "hint": "양의 되먹임 또는 음의 되먹임 하나를 골라, 무엇이 무엇을 강화하거나 약화하는지 순서대로 쓰세요.",
+            "ph": "① … → ② … → ③ … → 다시 ①"
+      },
+      {
+            "id": "w3",
+            "label": "아직 헷갈리는 것",
+            "hint": "다음 시간에 여기서부터 시작합니다.",
+            "ph": ""
+      }
+]
+  });
 })();
 </script>
 </body>
