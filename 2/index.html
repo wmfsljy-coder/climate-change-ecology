@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>기후위기와 환경생태 변화 — 기후환경생태 스테이션</title>
 <link rel="stylesheet" href="../assets/theme.css">
+<link rel="stylesheet" href="../assets/share.css">
 <style>
   .compare3 { grid-template-columns: repeat(2, 1fr); }
   @media (max-width: 900px) { .compare3 { grid-template-columns: 1fr; } }
@@ -32,6 +33,7 @@
     <button class="tab-btn" data-tab="7"><span class="num">08</span> 기후변화와 곤충 매개 감염병</button>
     <button class="tab-btn" data-tab="8"><span class="num">09</span> 창의적 문제 해결</button>
     <button class="tab-btn" data-tab="9"><span class="num">10</span> 정리하기</button>
+    <button class="tab-btn" data-tab="10"><span class="num">11</span> 우리 반</button>
   </nav>
 
   <main>
@@ -222,12 +224,25 @@
       </div>
       <div class="stage-card" style="padding:6px 0 4px"><div id="wk"></div></div>
     </section>
+  
+    <!-- ===================================================================== 11 우리 반 -->
+    <section class="tab-panel" data-panel="10" hidden>
+      <div class="stage-head">
+        <div class="eyebrow">11 · 같은 반 친구들과 나누기</div>
+        <h2 class="display">우리 반</h2>
+        <p>정리하기에 쓴 것을 우리 반에 올리고, 같은 반 친구들이 어디까지 했는지 함께 보세요. <b>올리기 버튼을 눌렀을 때만</b> 공유됩니다. 실명 대신 별명을 쓰고, 글까지 올릴지는 직접 고르세요.</p>
+      </div>
+      <div class="stage-card"><div id="share"></div></div>
+    </section>
+
   </main>
 </div>
 
 <button class="theme-toggle" id="themeToggle">라이트 모드</button>
 
 <script src="../assets/theme.js"></script>
+<script src="../assets/share-config.js"></script>
+<script src="../assets/share.js"></script>
 <script>
 (function () {
 "use strict";
@@ -699,6 +714,16 @@ function buildCardGrid(gridId, detailId, items) {
       var d = document.createElement("div"); d.className = "info-card"; d.style.margin = "18px 0 0";
       d.innerHTML = msg; g.insertAdjacentElement("afterend", d);
     }
+  });
+  window.sthShare({
+    mount: "share",
+    unit: "cce-2",
+    unitLabel: "[기후변화와 환경생태 Ⅱ] 기후위기와 환경생태 변화",
+    works: [
+      { id: "w1", label: "자연 선택으로 다시 쓰기" },
+      { id: "w2", label: "해수면이 오르는 두 경로" },
+      { id: "w3", label: "시나리오가 갈리는 지점" }
+    ]
   });
 })();
 </script>
