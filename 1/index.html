@@ -5,11 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>기후와 환경생태의 특성 — 기후환경생태 스테이션</title>
 <link rel="stylesheet" href="../assets/theme.css">
-<link rel="stylesheet" href="../assets/share.css">
-<style>
-  .compare3 { grid-template-columns: repeat(2, 1fr); }
-  @media (max-width: 900px) { .compare3 { grid-template-columns: 1fr; } }
-</style>
+<link rel="stylesheet" href="../assets/story.css">
 </head>
 <body>
 
@@ -23,479 +19,281 @@
     <button class="tab-btn active" data-tab="0"><span class="num">01</span> 날씨와 기후</button>
     <button class="tab-btn" data-tab="1"><span class="num">02</span> 기후시스템과 상호작용</button>
     <button class="tab-btn" data-tab="2"><span class="num">03</span> 기후변화와 생태계·생활환경</button>
-    <button class="tab-btn" data-tab="3"><span class="num">04</span> 창의적 문제 해결</button>
-    <button class="tab-btn" data-tab="4"><span class="num">05</span> 정리하기</button>
-    <button class="tab-btn" data-tab="5"><span class="num">06</span> 우리 반</button>
+    <button class="tab-btn" data-tab="3"><span class="num">04</span> 수준별 문제</button>
+    <button class="tab-btn" data-tab="4"><span class="num">05</span> 응용 실험실</button>
+    <button class="tab-btn" data-tab="5"><span class="num">06</span> 정리하기</button>
+    <button class="tab-btn" data-tab="6"><span class="num">07</span> 우리 반</button>
   </nav>
 
   <main>
-    <!-- TAB0 날씨와 기후 -->
+    <!-- =====================================================================
+         01 날씨와 기후 — 이야기 「콘월의 야자수」
+         ===================================================================== -->
     <section class="tab-panel" data-panel="0">
       <div class="stage-head">
-        <div class="eyebrow">01 · 순간의 상태와 오랜 평균</div>
-        <h2 class="display">날씨와 기후</h2>
-        <p>날씨는 순간순간 변화하지만, 기후는 30년간 날씨의 평균값입니다. 기후를 나타내는 기후요소와, 기후요소에 영향을 주는 기후인자를 카드로 확인해 보세요.</p>
-      
-        <span class="std-chip">12기환01-01</span><span class="std-chip">12기환01-02</span><span class="std-chip">12기환01-03</span><div class="std-note"><b>[12기환01-01]</b> 날씨와 기후의 특성을 이해하고, 이를 비교하여 설명할 수 있다.<br><b>[12기환01-02]</b> 기후시스템이 유지되는 되먹임 과정을 이해하고 생물권과 다른 권역 간 상호작용을 설명할 수 있다.<br><b>[12기환01-03]</b> 기후변화가 생태계와 우리의 생활환경에 영향을 미친 사례를 조사하여 발표할 수 있다.</div><div class="terms"><b>날씨와 기후</b><b>기후요소</b><b>기후인자</b><b>되먹임</b></div>
+        <div class="eyebrow">01 · 날씨와 기후 · 이야기 한 편</div>
+        <h2 class="display">콘월의 야자수</h2>
+        <p>북위 50°, 사할린과 비슷한 위도의 영국 바닷가에 야자나무가 자랍니다. 여행 사진 한 장에서 시작해 날씨와 기후를 가르고, 기후를 정하는 요인을 직접 조절해 수수께끼를 풉니다.</p>
+        <span class="std-chip">12기환01-01</span><div class="std-note"><b>[12기환01-01]</b> 날씨와 기후의 특성을 이해하고, 이를 비교하여 설명할 수 있다.</div><div class="terms"><b>날씨와 기후</b><b>기후요소</b><b>기후인자</b><b>연교차</b></div>
       </div>
-      <div class="stage-card">
-        <div class="compare-wrap compare3" id="c0-wrap"></div>
-        <div class="info-card" id="c0-info"></div>
-        <div class="card-grid" id="c0-grid" style="margin-top:16px"></div>
-        <div class="detail-panel" id="c0-detail">카드를 클릭하면 자세한 설명이 나타납니다.</div>
-      </div>
-      <div class="stage-card">
-        <div class="canvas-wrap"><canvas id="c0b" width="900" height="380"></canvas></div>
-        <div class="controls">
-          <div class="ctrl-group" style="flex:1 1 100%">
-            <div class="ctrl-label">평균 기간(일) — 1일(날씨)부터 3650일(10년, 기후에 가까움)까지<span class="val" id="c0b-w-val">1</span>일</div>
-            <input type="range" id="c0b-w" min="1" max="3650" step="1" value="1">
+
+      <div class="episode" id="ep1">
+        <section class="scene" data-title="여행 사진 한 장">
+          <div class="story narr"><div class="who">🌴</div><div class="say"><span class="name">이야기</span>겨울 방학에 영국 남서쪽 끝 <b>콘월</b>에 다녀온 <b>서윤</b>이가 사진을 보여 줍니다. 1월인데 바닷가 정원에 <b>야자나무</b>가 서 있습니다. 콘월은 북위 약 50°. 러시아 극동의 <b>하바롭스크</b>(북위 약 48°)보다도 북쪽입니다.</div></div>
+          <div class="story"><div class="who">🧑‍🎓</div><div class="say"><span class="name">서윤</span>“하바롭스크는 1월이면 영하 20 ℃ 가까이 내려간대. 그런데 더 북쪽인 콘월에서 야자나무라니. 내가 간 날이 마침 따뜻했던 걸까?”</div></div>
+          <div class="case-file"><b class="k">콘월(펜잰스)</b> 북위 약 50° · 1월 평균 약 8 ℃ · 7월 평균 약 17 ℃ &nbsp;|&nbsp; <b class="k">하바롭스크</b> 북위 약 48° · 1월 평균 약 −20 ℃ · 7월 평균 약 21 ℃</div>
+          <div class="gate loose" id="g1"></div>
+        </section>
+
+        <section class="scene" data-title="하루와 30년 — 날씨와 기후 가르기">
+          <div class="story"><div class="who">🧑‍🏫</div><div class="say"><span class="name">지리 선생님</span>“서윤이가 겪은 건 그날의 <b>날씨</b>야. 순간순간 바뀌는 대기 상태지. <b>기후</b>는 한 지역의 날씨를 <b>약 30년</b> 동안 평균한 것이고. 10년 치 매일 기온을 모아 두었으니, 평균하는 기간을 늘려 가며 무엇이 사라지는지 보자.”</div></div>
+          <div class="stage-card">
+            <div class="canvas-wrap"><canvas id="c-avg" width="900" height="360"></canvas></div>
+            <div class="controls">
+              <div class="ctrl-group" style="flex:1 1 100%">
+                <div class="ctrl-label">평균하는 기간 — 1일(날씨)부터 3650일(10년)까지<span class="val" id="avg-w-val">1일</span></div>
+                <input type="range" id="avg-w" min="1" max="3650" step="1" value="1">
+              </div>
+            </div>
+            <div class="info-card" id="avg-info"></div>
           </div>
-        </div>
-        <div class="info-card" id="c0b-info"></div>
+          <div class="mission" id="m1-2"><span class="m-tag">미션</span>평균 기간을 늘려 가며 변동 폭(표준 편차)을 비교하세요.<ul><li id="m1-2a">하루하루 기온(1일)의 변동 폭을 확인하기</li><li id="m1-2b">계절 변화까지 지워져 변동 폭이 <b>0.5 ℃ 미만</b>이 되는 가장 짧은 기간(400일 이하)을 찾기</li></ul></div>
+        </section>
+
+        <section class="scene" data-title="증거 분류 — 기후요소와 기후인자">
+          <div class="story"><div class="who">🧑‍🏫</div><div class="say"><span class="name">지리 선생님</span>“기후를 <b>나타내는</b> 값과 기후를 <b>만드는</b> 원인은 달라. 기온·강수량처럼 기후를 나타내는 물리량이 <b>기후요소</b>, 위도·해류처럼 기후요소에 영향을 주는 요인이 <b>기후인자</b>야. 조사 노트를 둘로 나눠 보렴.”</div></div>
+          <div class="stage-card"><div id="s1-sort"></div></div>
+          <div class="mission" id="m1-3"><span class="m-tag">미션</span>조사 노트 10개를 기후요소와 기후인자로 나누세요.</div>
+        </section>
+
+        <section class="scene" data-title="기후 만들기 — 같은 위도, 다른 겨울">
+          <div class="story"><div class="who">🧑‍🎓</div><div class="say"><span class="name">서윤</span>“위도가 같아도 다른 기후인자가 다르면 기후가 달라지는 거네. 그럼 기후인자를 직접 바꿔서 콘월과 하바롭스크를 둘 다 만들어 볼래!”</div></div>
+          <div class="stage-card">
+            <div class="canvas-wrap"><canvas id="c-clim" width="900" height="360"></canvas></div>
+            <div class="controls">
+              <div class="ctrl-group">
+                <div class="ctrl-label">위도<span class="val" id="cl-lat-val">북위 50°</span></div>
+                <input type="range" id="cl-lat" min="0" max="70" step="5" value="50">
+              </div>
+              <div class="ctrl-group">
+                <div class="ctrl-label">바다에서 떨어진 정도 (수륙 분포)<span class="val" id="cl-cont-val">해안 0%</span></div>
+                <input type="range" id="cl-cont" min="0" max="100" step="10" value="50">
+              </div>
+              <div class="ctrl-group">
+                <div class="ctrl-label">주변 해류</div>
+                <div class="seg" id="cl-cur"><button data-v="warm">난류</button><button class="on" data-v="none">없음</button><button data-v="cold">한류</button></div>
+              </div>
+            </div>
+            <div class="info-card" id="cl-info"></div>
+          </div>
+          <div class="mission" id="m1-4"><span class="m-tag">미션</span>위도를 <b>북위 45~55°</b>에 두고 두 도시의 기후를 만들어 보세요.<ul><li id="m1-4a">콘월형 — 1월 평균 <b>4 ℃ 이상</b>, 연교차 <b>14 ℃ 이하</b></li><li id="m1-4b">하바롭스크형 — 1월 평균 <b>−15 ℃ 이하</b>, 연교차 <b>35 ℃ 이상</b></li></ul></div>
+        </section>
+
+        <section class="scene" data-title="결말 — 야자나무를 키운 것">
+          <div class="ending">
+            <h4>🌴 야자나무를 키운 것은 그날의 날씨가 아니라 ‘바다와 난류’였다</h4>
+            <p>콘월의 겨울이 따뜻한 것은 서윤이가 운 좋게 따뜻한 날에 갔기 때문이 아닙니다. 30년 평균인 <b>기후</b>가 따뜻합니다. 멕시코 만류에서 이어지는 <b>북대서양 난류</b>와 바다에서 불어오는 바람이 겨울을 데우고 여름을 식혀, <b>연교차가 작은</b> 해양성 기후가 됩니다. 대륙 안쪽의 하바롭스크는 바다의 영향을 적게 받아 겨울이 매우 춥고 연교차가 큽니다. 위도는 같아도 <b>해류·수륙 분포</b>라는 기후인자가 달랐던 것입니다.</p>
+            <div class="vs" id="e1-vs"></div>
+            <span class="stamp">사건 파일 ① 해결</span>
+          </div>
+          <div class="miscon loose"><span class="tag">오개념 지도</span><br><b>같은 위도라도 기온이 다르다</b><br>영국, 아이슬란드와 같이 <b>주변에 난류가 흐르는 지역</b>은 같은 위도의 다른 지역에 비해 <b>따뜻하고 기온의 연교차가 작은</b> 경우가 많다. 그래서 약 50°N인 영국의 콘월 지역에서는 야자나무가 자란다. 위도만으로 기후를 판단하지 않도록 한다.<cite>기후변화와 환경생태 교사용 교과서, 오개념 지도</cite></div>
+          <div class="info-card" style="margin:14px 0">📎 과학자의 눈: 기후 만들기 화면은 위도·수륙 분포·해류·높이만 넣은 <b>단순화한 모형</b>입니다. 실제 기후에는 편서풍과 계절풍, 산맥 같은 지형, 대기 대순환도 함께 작용합니다. 콘월의 야자나무도 사실은 추위에 강한 품종(양치식물 모양의 ‘코르딜리네’ 등)이 많습니다.</div>
+          <div class="stage-card" style="padding:6px 0 4px;margin-top:16px"><div id="wk1"></div></div>
+        </section>
       </div>
-      <div class="miscon loose"><span class="tag">오개념 지도</span><br><b>같은 위도라도 기온이 다르다</b><br>영국, 아이슬란드와 같이 <b>주변에 난류가 흐르는 지역</b>은 같은 위도의 다른 지역에 비해 <b>따뜻하고 기온의 연교차가 작은</b> 경우가 많다. 그래서 약 50°N인 영국의 콘월 지역에서는 야자나무가 자란다. 위도만으로 기후를 판단하지 않도록 한다.<cite>기후변화와 환경생태 교사용 교과서, 오개념 지도</cite></div>
+      <p class="teacher-note">교사용: 주소 끝에 <a href="?open=1">?open=1</a> 을 붙이면 모든 장면이 열립니다.</p>
     </section>
 
-    <!-- TAB1 기후시스템과 상호작용 -->
+    <!-- =====================================================================
+         02 기후시스템과 상호작용 — 이야기 「녹는 얼음, 짙어지는 구름」
+         ===================================================================== -->
     <section class="tab-panel" data-panel="1" hidden>
       <div class="stage-head">
-        <div class="eyebrow">02 · 원인이 결과를 낳고, 결과가 다시 원인에</div>
-        <h2 class="display">기후시스템과 되먹임</h2>
-        <p>되먹임은 하나의 원인이 변화된 결과를 낳고, 그 결과가 다시 초기 원인에 영향을 미치는 과정입니다. 초기 원인을 강화하면 양의 되먹임, 약화하면 음의 되먹임입니다.</p>
-      </div>
-      <div class="stage-card">
-        <div class="controls">
-          <div class="ctrl-group">
-            <div class="ctrl-label">되먹임 유형</div>
-            <div class="seg" id="c1-fb">
-              <button class="on" data-f="pos">양의 되먹임 (증폭)</button>
-              <button data-f="neg">음의 되먹임 (축소)</button>
-            </div>
-          </div>
-        </div>
-        <div class="timeline-wrap">
-          <div class="timeline-track" id="c1-track"></div>
-        </div>
-        <div class="detail-panel" id="c1-detail"></div>
-      </div>
-      <div class="stage-card">
-        <div class="canvas-wrap"><canvas id="c1b" width="900" height="380"></canvas></div>
-        <div class="controls">
-          <div class="ctrl-group" style="flex:1 1 100%">
-            <div class="ctrl-label">되먹임 강도 k (한 단계마다 변화가 (1+k)배로)<span class="val" id="c1b-k-val">0.00</span></div>
-            <input type="range" id="c1b-k" min="-40" max="40" step="1" value="0">
-          </div>
-        </div>
-        <div class="info-card" id="c1b-info"></div>
+        <div class="eyebrow">02 · 기후시스템과 상호작용 · 이야기 한 편</div>
+        <h2 class="display">녹는 얼음, 짙어지는 구름</h2>
+        <p>북극은 지구 평균보다 훨씬 빠르게 더워지고 있습니다. 극지 연구소의 신입 연구원이 되어 그 까닭을 쫓고, 기후시스템 안에서 원인과 결과가 서로를 키우거나 누그러뜨리는 되먹임을 직접 조립해 봅니다.</p>
+        <span class="std-chip">12기환01-02</span><div class="std-note"><b>[12기환01-02]</b> 기후시스템이 유지되는 되먹임 과정을 이해하고 생물권과 다른 권역 간 상호작용을 설명할 수 있다.</div><div class="terms"><b>기후시스템</b><b>양의 되먹임</b><b>음의 되먹임</b><b>반사율(알베도)</b><b>권역 간 상호작용</b></div>
       </div>
 
-      <div class="stage-head">
-        <div class="eyebrow">🔎 미션 · 양의 되먹임 vs 음의 되먹임</div>
-        <h2 class="display" style="font-size:18px;">이 과정은 어떤 되먹임일까?</h2>
+      <div class="episode" id="ep2">
+        <section class="scene" data-title="북극에서 온 경고">
+          <div class="story narr"><div class="who">🧊</div><div class="say"><span class="name">이야기</span>위성 관측이 시작된 1979년, 9월 북극 바다 얼음(해빙)의 면적은 약 <b>700만 km²</b> 였습니다. 2012년 9월에는 약 <b>340만 km²</b> 로 절반 아래까지 줄어 관측 사상 최저를 기록했습니다. 그 사이 북극의 기온은 지구 평균보다 <b>거의 4배</b> 빠르게 올랐다는 연구도 나왔습니다.</div></div>
+          <div class="story"><div class="who">👩‍🔬</div><div class="say"><span class="name">극지 연구원 도하</span>“같은 지구인데 왜 북극만 유독 빨리 더워질까요? 첫 가설부터 세워 봅시다.”</div></div>
+          <div class="gate loose" id="g2"></div>
+        </section>
+
+        <section class="scene" data-title="얼음 거울 — 반사율 실험">
+          <div class="story"><div class="who">👩‍🔬</div><div class="say"><span class="name">도하</span>“얼음은 햇빛을 잘 반사하는 거울이에요. 얼음이 반사하는 비율(반사율)은 약 <b>60%</b>, 어두운 바닷물은 약 <b>6%</b>뿐이죠. 9월 해빙 면적을 바꿔 가며 북극해가 흡수하는 햇빛이 얼마나 달라지는지 확인해 보세요.”</div></div>
+          <div class="stage-card">
+            <div class="canvas-wrap"><canvas id="c-ice" width="900" height="330"></canvas></div>
+            <div class="controls">
+              <div class="ctrl-group" style="flex:1 1 100%">
+                <div class="ctrl-label">9월 북극 해빙 면적 (북극해 약 1,400만 km² 가운데)<span class="val" id="ice-a-val">1,000만 km²</span></div>
+                <input type="range" id="ice-a" min="0" max="14" step="0.1" value="10">
+              </div>
+            </div>
+            <div class="info-card" id="ice-info"></div>
+          </div>
+          <div class="mission" id="m2-2"><span class="m-tag">미션</span>두 해의 해빙 면적을 만들고 흡수량을 비교하세요.<ul><li id="m2-2a">1979년 9월 — 약 700만 km² (6.9 ~ 7.1)</li><li id="m2-2b">2012년 9월 — 약 340만 km² (3.3 ~ 3.5)</li><li id="m2-2c">아래 물음에 답하기</li></ul></div>
+          <div class="stage-card" style="margin-top:14px"><div id="s2-q1"></div></div>
+        </section>
+
+        <section class="scene" data-title="되먹임 조립대 — 키우는 고리, 누르는 고리">
+          <div class="story"><div class="who">👩‍🔬</div><div class="say"><span class="name">도하</span>“이산화 탄소가 늘어 처음에 1 ℃가 올랐다고 합시다. 그 결과가 다시 원인을 <b>키우면 양의 되먹임</b>, <b>누그러뜨리면 음의 되먹임</b>이에요. 고리를 하나씩 켜고 끄면서 최종 기온 상승이 어떻게 되는지 보세요. 고리마다 숫자는 ‘한 바퀴에 앞 변화의 몇 배를 더하는지’입니다.”</div></div>
+          <div class="stage-card">
+            <div class="canvas-wrap"><canvas id="c-fb" width="900" height="340"></canvas></div>
+            <div class="controls" id="fb-ctrl"></div>
+            <div class="info-card" id="fb-info"></div>
+          </div>
+          <div class="mission" id="m2-3"><span class="m-tag">미션</span>되먹임 고리를 조립하세요.<ul><li id="m2-3a">처음 1 ℃ 를 <b>2배(1.9 ℃ 이상)</b>로 키우는 조합</li><li id="m2-3b">처음 1 ℃ 보다 <b>작게</b> 누그러뜨리는 조합</li></ul></div>
+          <div class="stage-card" style="margin-top:14px"><div id="s2-sort"></div></div>
+          <div class="mission" id="m2-3c"><span class="m-tag">미션</span>연구소에 들어온 관측 보고 6건을 양의 되먹임과 음의 되먹임으로 나누세요.</div>
+        </section>
+
+        <section class="scene" data-title="생물권의 손 — 권역 사이를 잇는 생물">
+          <div class="story"><div class="who">👩‍🔬</div><div class="say"><span class="name">도하</span>“기후시스템은 기권·수권·지권·빙권·생물권이 에너지와 물질을 주고받는 하나의 시스템이에요. 되먹임 고리 속에도 생물이 숨어 있었죠(식물의 광합성). 생물권이 어느 권역과 손을 잡는지 정리해 봅시다.”</div></div>
+          <div class="stage-card"><div id="s2-sph"></div></div>
+          <div class="mission" id="m2-4"><span class="m-tag">미션</span>생물권이 다른 권역과 주고받는 일 8가지를 상대 권역별로 나누세요.</div>
+        </section>
+
+        <section class="scene" data-title="결말 — 북극이 빨리 더워지는 까닭">
+          <div class="ending">
+            <h4>🧊 녹은 얼음이 더 녹게 만든다 — 양의 되먹임</h4>
+            <p>해빙이 줄면 반사율이 낮은 바다가 드러나 햇빛을 더 흡수하고, 그 열이 다시 얼음을 녹입니다. 처음 원인(기온 상승)을 키우는 <b>양의 되먹임</b>이 북극에서 특히 강하게 작동하기 때문에 북극이 지구 평균보다 빠르게 더워집니다. 반대로 결과가 원인을 누그러뜨리는 <b>음의 되먹임</b>은 기후시스템이 한쪽으로 치닫지 않게 붙잡아 줍니다. 두 종류의 고리가 어떻게 맞물리느냐에 따라 기후시스템이 유지되거나 변합니다.</p>
+            <div class="vs" id="e2-vs"></div>
+            <span class="stamp">사건 파일 ② 해결</span>
+          </div>
+          <div class="info-card" style="margin:14px 0">📎 과학자의 눈: 조립대의 숫자는 되먹임의 방향과 상대적 크기만 보여 주는 <b>단순화한 값</b>입니다. 특히 구름은 낮은 구름(햇빛 반사, 냉각)과 높은 구름(지구 복사 흡수, 가열)의 효과가 반대라서, 실제로는 구름 전체의 되먹임이 약한 양의 값일 가능성이 크다고 평가됩니다(IPCC 제6차 보고서).</div>
+          <div class="stage-card" style="padding:6px 0 4px;margin-top:16px"><div id="wk2"></div></div>
+        </section>
       </div>
-      <div class="stage-card">
-        <div class="info-card" id="c1m-data"></div>
-        <div class="seg" id="c1m-choices">
-          <button data-c="pos">양의 되먹임(증폭)</button>
-          <button data-c="neg">음의 되먹임(축소)</button>
-        </div>
-        <div class="toggle-row" style="margin:14px 20px;">
-          <button class="btn" id="c1m-check">정답 확인</button>
-          <button class="btn" id="c1m-new">새 문제</button>
-        </div>
-        <div class="info-card" id="c1m-info"></div>
-      </div>
+      <p class="teacher-note">교사용: 주소 끝에 <a href="?open=1">?open=1</a> 을 붙이면 모든 장면이 열립니다.</p>
     </section>
 
-    <!-- TAB2 기후변화와 생태계·생활환경 -->
+    <!-- =====================================================================
+         03 기후변화와 생태계·생활환경 — 이야기 「실잠자리가 북쪽으로 온 까닭」
+         ===================================================================== -->
     <section class="tab-panel" data-panel="2" hidden>
       <div class="stage-head">
-        <div class="eyebrow">03 · 여섯 갈래로 퍼지는 영향</div>
-        <h2 class="display">기후변화와 생태계 및 우리의 생활환경</h2>
-        <p>기후변화는 생태계와 생활환경 여러 분야에 영향을 미칩니다. 카드를 눌러 분야별 사례를 확인해 보세요.</p>
+        <div class="eyebrow">03 · 기후변화와 생태계·생활환경 · 이야기 한 편</div>
+        <h2 class="display">실잠자리가 북쪽으로 온 까닭</h2>
+        <p>경기도 연못에서 남쪽 곤충이 발견되었습니다. 생태 기자가 되어 서식지가 옮겨 간 까닭을 계산하고, 여섯 분야의 피해 사례를 모아 기사를 쓰고, 해수면 상승에 대비하는 해상 도시를 설계합니다.</p>
+        <span class="std-chip">12기환01-03</span><div class="std-note"><b>[12기환01-03]</b> 기후변화가 생태계와 우리의 생활환경에 영향을 미친 사례를 조사하여 발표할 수 있다.</div><div class="terms"><b>서식지 북상</b><b>생물 계절</b><b>돌발 홍수</b><b>곤충 매개 감염병</b><b>해상 도시</b></div>
       </div>
-      <div class="stage-card">
-        <div class="card-grid" id="c2-grid"></div>
-        <div class="detail-panel" id="c2-detail">카드를 클릭하면 자세한 설명이 나타납니다.</div>
+
+      <div class="episode" id="ep3">
+        <section class="scene" data-title="경기도 연못의 낯선 손님">
+          <div class="story narr"><div class="who">🪷</div><div class="say"><span class="name">이야기</span>아열대성 곤충 <b>푸른아시아실잠자리</b>는 원래 남부 지방에서만 발견되었습니다. 그런데 2019년 이후 <b>경기도</b>에서도 발견되기 시작했습니다. 철새 붉은가슴울새도 기존 서식지에서 북쪽으로 약 500 km 옮겨 갔다는 보고가 있습니다.</div></div>
+          <div class="story"><div class="who">🧑‍💼</div><div class="say"><span class="name">편집장</span>“기자님, 이번 기사 제목은 ‘남쪽 손님이 올라온다’예요. 먼저 추측부터 적어 두세요. 사실 확인은 그다음!”</div></div>
+          <div class="gate loose" id="g3"></div>
+        </section>
+
+        <section class="scene" data-title="서식 한계선 — 몇 ℃면 경기도까지 올까">
+          <div class="story"><div class="who">🧑‍🔬</div><div class="say"><span class="name">곤충 연구자</span>“이 모형에서 실잠자리는 <b>연평균 기온 14.6 ℃ 이상</b>인 곳에서만 겨울을 난다고 가정해요. 우리나라는 남쪽에서 북쪽으로 위도 1°마다 연평균 기온이 약 0.8 ℃ 낮아지고요. 한반도 전체 기온을 올려 가며 서식 한계선이 어디까지 올라가는지 보세요.”</div></div>
+          <div class="stage-card">
+            <div class="canvas-wrap"><canvas id="c-map" width="900" height="380"></canvas></div>
+            <div class="controls">
+              <div class="ctrl-group" style="flex:1 1 100%">
+                <div class="ctrl-label">20세기 초보다 오른 연평균 기온<span class="val" id="map-t-val">+0.0 ℃</span></div>
+                <input type="range" id="map-t" min="0" max="3" step="0.1" value="0">
+              </div>
+            </div>
+            <div class="info-card" id="map-info"></div>
+          </div>
+          <div class="mission" id="m3-2"><span class="m-tag">미션</span>서식 한계선이 <b>경기도(북위 37.5°)</b>에 닿되, 아직 <b>북위 38°</b>는 넘지 않게 하는 기온 상승을 찾으세요.</div>
+        </section>
+
+        <section class="scene" data-title="취재 수첩 — 여섯 분야의 피해">
+          <div class="story"><div class="who">🧑‍💼</div><div class="say"><span class="name">편집장</span>“곤충만의 일이 아니에요. 지난 몇 년 동안 들어온 제보를 분야별로 정리해야 기사 틀이 잡힙니다.”</div></div>
+          <div class="stage-card"><div id="s3-sort"></div></div>
+          <div class="mission" id="m3-3"><span class="m-tag">미션</span>제보 12건을 여섯 분야로 나누세요.</div>
+        </section>
+
+        <section class="scene" data-title="해상 도시 설계 — 떠 있는 동네">
+          <div class="story"><div class="who">🏗️</div><div class="say"><span class="name">도시 설계자</span>“부산은 유엔 해비타트와 함께 해수면 상승에 대비한 <b>해상 도시</b>를 계획했어요. 기자님도 설계에 참여해 보세요. 바다 위 부지 한 모듈을 <b>태양광 발전</b>, <b>농장</b>, <b>주거</b>로 나눠야 합니다. 셋 다 기준을 넘겨야 해요.”</div></div>
+          <div class="stage-card"><div id="s3-q1"></div></div>
+          <div class="stage-card" style="margin-top:14px">
+            <div class="canvas-wrap"><canvas id="c-city" width="900" height="330"></canvas></div>
+            <div class="controls">
+              <div class="ctrl-group">
+                <div class="ctrl-label">태양광 발전 면적<span class="val" id="city-s-val">10%</span></div>
+                <input type="range" id="city-s" min="0" max="80" step="1" value="10">
+              </div>
+              <div class="ctrl-group">
+                <div class="ctrl-label">농장 면적<span class="val" id="city-f-val">10%</span></div>
+                <input type="range" id="city-f" min="0" max="80" step="1" value="10">
+              </div>
+            </div>
+            <div class="info-card" id="city-info"></div>
+          </div>
+          <div class="mission" id="m3-4"><span class="m-tag">미션</span>세 기준을 모두 만족하는 설계를 찾으세요.<ul><li id="m3-4a">위 물음에 답하기</li><li id="m3-4b">전력 자급률 100% 이상 · 채소 자급률 60% 이상 · 주민 12,000명이 살 집</li></ul></div>
+        </section>
+
+        <section class="scene" data-title="결말 — 기사를 내보내다">
+          <div class="ending">
+            <h4>📰 “남쪽 손님은 기온을 따라 올라왔다”</h4>
+            <p>기온이 오르면 생물이 살 수 있는 범위(서식 한계선)가 북쪽으로, 높은 곳으로 옮겨 갑니다. 우리나라의 연평균 기온은 1912년부터 2020년까지 약 <b>1.6 ℃</b> 올랐습니다. 영향은 육상·해양·담수 생태계를 넘어 식량과 농업, 주거 환경, 건강과 보건까지 이어집니다. 그래서 기후변화 대응에는 원인을 줄이는 노력과 함께, 해상 도시처럼 달라진 환경에 대비하는 설계도 필요합니다.</p>
+            <div class="vs" id="e3-vs"></div>
+            <span class="stamp">사건 파일 ③ 해결</span>
+          </div>
+          <div class="info-card" style="margin:14px 0">📎 과학자의 눈: 서식 한계선 화면은 ‘연평균 기온 한 가지’만으로 서식 여부를 정한 <b>단순화한 모형</b>입니다(14.6 ℃ 는 모형을 위한 값). 실제 분포는 겨울 최저 기온, 먹이와 서식지, 이동 능력에 따라서도 달라집니다. 해상 도시의 면적 기준도 설계 원리를 보이기 위한 가상의 값입니다.</div>
+          <div class="stage-card" style="padding:6px 0 4px;margin-top:16px"><div id="wk3"></div></div>
+        </section>
       </div>
+      <p class="teacher-note">교사용: 주소 끝에 <a href="?open=1">?open=1</a> 을 붙이면 모든 장면이 열립니다.</p>
     </section>
 
-    <!-- TAB3 창의적 문제 해결 -->
+    <!-- ===================================================================== 04 수준별 문제 -->
     <section class="tab-panel" data-panel="3" hidden>
       <div class="stage-head">
-        <div class="eyebrow">Project · 해수면 상승에 대비하는 해상 도시 설계하기</div>
-        <h2 class="display">지속 가능한 친환경 해상 도시</h2>
-        <p>부산광역시는 유엔 해비타트와 협력해 세계 최초의 해상 도시 건설을 계획하고 있습니다. 해상 도시 설계에 필요한 5가지 분야를 카드로 확인해 보세요.</p>
+        <div class="eyebrow">04 · 기본 · 발전 · 심화</div>
+        <h2 class="display">수준별 문제</h2>
+        <p>이 단원의 학습 목표를 세 단계로 확인합니다. <b>1단계 기본</b>은 용어와 핵심 개념, <b>2단계 발전</b>은 자료 해석과 계산, <b>3단계 심화</b>는 처음 보는 상황에 적용하고 근거를 들어 설명하기입니다. 자기 수준에 맞는 단계부터 시작하세요. 두 번 틀리면 정답과 해설을 볼 수 있어요.</p>
       </div>
-      <div class="stage-card">
-        <div class="card-grid" id="c3-grid"></div>
-        <div class="detail-panel" id="c3-detail">카드를 클릭하면 자세한 설명이 나타납니다.</div>
-      </div>
+      <div id="quiz"></div>
     </section>
 
+    <!-- ===================================================================== 05 응용 실험실 -->
     <section class="tab-panel" data-panel="4" hidden>
       <div class="stage-head">
-        <div class="eyebrow">05 · 오늘 알아낸 것을 문장으로</div>
+        <div class="eyebrow">05 · 배운 것을 처음 보는 상황에</div>
+        <h2 class="display">응용 실험실</h2>
+        <p>이야기에서 찾아낸 개념을 전혀 다른 상황에 써 봅니다. 사례마다 <b>먼저 예상하고 → 직접 조작해 → 판정받고 → 까닭을 확인</b>합니다. 세 번 틀리면 풀이를 볼 수 있어요.</p>
+      </div>
+      <div id="lab"></div>
+    </section>
+
+    <!-- ===================================================================== 06 정리하기 -->
+    <section class="tab-panel" data-panel="5" hidden>
+      <div class="stage-head">
+        <div class="eyebrow">06 · 세 사건을 하나로</div>
         <h2 class="display">정리하기</h2>
-        <p>조작한 것을 말이나 글로 옮기지 않으면 남지 않습니다. 아래를 채우고 <b>답안 복사</b>를 눌러 제출하세요. 쓰는 동안 자동으로 저장됩니다.</p>
+        <p>세 이야기의 결과가 아래에 모입니다. 세 사건을 꿰는 한 문장을 쓰고 <b>답안 복사</b>를 눌러 제출하세요. 쓰는 동안 자동으로 저장됩니다.</p>
       </div>
       <div class="stage-card" style="padding:6px 0 4px"><div id="wk"></div></div>
     </section>
-  
-    <!-- ===================================================================== 06 우리 반 -->
-    <section class="tab-panel" data-panel="5" hidden>
+
+    <!-- ===================================================================== 07 우리 반 -->
+    <section class="tab-panel" data-panel="6" hidden>
       <div class="stage-head">
-        <div class="eyebrow">06 · 같은 반 친구들과 나누기</div>
+        <div class="eyebrow">07 · 같은 반 친구들과 나누기</div>
         <h2 class="display">우리 반</h2>
-        <p>정리하기에 쓴 것을 우리 반에 올리고, 같은 반 친구들이 어디까지 했는지 함께 보세요. <b>올리기 버튼을 눌렀을 때만</b> 공유됩니다. 실명 대신 별명을 쓰고, 글까지 올릴지는 직접 고르세요.</p>
+        <p>내가 해결한 사건과 찾아낸 답을 우리 반에 올리고, 친구들은 어떤 설계를 했는지 살펴보세요. <b>올리기 버튼을 눌렀을 때만</b> 공유됩니다. 실명 대신 별명을 쓰세요.</p>
       </div>
       <div class="stage-card"><div id="share"></div></div>
     </section>
-
   </main>
 </div>
 
 <button class="theme-toggle" id="themeToggle">라이트 모드</button>
-
 <script src="../assets/theme.js"></script>
+<script src="../assets/story.js"></script>
+<script src="../assets/quiz.js"></script>
+<script src="../assets/lab.js"></script>
 <script src="../assets/share-config.js"></script>
 <script src="../assets/share.js"></script>
-<script>
-(function () {
-"use strict";
-
-function buildCardGrid(gridId, detailId, items) {
-  var grid = document.getElementById(gridId);
-  var detail = document.getElementById(detailId);
-  items.forEach(function (it, i) {
-    var btn = document.createElement("button");
-    btn.className = "pick-card" + (i === 0 ? " on" : "");
-    btn.innerHTML = '<div class="pc-ico">' + it.ico + '</div><div class="pc-name">' + it.name + '</div><div class="pc-sub">' + it.sub + '</div>';
-    btn.addEventListener("click", function () {
-      grid.querySelectorAll(".pick-card").forEach(function (b) { b.classList.toggle("on", b === btn); });
-      detail.innerHTML = "<h4>" + it.ico + " " + it.name + "</h4>" + it.detail;
-    });
-    grid.appendChild(btn);
-  });
-  if (items.length) { detail.innerHTML = "<h4>" + items[0].ico + " " + items[0].name + "</h4>" + items[0].detail; }
-}
-
-function buildTimeline(trackId, detailId, items) {
-  var track = document.getElementById(trackId);
-  var detail = document.getElementById(detailId);
-  track.innerHTML = "";
-  var fill = document.createElement("div");
-  fill.className = "timeline-fill";
-  track.appendChild(fill);
-  var dots = [];
-  items.forEach(function (it, i) {
-    var dot = document.createElement("div");
-    dot.className = "timeline-dot" + (i === 0 ? " on" : "");
-    dot.style.left = it.pct + "%";
-    dot.innerHTML = '<span class="td-label">' + it.name + '</span>';
-    dot.addEventListener("click", function () { select(i); });
-    track.appendChild(dot);
-    dots.push(dot);
-  });
-  function select(i) {
-    dots.forEach(function (d, di) { d.classList.toggle("on", di === i); });
-    fill.style.width = items[i].pct + "%";
-    detail.innerHTML = "<h4>" + items[i].name + "</h4>" + items[i].detail;
-  }
-  select(0);
-  return select;
-}
-
-/* TAB0 날씨와 기후 */
-(function () {
-  var wrap = document.getElementById("c0-wrap");
-  var cols = [
-    { name: "날씨", html: "순간순간의 대기 상태로 <b>시시각각 변화</b>합니다. 기온, 강수량, 풍속, 풍향 등 어느 순간의 대기 상태를 말합니다." },
-    { name: "기후", html: "어느 지역의 <b>일정 기간(약 30년) 날씨의 평균 상태</b>입니다. 순간순간 변화하지 않으며, 그 지역의 기상 상태에 대한 기준값 역할을 합니다." }
-  ];
-  cols.forEach(function (c) {
-    var col = document.createElement("div");
-    col.className = "compare-col";
-    col.innerHTML = "<h4>" + c.name + "</h4><p>" + c.html + "</p>";
-    wrap.appendChild(col);
-  });
-  document.getElementById("c0-info").innerHTML = "어느 지역의 하루하루 기온은 큰 폭으로 변화하지만(날씨), 30년 평균 기온의 변화 폭은 훨씬 작습니다(기후). 날씨의 변화와 달리, 그 지역 삶의 변화를 예측하려면 <b>기후</b> 정보가 필요합니다.";
-
-  var items = [
-    { ico: "🌡️", name: "기후요소", sub: "기후를 나타내는 물리량", detail: "기후를 나타내는 물리량인 <b>기온, 강수량, 습도, 풍향, 풍속</b> 등을 기후요소라고 합니다." },
-    { ico: "🗺️", name: "기후인자", sub: "기후요소에 영향을 주는 요인", detail: "기후요소에 영향을 미치는 다양한 요인으로, <b>위도, 수륙 분포, 고도, 지형, 해류</b> 등이 있습니다. 예를 들어 위도가 낮을수록 기온이 높고, 해류가 흐르는 방향에 따라 연안 지역의 기온이 달라집니다." }
-  ];
-  buildCardGrid("c0-grid", "c0-detail", items);
-})();
-
-/* TAB1 되먹임 */
-(function () {
-  var pos = [
-    { pct: 10, name: "① 이산화 탄소 농도 증가", detail: "대기 중 이산화 탄소 농도가 증가하면서 지구의 평균 기온이 상승하기 시작합니다." },
-    { pct: 50, name: "② 수증기 · 온실 기체 증가", detail: "기온이 상승하면 대기 중 <b>수증기의 양이 증가</b>합니다. 수증기도 온실 기체이므로 온실 기체의 양이 더 늘어납니다." },
-    { pct: 90, name: "③ 지구 복사 에너지 흡수 → 기온 재상승", detail: "늘어난 온실 기체가 지구 복사 에너지를 더 많이 흡수하면서 지구의 평균 기온이 <b>더욱 상승</b>합니다. 초기 원인(기온 상승)이 강화되는 <b>양의 되먹임</b>입니다. 영구 동토층이 녹아 메테인이 방출되는 것도 같은 예입니다." }
-  ];
-  var neg = [
-    { pct: 10, name: "① 이산화 탄소 농도 증가", detail: "대기 중 이산화 탄소 농도가 증가하면서 지구의 평균 기온이 상승하기 시작합니다." },
-    { pct: 50, name: "② 구름의 양 증가", detail: "기온이 상승하면 수증기가 증가하고 <b>구름의 양도 증가</b>합니다." },
-    { pct: 90, name: "③ 태양 빛 반사량 증가 → 기온 하강", detail: "늘어난 구름이 태양 빛(에너지)을 더 많이 반사하면서 지구의 평균 기온이 <b>하강</b>합니다. 초기 원인(기온 상승)이 약화되는 <b>음의 되먹임</b>입니다. 산불로 늘어난 에어로졸이 지구 반사율을 높이는 것도 같은 예입니다." }
-  ];
-  var select = buildTimeline("c1-track", "c1-detail", pos);
-  document.querySelectorAll("#c1-fb button").forEach(function (b) {
-    b.addEventListener("click", function () {
-      document.querySelectorAll("#c1-fb button").forEach(function (x) { x.classList.toggle("on", x === b); });
-      select = buildTimeline("c1-track", "c1-detail", b.getAttribute("data-f") === "pos" ? pos : neg);
-    });
-  });
-})();
-
-/* TAB0b 날씨-기후 평균 기간 시뮬레이터 */
-(function () {
-  var canvas = document.getElementById("c0b");
-  var ctx = setupCanvas(canvas);
-  var W = canvas._w, H = canvas._h;
-  var info = document.getElementById("c0b-info");
-  var N = 3650;
-
-  function seededRandom(seed) { var s = seed; return function () { s = (s * 9301 + 49297) % 233280; return s / 233280; }; }
-  function gaussian(rnd) { var u1 = Math.max(1e-6, rnd()), u2 = rnd(); return Math.sqrt(-2 * Math.log(u1)) * Math.cos(2 * Math.PI * u2); }
-  var rnd = seededRandom(11);
-  var daily = [];
-  for (var d = 0; d < N; d++) {
-    daily.push(15 + 10 * Math.sin(2 * Math.PI * d / 365 - Math.PI / 2) + 3 * gaussian(rnd));
-  }
-  // prefix sum for fast moving average
-  var prefix = [0];
-  for (var i = 0; i < N; i++) prefix.push(prefix[i] + daily[i]);
-  function movingAvgAt(center, win) {
-    var half = Math.floor(win / 2);
-    var lo = Math.max(0, center - half), hi = Math.min(N - 1, center + half);
-    return (prefix[hi + 1] - prefix[lo]) / (hi - lo + 1);
-  }
-
-  var win = 1;
-  document.getElementById("c0b-w").addEventListener("input", function (e) {
-    win = +e.target.value;
-    document.getElementById("c0b-w-val").textContent = win;
-    render();
-  });
-
-  function render() {
-    ctx.clearRect(0, 0, W, H);
-    ctx.fillStyle = cssVar("--panel"); ctx.fillRect(0, 0, W, H);
-    var x0 = 60, x1 = W - 30, y0 = 30, y1 = H - 50;
-    ctx.strokeStyle = cssVar("--line"); ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(x0, y1); ctx.lineTo(x1, y1); ctx.stroke();
-    var minT = -5, maxT = 30;
-    function yOf(t) { return y1 - (t - minT) / (maxT - minT) * (y1 - y0); }
-
-    // raw daily series (light)
-    ctx.beginPath();
-    for (var px = 0; px < 400; px++) {
-      var day = Math.floor(px / 400 * N);
-      var xx = x0 + px / 400 * (x1 - x0);
-      var yy = yOf(daily[day]);
-      if (px === 0) ctx.moveTo(xx, yy); else ctx.lineTo(xx, yy);
-    }
-    ctx.strokeStyle = cssVar("--mist"); ctx.globalAlpha = 0.45; ctx.lineWidth = 1; ctx.stroke(); ctx.globalAlpha = 1;
-
-    // averaged series (bold)
-    var series = [];
-    ctx.beginPath();
-    for (var px2 = 0; px2 < 400; px2++) {
-      var day2 = Math.floor(px2 / 400 * N);
-      var v = movingAvgAt(day2, win);
-      series.push(v);
-      var xx2 = x0 + px2 / 400 * (x1 - x0), yy2 = yOf(v);
-      if (px2 === 0) ctx.moveTo(xx2, yy2); else ctx.lineTo(xx2, yy2);
-    }
-    ctx.strokeStyle = cssVar("--coral"); ctx.lineWidth = 2.5; ctx.stroke();
-
-    ctx.font = "11px Segoe UI"; ctx.fillStyle = cssVar("--mist"); ctx.textAlign = "left";
-    ctx.fillText("day 0", x0, y1 + 22);
-    ctx.textAlign = "right"; ctx.fillText("day " + N + " (약 10년)", x1, y1 + 22);
-
-    var mean = series.reduce(function (a, b) { return a + b; }, 0) / series.length;
-    var variance = series.reduce(function (a, b) { return a + (b - mean) * (b - mean); }, 0) / series.length;
-    var sd = Math.sqrt(variance);
-    var rawMean = daily.reduce(function (a, b) { return a + b; }, 0) / daily.length;
-    var rawSd = Math.sqrt(daily.reduce(function (a, b) { return a + (b - rawMean) * (b - rawMean); }, 0) / daily.length);
-
-    info.innerHTML = win === 1
-      ? "평균 기간이 <b>1일</b>일 때는 매일의 기온이 그대로 나타나는 <b>날씨</b> 자체입니다. 이 하루하루 값들의 표준편차는 약 <b>" + rawSd.toFixed(2) + "°C</b>로 변동 폭이 큽니다."
-      : "평균 기간을 <b>" + win + "일</b>로 늘리면 짧은 변동은 사라지고 완만한 곡선이 됩니다. 이 평균값들의 표준편차는 약 <b>" + sd.toFixed(2) + "°C</b>로, 1일 평균(날씨)의 표준편차(" + rawSd.toFixed(2) + "°C)보다 크게 줄었습니다. 실제 기후는 <b>30년(약 10950일)</b> 평균을 사용해 변동 폭을 훨씬 더 줄인 값입니다.";
-  }
-  render();
-})();
-
-/* TAB1b 되먹임 증폭 계산기 */
-(function () {
-  var canvas = document.getElementById("c1b");
-  var ctx = setupCanvas(canvas);
-  var W = canvas._w, H = canvas._h;
-  var info = document.getElementById("c1b-info");
-  var kPct = 0;
-  document.getElementById("c1b-k").addEventListener("input", function (e) {
-    kPct = +e.target.value;
-    document.getElementById("c1b-k-val").textContent = (kPct / 100).toFixed(2);
-    render();
-  });
-
-  var STEPS = 8;
-  function series(kPctVal) {
-    var k = kPctVal / 100;
-    var vals = [1];
-    for (var n = 1; n <= STEPS; n++) vals.push(vals[n - 1] * (1 + k));
-    return vals;
-  }
-
-  function render() {
-    ctx.clearRect(0, 0, W, H);
-    ctx.fillStyle = cssVar("--panel"); ctx.fillRect(0, 0, W, H);
-    var vals = series(kPct);
-    var x0 = 60, x1 = W - 30, y0 = 30, y1 = H - 50;
-    var maxAbs = Math.max(2, Math.max.apply(null, vals.map(Math.abs)));
-    ctx.strokeStyle = cssVar("--line"); ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(x0, y1); ctx.lineTo(x1, y1); ctx.stroke();
-    function yOf(v) { return y1 - (v / maxAbs) * (y1 - y0) * 0.9; }
-    function xOf(n) { return x0 + n / STEPS * (x1 - x0); }
-
-    ctx.beginPath();
-    vals.forEach(function (v, n) {
-      var xx = xOf(n), yy = yOf(v);
-      if (n === 0) ctx.moveTo(xx, yy); else ctx.lineTo(xx, yy);
-    });
-    ctx.strokeStyle = kPct > 0 ? cssVar("--coral") : (kPct < 0 ? cssVar("--teal") : cssVar("--mist"));
-    ctx.lineWidth = 2.5; ctx.stroke();
-    vals.forEach(function (v, n) {
-      ctx.beginPath(); ctx.arc(xOf(n), yOf(v), 4, 0, 7);
-      ctx.fillStyle = kPct > 0 ? cssVar("--coral") : (kPct < 0 ? cssVar("--teal") : cssVar("--mist"));
-      ctx.fill();
-    });
-    ctx.font = "11px Segoe UI"; ctx.fillStyle = cssVar("--mist"); ctx.textAlign = "left";
-    ctx.fillText("단계 0(초기 원인)", x0, y1 + 22);
-    ctx.textAlign = "right"; ctx.fillText("단계 " + STEPS, x1, y1 + 22);
-
-    var final = vals[STEPS];
-    var kind = kPct > 0 ? "양의 되먹임(증폭)" : (kPct < 0 ? "음의 되먹임(축소)" : "되먹임 없음");
-    info.innerHTML = "되먹임 강도 k = <b>" + (kPct / 100).toFixed(2) + "</b>일 때, 초기 변화(=1)가 " + STEPS + "단계 후 <b>" + final.toFixed(2) + "배</b>가 됩니다. 이는 <b>" + kind + "</b>에 해당합니다. " + (kPct > 0 ? "수증기·온실 기체 증가처럼 초기 원인을 계속 강화하면 변화가 기하급수적으로 커집니다." : kPct < 0 ? "구름 반사처럼 초기 원인을 약화시키는 작용이 있으면 변화가 점점 줄어듭니다." : "강화도 축소도 없이 초기 변화가 그대로 유지됩니다.");
-  }
-  render();
-})();
-
-/* TAB1 미션 — 양의/음의 되먹임 구별 */
-(function () {
-  var qa = [
-    { txt: "기온이 상승해 수증기(온실 기체)가 늘어나고, 늘어난 온실 기체가 복사 에너지를 더 흡수해 기온이 더욱 상승한다.", key: "pos" },
-    { txt: "기온이 상승해 구름이 늘어나고, 늘어난 구름이 태양 빛을 더 많이 반사해 기온이 다시 낮아진다.", key: "neg" },
-    { txt: "영구 동토층이 녹으면서 메테인이 방출되어 온실 효과가 커지고 기온이 더 올라간다.", key: "pos" },
-    { txt: "해빙(빙하)이 녹아 어두운 바다 표면이 드러나면 태양 에너지 흡수가 늘어 기온이 더 상승하고 얼음이 더 빨리 녹는다.", key: "pos" },
-    { txt: "산불로 늘어난 에어로졸이 지구 반사율을 높여 기온 상승이 억제된다.", key: "neg" },
-    { txt: "기온이 상승하면 식물의 광합성이 활발해져 대기 중 이산화 탄소를 더 많이 흡수해 온실 효과가 줄어든다.", key: "neg" }
-  ];
-  var labels = { pos: "양의 되먹임(증폭)", neg: "음의 되먹임(축소)" };
-  var dataBox = document.getElementById("c1m-data");
-  var seg = document.getElementById("c1m-choices");
-  var checkBtn = document.getElementById("c1m-check");
-  var newBtn = document.getElementById("c1m-new");
-  var info = document.getElementById("c1m-info");
-  var current = null, picked = null;
-
-  function newQuestion() {
-    current = qa[Math.floor(Math.random() * qa.length)];
-    picked = null;
-    dataBox.innerHTML = current.txt;
-    seg.querySelectorAll("button").forEach(function (x) { x.classList.remove("on"); });
-    info.innerHTML = "";
-    info.style.color = "";
-  }
-
-  seg.querySelectorAll("button").forEach(function (btn) {
-    btn.addEventListener("click", function () {
-      picked = btn.dataset.c;
-      seg.querySelectorAll("button").forEach(function (x) { x.classList.toggle("on", x === btn); });
-    });
-  });
-
-  checkBtn.addEventListener("click", function () {
-    if (!picked) { info.innerHTML = "먼저 보기를 하나 선택하세요."; info.style.color = "var(--coral)"; return; }
-    if (picked === current.key) {
-      info.innerHTML = "✅ 정답! '" + labels[current.key] + "'입니다.";
-      info.style.color = "var(--teal)";
-    } else {
-      info.innerHTML = "❌ 틀렸습니다. 정답은 '" + labels[current.key] + "' 입니다.";
-      info.style.color = "var(--coral)";
-    }
-  });
-
-  newBtn.addEventListener("click", newQuestion);
-  newQuestion();
-})();
-
-/* TAB2 기후변화 영향 6분야 */
-(function () {
-  var items = [
-    { ico: "🦋", name: "육상생태계", sub: "서식지 이동", detail: "아열대성 곤충 <b>푸른아시아실잠자리</b>가 남부 지방에서 발견되다 2019년 이후 경기도까지 북상했습니다. 붉은가슴울새 등 철새도 기존 서식지에서 북쪽으로 500 km 정도 이동했습니다." },
-    { ico: "🐧", name: "해양생태계", sub: "빙하 감소와 개체 수 감소", detail: "2022년 남극 바다 얼음이 급격히 감소하면서 새끼 황제펭귄 약 1만 마리가 목숨을 잃었습니다. 바다 얼음이 사라질수록 황제펭귄의 개체 수는 더 줄어들 것으로 예상됩니다." },
-    { ico: "🐸", name: "담수생태계", sub: "산란 시기 변화", detail: "기후변화로 온도가 올라가면서 두꺼비의 산란 시기가 빨라지고, 섬진강 인근에 서식하는 종의 분포도 달라지고 있습니다." },
-    { ico: "🌾", name: "식량과 농업", sub: "가격 폭등과 병충해", detail: "2023년 인도에서는 폭우와 폭염이 번갈아 나타나 토마토 가격이 두 달 만에 4배로 뛰었습니다. 2020년 소말리아에서는 많은 비로 메뚜기 떼가 발생해 농작물이 큰 피해를 입었습니다." },
-    { ico: "🏠", name: "주거 환경", sub: "돌발 홍수와 침수", detail: "짧은 시간 동안 많은 비가 내리는 '돌발홍수'가 늘고 있습니다. 2020년 7월 대전에서는 폭우가 집중되어 주택과 도로가 물에 잠겼고, 미국에서는 돌발홍수 피해 규모가 32조 원에 이르렀습니다." },
-    { ico: "🏥", name: "건강과 보건", sub: "온열질환과 감염병 확산", detail: "폭염은 온열질환자를 늘리고 사망률을 높이며 정신 건강에도 악영향을 미칩니다. 질병을 매개하는 곤충의 서식지가 확대되어 곤충 매개 감염병이 확산되고, 홍수로 콜레라 같은 설사병도 증가합니다." }
-  ];
-  buildCardGrid("c2-grid", "c2-detail", items);
-})();
-
-/* TAB3 해상 도시 설계 5분야 */
-(function () {
-  var items = [
-    { ico: "🏗️", name: "건축물 · 도로", sub: "생활 기반 시설", detail: "주택, 학교, 병원, 공원 등 생활에 필수적인 건축물과 도로를 갖추어야 합니다." },
-    { ico: "⚡", name: "에너지 · 물 공급", sub: "자급자족", detail: "에너지와 물을 자체적으로 공급할 수 있는 시설이 필요합니다." },
-    { ico: "🌱", name: "식량 생산", sub: "농작물 재배", detail: "해상 도시 안에서 농작물을 재배할 수 있는 시설을 갖추어야 합니다." },
-    { ico: "♻️", name: "자원 재활용", sub: "하수·폐기물 처리", detail: "하수 및 폐기물을 처리하고, 모든 자원을 재활용할 수 있어야 합니다." },
-    { ico: "🌊", name: "자연 재해 대응", sub: "태풍·쓰나미 대비", detail: "태풍이나 쓰나미와 같은 자연재해를 견디는 것도 중요한 조건입니다. 해양생태계에 미치는 영향을 최소화하는 친환경 설계가 필요합니다." }
-  ];
-  buildCardGrid("c3-grid", "c3-detail", items);
-})();
-
-})();
-</script>
-
-<script>
-(function () {
-  window.sthUnit("cce-1");
-  window.sthWork({
-    mount: "wk",
-    unitLabel: "[기후변화와 환경생태 Ⅰ] 기후와 환경생태의 특성",
-    items: [
-      {
-            "id": "w1",
-            "label": "날씨와 기후를 가르는 것",
-            "hint": "두 말의 차이를 시간 규모로 설명하고, 각각의 예를 하나씩 드세요.",
-            "ph": ""
-      },
-      {
-            "id": "w2",
-            "label": "되먹임 고리 하나",
-            "hint": "양의 되먹임 또는 음의 되먹임 하나를 골라, 무엇이 무엇을 강화하거나 약화하는지 순서대로 쓰세요.",
-            "ph": "① … → ② … → ③ … → 다시 ①"
-      },
-      {
-            "id": "w3",
-            "label": "아직 헷갈리는 것",
-            "hint": "다음 시간에 여기서부터 시작합니다.",
-            "ph": ""
-      }
-]
-  });
-  window.sthShare({
-    mount: "share",
-    unit: "cce-1",
-    unitLabel: "[기후변화와 환경생태 Ⅰ] 기후와 환경생태의 특성",
-    works: [
-      { id: "w1", label: "날씨와 기후를 가르는 것" },
-      { id: "w2", label: "되먹임 고리 하나" }
-    ]
-  });
-})();
-</script>
+<script src="episodes.js"></script>
+<script src="quiz-items.js"></script>
+<script src="lab-cases.js"></script>
 </body>
 </html>
