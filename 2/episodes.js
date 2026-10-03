@@ -737,7 +737,8 @@ window.sthWork({
     { key: "r3", label: "③ 39만 봉군이 사라진 겨울" },
     { key: "r4", label: "④ 초록 강, 여름 모기" },
     { key: "rQuiz", label: "수준별 문제" },
-    { key: "rLab", label: "응용 실험실" }
+    { key: "rLab", label: "응용 실험실" },
+    { key: "rReal", label: "실제 자료" }
   ],
   items: [
     { id: "all", label: "네 사건을 꿰는 한 문장", hint: "바다, 날씨, 꿀벌, 강과 모기. 네 이야기에 공통으로 들어 있는 원인과 그 영향을 한 문장으로 이어 보세요." },
@@ -754,7 +755,8 @@ window.sthShare({
     { key: "r3", label: "③ 39만 봉군이 사라진 겨울" },
     { key: "r4", label: "④ 초록 강, 여름 모기" },
     { key: "rQuiz", label: "수준별 문제" },
-    { key: "rLab", label: "응용 실험실" }
+    { key: "rLab", label: "응용 실험실" },
+    { key: "rReal", label: "실제 자료" }
   ],
   line: { id: "all", label: "네 사건을 꿰는 한 문장" }
 });

@@ -535,7 +535,8 @@ window.sthWork({
     { key: "r2", label: "② 녹는 얼음, 짙어지는 구름" },
     { key: "r3", label: "③ 실잠자리가 북쪽으로 온 까닭" },
     { key: "rQuiz", label: "수준별 문제" },
-    { key: "rLab", label: "응용 실험실" }
+    { key: "rLab", label: "응용 실험실" },
+    { key: "rReal", label: "실제 자료" }
   ],
   items: [
     { id: "all", label: "세 사건을 꿰는 한 문장", hint: "야자나무, 북극 얼음, 실잠자리. 세 이야기를 ‘기후’, ‘상호작용’, ‘생태계’라는 말을 넣어 한 문장으로 이어 보세요." },
@@ -551,7 +552,8 @@ window.sthShare({
     { key: "r2", label: "② 녹는 얼음, 짙어지는 구름" },
     { key: "r3", label: "③ 실잠자리가 북쪽으로 온 까닭" },
     { key: "rQuiz", label: "수준별 문제" },
-    { key: "rLab", label: "응용 실험실" }
+    { key: "rLab", label: "응용 실험실" },
+    { key: "rReal", label: "실제 자료" }
   ],
   line: { id: "all", label: "세 사건을 꿰는 한 문장" }
 });
