@@ -644,7 +644,8 @@ window.sthWork({
     { key: "r3", label: "③ 저울 위의 탄소" },
     { key: "r4", label: "④ 8%의 약속" },
     { key: "rQuiz", label: "수준별 문제" },
-    { key: "rLab", label: "응용 실험실" }
+    { key: "rLab", label: "응용 실험실" },
+    { key: "rReal", label: "실제 자료" }
   ],
   items: [
     { id: "all", label: "네 사건을 꿰는 한 문장", hint: "산호, 재해, 탄소 저울, 탄소예산. 네 이야기를 ‘피해’와 ‘대응’이라는 말을 넣어 한 문장으로 이어 보세요." },
@@ -661,7 +662,8 @@ window.sthShare({
     { key: "r3", label: "③ 저울 위의 탄소" },
     { key: "r4", label: "④ 8%의 약속" },
     { key: "rQuiz", label: "수준별 문제" },
-    { key: "rLab", label: "응용 실험실" }
+    { key: "rLab", label: "응용 실험실" },
+    { key: "rReal", label: "실제 자료" }
   ],
   line: { id: "all", label: "네 사건을 꿰는 한 문장" }
 });
