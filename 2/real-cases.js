@@ -45,7 +45,7 @@ window.sthLab({
       cv.canvas._redraw = draw;
       api.slider({ label: "한 해 해수면 상승량", min: 0, max: 8, step: 0.1, value: 1, fmt: function (x) { return x.toFixed(1) + " mm/년"; }, onInput: function (x) { sl = x; api.changed(); draw(); } });
       api.info("점은 약 열흘마다 잰 값입니다. " + SRC
-        + "<div data-link='{\"id\":\"nasa-sealevel\",\"title\":\"NASA 기후 — 해수면 상승\",\"src\":\"미국 항공우주국\",\"url\":\"https://science.nasa.gov/earth/explore/earth-indicators/sea-level/\",\"ask\":\"1993년 이후 지구 평균 해수면이 몇 mm 올랐다고 하는지 찾아, 이 그래프의 마지막 값과 비교해 오세요.\"}'></div>");
+        + "<div data-link='{\"id\":\"nasa-svs-sealevel\",\"title\":\"NASA — 창문으로 본 해수면 (교과서 연결 자료)\",\"src\":\"NASA 과학 시각화 스튜디오 · 비상교육 기후변화와 환경생태 191쪽\",\"url\":\"https://svs.gsfc.nasa.gov/5114\",\"ask\":\"1993 ~ 2022년 동안 둥근 창 너머로 물이 얼마나 차오르는지 영상을 보고, 이 사례에서 구한 상승량(30년에 약 10 cm)과 견주어 한 문장으로 적어 오세요.\"}'></div>");
       draw();
       return {
         judge: function () {
