@@ -77,7 +77,7 @@ function segWire(id, onPick) {
     function update() {
       var d = draw();
       $("avg-info").innerHTML = win === 1
-        ? "평균 기간 <b>1일</b> — 매일의 기온 그대로, 곧 <b>날씨</b>입니다. 변동 폭이 약 <b>" + rawSd.toFixed(1) + " ℃</b> 로 큽니다."
+        ? "평균 기간 <b>1일</b> — 매일의 기온 그대로, 곧 <b>날씨</b>입니다. 변동 폭이 약 <b>" + rawSd.toFixed(1) + " ℃</b>로 큽니다."
         : "평균 기간 <b>" + win + "일</b> — 변동 폭 <b>" + d.toFixed(2) + " ℃</b>. " + (win < 300 ? "짧은 변동은 사라졌지만 여름·겨울의 큰 물결(계절 변화)은 남아 있습니다." : (d < 0.5 ? "계절 변화까지 지워져 거의 평평합니다. 실제 기후는 이보다 훨씬 긴 <b>30년(약 10,950일)</b> 평균을 씁니다." : "1년의 배수에서 조금 벗어나면 계절의 흔적이 다시 나타납니다."));
       var ch = false;
       if (win === 1 && !got.a) { got.a = ch = true; }
@@ -86,7 +86,7 @@ function segWire(id, onPick) {
     }
     function mission() {
       if (got.a) done("m1-2a"); if (got.b) done("m1-2b");
-      if (got.a && got.b) { window.sthMission("m1-2", true, "<span class='m-tag'>미션 완료</span>약 <b>1년(" + (got.w || 365) + "일)</b> 을 평균하면 계절 변화까지 지워집니다. 날씨는 날마다 크게 변하지만, 여러 해를 평균한 <b>기후</b>는 거의 변하지 않는 기준값이 됩니다."); ep.clear(1); }
+      if (got.a && got.b) { window.sthMission("m1-2", true, "<span class='m-tag'>미션 완료</span>약 <b>1년(" + (got.w || 365) + "일)</b>을 평균하면 계절 변화까지 지워집니다. 날씨는 날마다 크게 변하지만, 여러 해를 평균한 <b>기후</b>는 거의 변하지 않는 기준값이 됩니다."); ep.clear(1); }
     }
     canvas._redraw = draw;
     $("avg-w").addEventListener("input", function (e) { win = +e.target.value; $("avg-w-val").textContent = win + "일"; update(); });
@@ -153,7 +153,7 @@ function segWire(id, onPick) {
     }
     function update() {
       var r = draw(), inLat = lat >= 45 && lat <= 55, ch = false;
-      $("cl-info").innerHTML = "바다는 육지보다 천천히 데워지고 천천히 식어 겨울을 덜 춥게, 여름을 덜 덥게 만듭니다. 난류는 연안을 데우고 한류는 식힙니다. " + (inLat ? "" : "<b>미션은 북위 45~55° 에서 판정합니다.</b>");
+      $("cl-info").innerHTML = "바다는 육지보다 천천히 데워지고 천천히 식어 겨울을 덜 춥게, 여름을 덜 덥게 만듭니다. 난류는 연안을 데우고 한류는 식힙니다. " + (inLat ? "" : "<b>미션은 북위 45~55°에서 판정합니다.</b>");
       if (inLat && r.jan >= 4 && r.rng <= 14 && !got.a) { got.a = ch = true; got.ta = CN[cur] + ", 해안에서 " + cont + "%"; }
       if (inLat && r.jan <= -15 && r.rng >= 35 && !got.b) { got.b = ch = true; got.tb = CN[cur] + ", 해안에서 " + cont + "%"; }
       if (ch) { window.sthState("climGot", got); mission(); }
@@ -179,7 +179,7 @@ function segWire(id, onPick) {
   function vs() {
     var p = window.sthState("p1") || "";
     $("e1-vs").innerHTML = "<b>나의 첫 추리</b> " + (p || "기록 없음") + "<br>" +
-      (p.indexOf("㉢") === 0 ? "처음부터 정확했습니다. 이제 평균 기온 자료와 모형으로 증거까지 갖췄습니다." : "하루의 날씨나 위도만으로는 설명되지 않았지요. 30년 평균(기후)과 기후인자를 함께 봐야 합니다.");
+      (p.indexOf("㉢") === 0 ? "처음부터 정확했습니다. 이제 평균 기온 자료와 모형으로 증거까지 갖췄습니다." : "하루의 날씨나 위도만으로는 설명되지 않았습니다. 30년 평균(기후)과 기후인자를 함께 봐야 합니다.");
   }
   ep.onShow(function (i) { if (i === 4) vs(); });
   if (ep.at() === 4) vs();
@@ -251,7 +251,7 @@ function segWire(id, onPick) {
       q: "해빙이 녹아 흡수량이 늘면, 그다음에는 무슨 일이 일어날까요?",
       options: ["바다가 더 데워져 얼음이 더 녹고, 흡수량이 또 늘어난다", "흡수량이 늘면 곧바로 얼음이 다시 언다", "해빙 면적은 기온과 관계없다"],
       answer: 0,
-      why: ["결과(흡수 증가)가 원인(기온 상승·얼음 감소)을 다시 키우는 <b>양의 되먹임</b>입니다.", "더 많이 흡수하면 더 따뜻해집니다. 얼음이 다시 얼 까닭이 없어요.", "막대가 움직이는 것을 보았지요? 얼음 면적이 흡수량을 바꾸고, 흡수량이 기온을 바꿉니다."],
+      why: ["결과(흡수 증가)가 원인(기온 상승·얼음 감소)을 다시 키우는 <b>양의 되먹임</b>입니다.", "더 많이 흡수하면 더 따뜻해집니다. 얼음이 다시 얼 까닭이 없습니다.", "막대가 움직이는 것을 보았지요? 얼음 면적이 흡수량을 바꾸고, 흡수량이 기온을 바꿉니다."],
       onDone: function () { got.q = true; window.sthState("iceGot", got); mission(); }
     });
     update(); mission();
@@ -301,7 +301,7 @@ function segWire(id, onPick) {
     function update() {
       var r = draw(), ch = false;
       var names = LOOPS.filter(function (L) { return on[L.id]; }).map(function (L) { return L.t.replace(/^\S+\s/, ""); });
-      $("fb-info").innerHTML = (names.length ? "켠 고리: " + names.join(", ") + " → 합친 되먹임 <b>" + (r.g >= 0 ? "+" : "") + r.g.toFixed(2) + "</b>, 최종 기온 상승 <b>" + r.fin.toFixed(2) + " ℃</b>. " : "아직 켠 고리가 없습니다. 처음 1 ℃ 가 그대로입니다. ") +
+      $("fb-info").innerHTML = (names.length ? "켠 고리: " + names.join(", ") + " → 합친 되먹임 <b>" + (r.g >= 0 ? "+" : "") + r.g.toFixed(2) + "</b>, 최종 기온 상승 <b>" + r.fin.toFixed(2) + " ℃</b>. " : "아직 켠 고리가 없습니다. 처음 1 ℃가 그대로입니다. ") +
         (r.g > 0 ? "결과가 원인을 키우는 <b>양의 되먹임</b> — 바퀴마다 덧붙는 양은 줄지만 합은 처음보다 커집니다." : (r.g < 0 ? "결과가 원인을 누르는 <b>음의 되먹임</b> — 변화가 처음보다 작아집니다." : ""));
       if (r.fin >= 1.9 && !got.a) { got.a = ch = true; }
       if (r.fin < 0.999 && !got.b) { got.b = ch = true; }
@@ -413,7 +413,7 @@ function segWire(id, onPick) {
     }
     function update() {
       var L = draw();
-      $("map-info").innerHTML = "위도 1°마다 약 0.8 ℃ 낮아지므로, 전체 기온이 0.8 ℃ 오르면 같은 기온의 선이 북쪽으로 약 1° (약 111 km) 옮겨 갑니다. 지금 한계선은 <b>북위 " + L.toFixed(2) + "°</b> 입니다.";
+      $("map-info").innerHTML = "위도 1°마다 약 0.8 ℃ 낮아지므로, 전체 기온이 0.8 ℃ 오르면 같은 기온의 선이 북쪽으로 약 1° (약 111 km) 옮겨 갑니다. 지금 한계선은 <b>북위 " + L.toFixed(2) + "°</b>입니다.";
       if (L >= 37.5 && L < 38 && !ep.cleared(1)) {
         window.sthState("mapBest", "+" + dT.toFixed(1) + " ℃ → 한계선 북위 " + L.toFixed(2) + "°");
         window.sthMission("m3-2", true, "<span class='m-tag'>미션 완료</span>기온이 <b>+" + dT.toFixed(1) + " ℃</b> 오르면 한계선이 경기도까지 올라옵니다. 실제로 우리나라 연평균 기온은 1912~2020년에 약 <b>1.6 ℃</b> 올랐습니다.");
@@ -486,7 +486,7 @@ function segWire(id, onPick) {
     }
     function update() {
       var r = draw(), ok = r.pow >= 100 && r.food >= 60 && r.people >= 12000 && r.h >= 0;
-      $("city-info").innerHTML = "태양광 1% 마다 전력 약 3.3%, 농장 1% 마다 채소 3%, 남은 면적 1% 마다 주민 300명이 살 수 있다고 가정했습니다. 한쪽을 늘리면 다른 쪽이 줄어듭니다.";
+      $("city-info").innerHTML = "태양광 1%마다 전력 약 3.3%, 농장 1%마다 채소 3%, 남은 면적 1%마다 주민 300명이 살 수 있다고 가정했습니다. 한쪽을 늘리면 다른 쪽이 줄어듭니다.";
       if (q) done("m3-4a");
       if (ok) { done("m3-4b"); window.sthState("cityBest", "태양광 " + s + "% · 농장 " + f + "% · 주거 " + r.h + "%"); window.sthState("cityOk", 1); }
       mission();
