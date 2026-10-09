@@ -130,8 +130,8 @@ function segWire(id, attr, onPick) {
     function mission() {
       if (got.a) done("m1-2a"); if (got.b) done("m1-2b");
       if (got.a && got.b) {
-        window.sthState("dhwBest", "+1.0 °C 는 " + got.wa + "주면 백화 시작 · " + got.cb + " 이면 대량 폐사");
-        window.sthMission("m1-2", true, "<span class='m-tag'>미션 완료</span>+1 °C 도 <b>4주</b>면 백화가 시작됩니다. 높은 수온과 긴 기간이 곱해져 열스트레스가 쌓입니다.");
+        window.sthState("dhwBest", "+1.0 °C는 " + got.wa + "주면 백화 시작 · " + got.cb + " 이면 대량 폐사");
+        window.sthMission("m1-2", true, "<span class='m-tag'>미션 완료</span>+1 °C도 <b>4주</b>면 백화가 시작됩니다. 높은 수온과 긴 기간이 곱해져 열스트레스가 쌓입니다.");
         ep.clear(1);
       }
     }
@@ -187,14 +187,14 @@ function segWire(id, attr, onPick) {
   function finish() { window.sthState("r1", "해결 · " + (window.sthState("reefBest") || "") + " / " + (window.sthState("dhwBest") || "")); }
   function vs() {
     var p = window.sthState("coral") || "";
-    $("e1-vs").innerHTML = "<b>나의 첫 예상</b> " + (p || "기록 없음") + (p.indexOf("㉡") === 0 ? " — 정확했습니다. 1 °C × 4주 = DHW 4." : " — 실제로는 1 °C 로 4주면 DHW 4, 백화가 시작됩니다.") + "<br><b>회복 계산</b> " + (window.sthState("reefBest") || "-");
+    $("e1-vs").innerHTML = "<b>나의 첫 예상</b> " + (p || "기록 없음") + (p.indexOf("㉡") === 0 ? " — 정확했습니다. 1 °C × 4주 = DHW 4." : " — 실제로는 1 °C로 4주면 DHW 4, 백화가 시작됩니다.") + "<br><b>회복 계산</b> " + (window.sthState("reefBest") || "-");
   }
   ep.onShow(function (i) { if (i === 4) vs(); });
   if (ep.at() === 4) vs();
   window.sthWork({
     mount: "wk1", unitLabel: "[기후변화와 환경생태 Ⅲ] 이야기 ① 하얗게 변한 산호초",
     items: [
-      { id: "w1", label: "온도만이 아니라 기간이 문제인 까닭", hint: "수온 편차와 기간을 각각 바꿔 보고, 어느 쪽이 DHW를 더 크게 만드는지 근거와 함께 쓰세요.", ph: "+2 °C 로 2주 두었을 때와 +1 °C 로 4주 두었을 때를 비교하면 …" },
+      { id: "w1", label: "온도만이 아니라 기간이 문제인 까닭", hint: "수온 편차와 기간을 각각 바꿔 보고, 어느 쪽이 DHW를 더 크게 만드는지 근거와 함께 쓰세요.", ph: "+2 °C로 2주 두었을 때와 +1 °C로 4주 두었을 때를 비교하면 …" },
       { id: "e1b", label: "산호의 백화가 해양 생태계에 주는 영향", hint: "산호초가 바다 생물에게 어떤 곳인지, 백화가 자주 오면 무슨 일이 생기는지 설명하세요." }
     ]
   });
@@ -339,7 +339,7 @@ function segWire(id, attr, onPick) {
   window.sthWork({
     mount: "wk2", unitLabel: "[기후변화와 환경생태 Ⅲ] 이야기 ② 같은 비, 다른 재해",
     items: [
-      { id: "w2", label: "가뭄과 홍수가 함께 늘어나는 까닭", hint: "연 강수량 · 비 오는 날 · 하루 최대 강수 세 값을 근거로 설명하세요.", ph: "연 강수량은 (      ) 인데 비 오는 날은 (      ), 하루 최대 강수는 (      ) 이므로 …" },
+      { id: "w2", label: "가뭄과 홍수가 함께 늘어나는 까닭", hint: "연 강수량 · 비 오는 날 · 하루 최대 강수 세 값을 근거로 설명하세요.", ph: "연 강수량은 (      )인데 비 오는 날은 (      ), 하루 최대 강수는 (      )이므로 …" },
       { id: "e2b", label: "우리 지역 재해 대응 방안", hint: "사막화·대형 산불·가뭄·홍수 가운데 우리 지역에 가장 걱정되는 재해를 골라, 원인과 대응 방안을 짝지어 쓰세요." }
     ]
   });
@@ -390,7 +390,7 @@ function segWire(id, attr, onPick) {
       pan(rx, ry, "흡수", t.ab);
       var ok = Math.abs(t.net) < 1.5;
       text(ctx, ok ? "탄소중립 — 순배출 0" : ("순배출 " + (t.net > 0 ? "+" : "") + t.net.toFixed(1)), cx, H - 32, { s: 17, w: "800", a: "center", c: ok ? V("--green-700") : V("--rose-700") });
-      text(ctx, "배출 100 을 기준으로 한 상대값", cx, H - 13, { s: 11.5, w: "600", a: "center", c: V("--mist") });
+      text(ctx, "배출 100을 기준으로 한 상대값", cx, H - 13, { s: 11.5, w: "600", a: "center", c: V("--mist") });
     }
     function refresh() {
       var t = totals(), msg;
@@ -423,7 +423,7 @@ function segWire(id, attr, onPick) {
       { t: "건물 단열과 고효율 설비", a: "r", why: "같은 일을 적은 에너지로 합니다." },
       { t: "숲 가꾸기와 나무 심기", a: "c", why: "광합성으로 대기 중 이산화 탄소를 흡수합니다." },
       { t: "바다숲·갯벌·염습지 보전(블루카본)", a: "c", why: "해양 생태계가 탄소를 흡수·저장합니다." },
-      { t: "발전소 굴뚝의 이산화 탄소를 붙잡아 땅속에 저장(CCS)", a: "c", why: "대기로 나갈 이산화 탄소를 굴뚝에서 붙잡아 땅속에 가둬 배출을 막습니다. 이미 공기 중에 있는 이산화 탄소를 빼내는 DAC 와는 다릅니다.", hint: "이 기술은 이산화 탄소를 ‘안 만드는’ 것일까요, 만들어진 것을 ‘붙잡는’ 것일까요?" },
+      { t: "발전소 굴뚝의 이산화 탄소를 붙잡아 땅속에 저장(CCS)", a: "c", why: "대기로 나갈 이산화 탄소를 굴뚝에서 붙잡아 땅속에 가둬 배출을 막습니다. 이미 공기 중에 있는 이산화 탄소를 빼내는 DAC와는 다릅니다.", hint: "이 기술은 이산화 탄소를 ‘안 만드는’ 것일까요, 만들어진 것을 ‘붙잡는’ 것일까요?" },
       { t: "공기 중 이산화 탄소를 직접 빨아들이는 직접 공기 포집(DAC)", a: "c", why: "이미 대기에 있는 이산화 탄소를 제거합니다." }
     ],
     onDone: function () { window.sthMission("m3-3", true, "<span class='m-tag'>미션 완료</span>배출을 줄이는 기술과 붙잡거나 거두어들이는 기술이 함께 저울을 맞춥니다."); ep.clear(2); }
@@ -445,9 +445,9 @@ function segWire(id, attr, onPick) {
       text(ctx, "기준 1 kg", 484, y1 - sc + 4, { s: 10.5, w: "800", c: V("--amber-700") });
       ctx.fillStyle = c <= 1 ? V("--green") : V("--coral"); ctx.fillRect(x0 + 110, y1 - c * sc, 140, c * sc);
       text(ctx, c.toFixed(1) + " kg", x0 + 180, y1 - c * sc - 8, { s: 15, w: "900", a: "center" });
-      text(ctx, "수소 1 kg 을 만들 때 나오는 이산화 탄소", x0, 20, { s: 12.5, w: "800" });
+      text(ctx, "수소 1 kg을 만들 때 나오는 이산화 탄소", x0, 20, { s: 12.5, w: "800" });
       text(ctx, NM[m], 580, 90, { s: 20, w: "900", c: m === "green" ? V("--green-700") : (m === "blue" ? V("--brand-700") : V("--mist")) });
-      text(ctx, m === "grey" ? "천연가스(CH₄)를 수증기와 반응시켜 수소를 얻음" : (m === "blue" ? "개질에서 나온 CO₂ 를 포집해 땅속에 저장" : "재생 에너지 전기로 물(H₂O)을 분해"), 580, 124, { s: 11.5, c: V("--mist") });
+      text(ctx, m === "grey" ? "천연가스(CH₄)를 수증기와 반응시켜 수소를 얻음" : (m === "blue" ? "개질에서 나온 CO₂를 포집해 땅속에 저장" : "재생 에너지 전기로 물(H₂O)을 분해"), 580, 124, { s: 11.5, c: V("--mist") });
       text(ctx, m === "blue" ? "포집률 " + cap + "%" : "", 580, 160, { s: 14, w: "800" });
       return c;
     }
@@ -475,7 +475,7 @@ function segWire(id, attr, onPick) {
   function finish() { window.sthState("r3", "해결 · " + (window.sthState("balBest") || "") + " / " + (window.sthState("h2Best") || "")); }
   function vs() {
     var p = window.sthState("p3") || "";
-    $("e3-vs").innerHTML = "<b>나의 첫 발언</b> " + (p || "기록 없음") + (p.indexOf("㉡") === 0 ? " — 정확했습니다." : " — 저울을 맞추며 보았듯, 탄소중립은 순배출 0 입니다.") + "<br><b>나의 저울</b> " + (window.sthState("balBest") || "-");
+    $("e3-vs").innerHTML = "<b>나의 첫 발언</b> " + (p || "기록 없음") + (p.indexOf("㉡") === 0 ? " — 정확했습니다." : " — 저울을 맞추며 보았듯, 탄소중립은 순배출 0입니다.") + "<br><b>나의 저울</b> " + (window.sthState("balBest") || "-");
   }
   ep.onShow(function (i) { if (i === 4) vs(); });
   if (ep.at() === 4) vs();
@@ -536,7 +536,7 @@ function segWire(id, attr, onPick) {
     function refresh() {
       var ey = exhaustYear(), need = E0 / budget, ch = false;
       $("t3-rv").textContent = (r * 100).toFixed(1) + " %";
-      $("t3-info").innerHTML = (ey === null ? "<b>예산 안에 머뭅니다.</b> 해마다 " + (r * 100).toFixed(1) + "%씩 줄이면 누적이 " + cumulative(200).toFixed(0) + " Gt 에서 멈춥니다." : "<b>" + Math.round(ey) + "년</b>에 예산이 바닥납니다.") +
+      $("t3-info").innerHTML = (ey === null ? "<b>예산 안에 머뭅니다.</b> 해마다 " + (r * 100).toFixed(1) + "%씩 줄이면 누적이 " + cumulative(200).toFixed(0) + " Gt에서 멈춥니다." : "<b>" + Math.round(ey) + "년</b>에 예산이 바닥납니다.") +
         " 2050년 배출량 " + (E0 * Math.pow(1 - r, 30)).toFixed(1) + " Gt." + ((budget === 500 ? got.a : got.b) ? " 이 목표를 넘지 않으려면 해마다 최소 <b>" + (need * 100).toFixed(1) + "%</b>." : "") + " 곡선의 높이가 아니라 <b>칠해진 넓이</b>를 보세요.";
       draw();
       if (!picked) return;
@@ -588,7 +588,7 @@ function segWire(id, attr, onPick) {
     }
     function update() {
       var pct = draw();
-      $("sc-info").innerHTML = "냉방을 1 ℃ 높이면 냉방 전기가 약 7% 줄고(냉방은 전체의 30%), 빈 교실 소등으로 조명 전기의 최대 30%를 줄이며(조명은 전체의 20%), 태양광 1 kW 는 한 해 약 1,200 kWh 를 만듭니다.";
+      $("sc-info").innerHTML = "냉방을 1 ℃ 높이면 냉방 전기가 약 7% 줄고(냉방은 전체의 30%), 빈 교실 소등으로 조명 전기의 최대 30%를 줄이며(조명은 전체의 20%), 태양광 1 kW는 한 해 약 1,200 kWh를 만듭니다.";
       if (pct >= 15 && !got.a) { got.a = true; got.plan = "냉방 " + T + " ℃ · 소등 " + L + "% · 태양광 " + S + " kW → " + pct.toFixed(1) + "%"; window.sthState("schGot", got); mission(); }
     }
     function mission() {

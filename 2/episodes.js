@@ -126,7 +126,7 @@ function firstPick(key) { return window.sthState(key) || ""; }
     var canvas = $("c-bx"), ctx = window.setupCanvas(canvas), W = canvas._w, H = canvas._h;
     var exp = "a", phase = 0, busy = false, got = window.sthState("bxGot") || { a: false, b: false, c: false };
     var RES = { a: { before: 109.0, after: 109.0 }, b: { before: 100.0, after: 109.0 }, c: { before: 100.0, after: 100.6 } };
-    var NAME = { a: "(가) 물에 떠 있는 얼음 90 g", b: "(나) 받침대 위 얼음 90 g", c: "(다) 물 1,000 cm³ 를 20 ℃ → 40 ℃" };
+    var NAME = { a: "(가) 물에 떠 있는 얼음 90 g", b: "(나) 받침대 위 얼음 90 g", c: "(다) 물 1,000 cm³를 20 ℃ → 40 ℃" };
     function draw() {
       paper(ctx, W, H);
       var r = RES[exp], lv = r.before + (r.after - r.before) * phase;
@@ -151,8 +151,8 @@ function firstPick(key) { return window.sthState(key) || ""; }
     }
     var MSG = {
       a: "떠 있는 얼음은 녹기 전부터 <b>자기 무게만큼 물을 밀어내고</b> 있었습니다. 녹아서 생긴 물이 딱 그 자리를 채우므로 수면은 <b>그대로</b>입니다. 바다에 떠 있는 해빙·빙붕이 녹는 경우와 같습니다.",
-      b: "받침대 위 얼음은 물을 밀어내지 않다가, 녹은 물 90 cm³ 가 <b>새로</b> 비커에 들어와 수면이 <b>9 mm</b> 오릅니다. 그린란드·남극 대륙의 빙상이 녹아 바다로 흘러드는 경우와 같습니다.",
-      c: "물 1,000 cm³ 를 20 ℃ 에서 40 ℃ 로 데우면 밀도가 0.998 → 0.992 g/cm³ 로 줄어 부피가 약 6 cm³ 늘고, 수면이 <b>0.6 mm</b> 오릅니다. 작아 보이지만 바다는 수천 m 깊이라 <b>열팽창</b>만으로도 해수면이 크게 오릅니다."
+      b: "받침대 위 얼음은 물을 밀어내지 않다가, 녹은 물 90 cm³가 <b>새로</b> 비커에 들어와 수면이 <b>9 mm</b> 오릅니다. 그린란드·남극 대륙의 빙상이 녹아 바다로 흘러드는 경우와 같습니다.",
+      c: "물 1,000 cm³를 20 ℃에서 40 ℃로 데우면 밀도가 0.998 → 0.992 g/cm³로 줄어 부피가 약 6 cm³ 늘고, 수면이 <b>0.6 mm</b> 오릅니다. 작아 보이지만 바다는 수천 m 깊이라 <b>열팽창</b>만으로도 해수면이 크게 오릅니다."
     };
     function run() {
       if (busy) return;
@@ -208,7 +208,7 @@ function firstPick(key) { return window.sthState(key) || ""; }
     }
     function update() {
       var r = draw();
-      $("sl-info").innerHTML = "열팽창 = 0.0002 /℃ × 수온 상승 × 700 m, 녹은 물 = 부피 ÷ 바다 넓이(3억 6,100만 km²). 녹은 물 1천 km³ 는 해수면을 약 2.8 mm 올립니다.";
+      $("sl-info").innerHTML = "열팽창 = 0.0002 /℃ × 수온 상승 × 700 m, 녹은 물 = 부피 ÷ 바다 넓이(3억 6,100만 km²). 녹은 물 1천 km³는 해수면을 약 2.8 mm 올립니다.";
       if (r.tot >= 86 && r.tot <= 97 && r.share >= 0.25 && r.share <= 0.40 && !ep.cleared(3)) {
         window.sthState("slBest", "수온 +" + dT.toFixed(2) + " ℃ · 녹은 물 " + ice + " 천 km³ → " + r.tot.toFixed(1) + " mm");
         window.sthMission("m1-4", true, "<span class='m-tag'>미션 완료</span>" + window.sthState("slBest") + " (열팽창 " + Math.round(r.share * 100) + "%). 바다 위층이 0.2 ℃ 남짓 데워지고 녹은 물 2만 km³ 남짓이 흘러들면 관측값이 설명됩니다.");
@@ -271,17 +271,17 @@ function firstPick(key) { return window.sthState(key) || ""; }
       text(ctx, "25 ℃ → " + (25 + d).toFixed(1) + " ℃", 560, 80, { s: 14, w: "800" });
       text(ctx, "품을 수 있는 수증기", 560, 130, { s: 12, c: v("--mist") });
       text(ctx, "+" + inc.toFixed(1) + " %", 560, 166, { s: 28, w: "900", c: inc >= 12 && inc <= 16 ? v("--green-700") : v("--coral-700") });
-      text(ctx, "1 ℃ 에 약 6~7% 씩", 560, 210, { s: 12, c: v("--mist") });
+      text(ctx, "1 ℃에 약 6~7%씩", 560, 210, { s: 12, c: v("--mist") });
       return inc;
     }
     function update() {
       var inc = draw();
-      $("cc-info").innerHTML = "기온이 " + d.toFixed(1) + " ℃ 오르면 공기가 품을 수 있는 수증기가 약 <b>" + inc.toFixed(1) + "%</b> 늘어납니다. 곡선이 위로 휘어 있어 따뜻할수록 1 ℃ 의 효과가 더 큽니다.";
+      $("cc-info").innerHTML = "기온이 " + d.toFixed(1) + " ℃ 오르면 공기가 품을 수 있는 수증기가 약 <b>" + inc.toFixed(1) + "%</b> 늘어납니다. 곡선이 위로 휘어 있어 따뜻할수록 1 ℃의 효과가 더 큽니다.";
       if (inc >= 12 && inc <= 16 && !window.sthState("ccOk")) { window.sthState("ccOk", "+" + d.toFixed(1) + " ℃ → 수증기 +" + inc.toFixed(1) + "%"); mission(); }
     }
     function mission() {
       var a = window.sthState("ccOk"), b = window.sthState("wxSorted");
-      if (a) window.sthMission("m2-2", true, "<span class='m-tag'>미션 완료</span>" + a + ". 약 2 ℃ 만 올라도 한 번에 쏟아질 수 있는 비의 재료가 10% 넘게 늘어납니다.");
+      if (a) window.sthMission("m2-2", true, "<span class='m-tag'>미션 완료</span>" + a + ". 약 2 ℃만 올라도 한 번에 쏟아질 수 있는 비의 재료가 10% 넘게 늘어납니다.");
       if (b) window.sthMission("m2-2b", true, "<span class='m-tag'>미션 완료</span>다섯 가지 극한 기상 현상을 정리했습니다.");
       if (a && b) ep.clear(1);
     }
@@ -292,13 +292,13 @@ function firstPick(key) { return window.sthState(key) || ""; }
       buckets: [{ id: "t", label: "🌀 슈퍼 태풍" }, { id: "d", label: "🏜️ 메가 가뭄" }, { id: "h", label: "🥵 열파(폭염)" }, { id: "r", label: "🌧️ 집중 호우" }, { id: "c", label: "❄️ 한파·폭설" }],
       items: [
         { t: "따뜻해진 바다에서 증발이 활발해져 잠열이 커지고 세력이 급격히 강해진다", a: "t", why: "태풍의 에너지원은 수증기가 응결할 때 나오는 잠열입니다." },
-        { t: "2013년 하이옌은 순간 최대 풍속 약 105 m/s 를 기록했다", a: "t", why: "우리 기상청은 최대 풍속 54 m/s 이상인 태풍을 ‘초강력’ 등급으로 분류합니다(흔히 슈퍼 태풍이라 부릅니다)." },
+        { t: "2013년 하이옌은 순간 최대 풍속 약 105 m/s를 기록했다", a: "t", why: "우리 기상청은 최대 풍속 54 m/s 이상인 태풍을 ‘초강력’ 등급으로 분류합니다(흔히 슈퍼 태풍이라 부릅니다)." },
         { t: "미국 남서부에서 2000년부터 20년 넘게 이어져 1,200년 만에 가장 건조했다", a: "d", why: "10년~수십 년 이어지는 가뭄입니다." },
         { t: "기온이 올라 토양 수분 증발이 빨라져 가뭄이 깊어진다", a: "d", why: "온난화가 가뭄을 심화합니다.", hint: "비가 오는 것이 아니라 흙이 마르는 쪽입니다." },
         { t: "고온다습한 북태평양 고기압이 우리나라 부근에 오래 머문다", a: "h", why: "이상 고온이 며칠~몇 주 이어지는 열파의 원인입니다." },
-        { t: "2024년 여름 전국 평균 기온 25.6 ℃ 로 1973년 관측 이래 가장 높았다", a: "h", why: "폭염 기록입니다(기상청)." },
+        { t: "2024년 여름 전국 평균 기온 25.6 ℃로 1973년 관측 이래 가장 높았다", a: "h", why: "폭염 기록입니다(기상청)." },
         { t: "장마 전선과 대기 불안정으로 강한 상승 기류가 생긴다", a: "r", why: "짧은 시간 많은 비를 내리는 원인입니다." },
-        { t: "2022년 8월 서울에 시간당 141.5 mm 의 비가 내렸다", a: "r", why: "80년 만에 기록이 깨졌습니다." },
+        { t: "2022년 8월 서울에 시간당 141.5 mm의 비가 내렸다", a: "r", why: "80년 만에 기록이 깨졌습니다." },
         { t: "시베리아 고기압이 확장해 차가운 북서풍이 강해진다", a: "c", why: "겨울 한파의 원인입니다." },
         { t: "북극이 더워져 제트 기류가 약해지고 북극의 찬 공기가 중위도로 내려온다", a: "c", why: "온난화 속 한파의 역설입니다.", hint: "북극의 ‘찬 공기’가 어디로 오나요?" }
       ],
@@ -413,7 +413,7 @@ function firstPick(key) { return window.sthState(key) || ""; }
       if (got.a) done("m2-4a"); if (got.b) done("m2-4b");
       if (got.a && got.b) {
         window.sthState("sspBest", "감축 노력 " + got.p + "% 이상 → 해수면 0.8 m 미만 (SSP1-2.6)");
-        window.sthMission("m2-4", true, "<span class='m-tag'>미션 완료</span>해수면을 0.8 m 아래로 묶으려면 감축 노력이 약 <b>80% 이상</b>, 곧 SSP1-2.6 에 가까운 경로여야 합니다. 그래도 해수면은 0.7 m 넘게 오릅니다.");
+        window.sthMission("m2-4", true, "<span class='m-tag'>미션 완료</span>해수면을 0.8 m 아래로 묶으려면 감축 노력이 약 <b>80% 이상</b>, 곧 SSP1-2.6에 가까운 경로여야 합니다. 그래도 해수면은 0.7 m 넘게 오릅니다.");
         ep.clear(3); ep.clear(4);
       }
     }
@@ -628,7 +628,7 @@ function firstPick(key) { return window.sthState(key) || ""; }
     }
     function update() {
       var c = draw(), ch = false;
-      $("lk-info").innerHTML = "수온이 높을수록 남세균이 빨리 불어나고, 영양염(질소·인)이 많을수록 불어날 재료가 많습니다. 수온 25 ℃ 가 넘으면 성층이 강해져 남세균이 더 유리해집니다.";
+      $("lk-info").innerHTML = "수온이 높을수록 남세균이 빨리 불어나고, 영양염(질소·인)이 많을수록 불어날 재료가 많습니다. 수온 25 ℃가 넘으면 성층이 강해져 남세균이 더 유리해집니다.";
       if (c >= 5000 && !got.a) { got.a = ch = true; }
       if (T >= 30 && c < 1000 && !got.b) { got.b = ch = true; got.n = n; }
       if (ch) { window.sthState("lakeGot", got); mission(); }
