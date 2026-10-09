@@ -216,7 +216,7 @@ function segWire(id, attr, onPick) {
   /* 장면 2 — 1년의 비 (기존 시뮬레이션) */
   (function () {
     var cv = $("c1"), ctx = window.setupCanvas(cv), W = cv._w, H = cv._h, dT = 0, mode = "rain";
-    var BASE = (function () { var r = mulberry(20261), a = []; for (var i = 0; i < 365; i++) a.push(r() < 0.28 ? Math.pow(r(), 2.2) * 45 + 1 : 0); return a; })();
+    var BASE = (function () { var r = mulberry(20261), a = []; for (var i = 0; i < 365; i++) { var x = r() < 0.28 ? Math.pow(r(), 2.2) * 45 + 1 : 0; a.push(x < 1.2 ? 0 : x); } return a; })();
     var TOT0 = BASE.reduce(function (s, x) { return s + x; }, 0), DAY0 = BASE.filter(function (x) { return x > 0; }).length, MAX0 = Math.max.apply(null, BASE);
     function series() {
       var out = BASE.map(function (x) { return x > 0 ? Math.pow(x, 1 + 0.16 * dT) : 0; });
@@ -415,7 +415,7 @@ function segWire(id, attr, onPick) {
   /* 장면 3 — 기술 분류 */
   window.sthSort({
     mount: "s3-sort",
-    buckets: [{ id: "r", label: "배출을 줄이는 기술", sub: "처음부터 덜 내보낸다" }, { id: "c", label: "흡수·제거하는 기술", sub: "이미 나온 것을 거두어들인다" }],
+    buckets: [{ id: "r", label: "배출을 줄이는 기술", sub: "처음부터 덜 내보낸다" }, { id: "c", label: "붙잡거나 거두어들이는 기술", sub: "나가는 것을 붙잡거나, 이미 나온 것을 빼낸다" }],
     items: [
       { t: "태양광·풍력 발전", a: "r", why: "화석 연료를 태우지 않고 전기를 만듭니다." },
       { t: "전기차·수소차", a: "r", why: "달리는 동안 배기가스가 나오지 않습니다(전기·수소를 만드는 과정은 따로 따져야 함)." },
@@ -423,10 +423,10 @@ function segWire(id, attr, onPick) {
       { t: "건물 단열과 고효율 설비", a: "r", why: "같은 일을 적은 에너지로 합니다." },
       { t: "숲 가꾸기와 나무 심기", a: "c", why: "광합성으로 대기 중 이산화 탄소를 흡수합니다." },
       { t: "바다숲·갯벌·염습지 보전(블루카본)", a: "c", why: "해양 생태계가 탄소를 흡수·저장합니다." },
-      { t: "발전소 굴뚝의 이산화 탄소를 붙잡아 땅속에 저장(CCS)", a: "c", why: "배출될 이산화 탄소를 붙잡아 가둡니다.", hint: "이 기술은 이산화 탄소를 ‘안 만드는’ 것일까요, 만들어진 것을 ‘붙잡는’ 것일까요?" },
+      { t: "발전소 굴뚝의 이산화 탄소를 붙잡아 땅속에 저장(CCS)", a: "c", why: "대기로 나갈 이산화 탄소를 굴뚝에서 붙잡아 땅속에 가둬 배출을 막습니다. 이미 공기 중에 있는 이산화 탄소를 빼내는 DAC 와는 다릅니다.", hint: "이 기술은 이산화 탄소를 ‘안 만드는’ 것일까요, 만들어진 것을 ‘붙잡는’ 것일까요?" },
       { t: "공기 중 이산화 탄소를 직접 빨아들이는 직접 공기 포집(DAC)", a: "c", why: "이미 대기에 있는 이산화 탄소를 제거합니다." }
     ],
-    onDone: function () { window.sthMission("m3-3", true, "<span class='m-tag'>미션 완료</span>배출을 줄이는 기술과 거두어들이는 기술이 함께 저울을 맞춥니다."); ep.clear(2); }
+    onDone: function () { window.sthMission("m3-3", true, "<span class='m-tag'>미션 완료</span>배출을 줄이는 기술과 붙잡거나 거두어들이는 기술이 함께 저울을 맞춥니다."); ep.clear(2); }
   });
   if (ep.cleared(2)) window.sthMission("m3-3", true);
 
@@ -537,7 +537,7 @@ function segWire(id, attr, onPick) {
       var ey = exhaustYear(), need = E0 / budget, ch = false;
       $("t3-rv").textContent = (r * 100).toFixed(1) + " %";
       $("t3-info").innerHTML = (ey === null ? "<b>예산 안에 머뭅니다.</b> 해마다 " + (r * 100).toFixed(1) + "%씩 줄이면 누적이 " + cumulative(200).toFixed(0) + " Gt 에서 멈춥니다." : "<b>" + Math.round(ey) + "년</b>에 예산이 바닥납니다.") +
-        " 2050년 배출량 " + (E0 * Math.pow(1 - r, 30)).toFixed(1) + " Gt. 이 목표를 넘지 않으려면 해마다 최소 <b>" + (need * 100).toFixed(1) + "%</b>. 곡선의 높이가 아니라 <b>칠해진 넓이</b>를 보세요.";
+        " 2050년 배출량 " + (E0 * Math.pow(1 - r, 30)).toFixed(1) + " Gt." + ((budget === 500 ? got.a : got.b) ? " 이 목표를 넘지 않으려면 해마다 최소 <b>" + (need * 100).toFixed(1) + "%</b>." : "") + " 곡선의 높이가 아니라 <b>칠해진 넓이</b>를 보세요.";
       draw();
       if (!picked) return;
       var minR = E0 / budget;

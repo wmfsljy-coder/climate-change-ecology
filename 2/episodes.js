@@ -281,7 +281,7 @@ function firstPick(key) { return window.sthState(key) || ""; }
     }
     function mission() {
       var a = window.sthState("ccOk"), b = window.sthState("wxSorted");
-      if (a) window.sthMission("m2-2", true, "<span class='m-tag'>미션 완료</span>" + a + ". 약 2 ℃ 만 올라도 한 번에 쏟아질 수 있는 비의 재료가 1할 넘게 늘어납니다.");
+      if (a) window.sthMission("m2-2", true, "<span class='m-tag'>미션 완료</span>" + a + ". 약 2 ℃ 만 올라도 한 번에 쏟아질 수 있는 비의 재료가 10% 넘게 늘어납니다.");
       if (b) window.sthMission("m2-2b", true, "<span class='m-tag'>미션 완료</span>다섯 가지 극한 기상 현상을 정리했습니다.");
       if (a && b) ep.clear(1);
     }
@@ -292,11 +292,11 @@ function firstPick(key) { return window.sthState(key) || ""; }
       buckets: [{ id: "t", label: "🌀 슈퍼 태풍" }, { id: "d", label: "🏜️ 메가 가뭄" }, { id: "h", label: "🥵 열파(폭염)" }, { id: "r", label: "🌧️ 집중 호우" }, { id: "c", label: "❄️ 한파·폭설" }],
       items: [
         { t: "따뜻해진 바다에서 증발이 활발해져 잠열이 커지고 세력이 급격히 강해진다", a: "t", why: "태풍의 에너지원은 수증기가 응결할 때 나오는 잠열입니다." },
-        { t: "2013년 하이옌은 순간 최대 풍속 약 105 m/s 를 기록했다", a: "t", why: "최대 풍속 54 m/s 이상이면 슈퍼 태풍이라 부릅니다." },
+        { t: "2013년 하이옌은 순간 최대 풍속 약 105 m/s 를 기록했다", a: "t", why: "우리 기상청은 최대 풍속 54 m/s 이상인 태풍을 ‘초강력’ 등급으로 분류합니다(흔히 슈퍼 태풍이라 부릅니다)." },
         { t: "미국 남서부에서 2000년부터 20년 넘게 이어져 1,200년 만에 가장 건조했다", a: "d", why: "10년~수십 년 이어지는 가뭄입니다." },
         { t: "기온이 올라 토양 수분 증발이 빨라져 가뭄이 깊어진다", a: "d", why: "온난화가 가뭄을 심화합니다.", hint: "비가 오는 것이 아니라 흙이 마르는 쪽입니다." },
         { t: "고온다습한 북태평양 고기압이 우리나라 부근에 오래 머문다", a: "h", why: "이상 고온이 며칠~몇 주 이어지는 열파의 원인입니다." },
-        { t: "2023년 여름 평균 기온 24.7 ℃ 로 관측 이래 가장 높았다", a: "h", why: "폭염 기록입니다." },
+        { t: "2024년 여름 전국 평균 기온 25.6 ℃ 로 1973년 관측 이래 가장 높았다", a: "h", why: "폭염 기록입니다(기상청)." },
         { t: "장마 전선과 대기 불안정으로 강한 상승 기류가 생긴다", a: "r", why: "짧은 시간 많은 비를 내리는 원인입니다." },
         { t: "2022년 8월 서울에 시간당 141.5 mm 의 비가 내렸다", a: "r", why: "80년 만에 기록이 깨졌습니다." },
         { t: "시베리아 고기압이 확장해 차가운 북서풍이 강해진다", a: "c", why: "겨울 한파의 원인입니다." },
@@ -379,9 +379,9 @@ function firstPick(key) { return window.sthState(key) || ""; }
     var LV = [
       { min: 80, n: "SSP1-2.6 친환경 성장", d: "재생 에너지로 화석 연료 사용을 최소화하는 가장 이상적인 경로" },
       { min: 60, n: "SSP2-4.5 중도 성장", d: "지금 추세를 유지하며 완화와 발전이 중간 수준으로 진행" },
-      { min: 40, n: "SSP3-7.0 불균형 성장", d: "인구 급증·느린 기술 변화, 완화 정책에 소극적" },
-      { min: 20, n: "SSP4 양극화 성장", d: "에너지 기술은 빠르지만 경제 성장은 느려 적응이 어려움" },
-      { min: 0, n: "SSP5-8.5 고속 성장(최악)", d: "화석 연료에 의존한 빠른 개발, 2100년 지구 기온 약 5 ℃ 상승" }
+      { min: 40, n: "SSP4-6.0 불평등 성장", d: "나라 사이·안의 격차가 커서 감축과 적응이 고르지 못함" },
+      { min: 20, n: "SSP3-7.0 지역 경쟁", d: "인구 급증·느린 기술 변화, 완화 정책에 소극적" },
+      { min: 0, n: "SSP5-8.5 고속 성장(최악)", d: "화석 연료에 의존한 빠른 개발, 2081~2100년 지구 기온 약 4.4 ℃ 상승(최선 추정값)" }
     ];
     function lv() { for (var k = 0; k < LV.length; k++) if (pct >= LV[k].min) return LV[k]; return LV[4]; }
     function vals() { var t = pct / 100; return { temp: 4.93 + (2.07 - 4.93) * t, sea: 1.1 + (0.72 - 1.1) * t }; }
@@ -406,7 +406,7 @@ function firstPick(key) { return window.sthState(key) || ""; }
       var s = draw(), ch = false;
       $("ssp-info").innerHTML = "감축 노력 " + pct + "% → 해수 온도 <b>+" + s.temp.toFixed(2) + " ℃</b>, 해수면 <b>+" + s.sea.toFixed(2) + " m</b>. 해수면이 오르면 연안 습지와 갯벌이 잠기고, 수온이 오르면 한류성 어종은 북쪽으로 밀려납니다.";
       if (pct < 20 && !got.a) { got.a = ch = true; }
-      if (s.sea < 0.8 && !got.b) { got.b = ch = true; got.p = pct; }
+      if (pct >= 80 && s.sea < 0.8 && !got.b) { got.b = ch = true; got.p = pct; }
       if (ch) { window.sthState("sspGot", got); mission(); }
     }
     function mission() {

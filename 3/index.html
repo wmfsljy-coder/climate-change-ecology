@@ -52,7 +52,7 @@
             <div class="canvas-wrap"><canvas id="c0" width="900" height="420"></canvas></div>
             <div class="controls">
               <div class="ctrl-group">
-                <div class="ctrl-label">평년보다 높아진 수온<span class="val" id="t0-dtv">+1.0 °C</span></div>
+                <div class="ctrl-label">가장 따뜻한 달의 평균보다 높아진 수온<span class="val" id="t0-dtv">+1.0 °C</span></div>
                 <input type="range" id="t0-dt" min="0" max="40" step="1" value="10">
               </div>
               <div class="ctrl-group">
@@ -206,7 +206,7 @@
         </section>
 
         <section class="scene" data-title="기술 분류 — 줄이는 기술, 거두는 기술">
-          <div class="story"><div class="who">👩‍⚖️</div><div class="say"><span class="name">위원장</span>“저울을 맞추는 기술은 두 갈래예요. 처음부터 <b>배출을 줄이는 기술</b>, 이미 나온 이산화 탄소를 <b>거두어들이는(흡수·제거) 기술</b>.”</div></div>
+          <div class="story"><div class="who">👩‍⚖️</div><div class="say"><span class="name">위원장</span>“저울을 맞추는 기술은 두 갈래예요. 처음부터 <b>배출을 줄이는 기술</b>, 그리고 이산화 탄소를 <b>붙잡거나 거두어들이는 기술</b>. 굴뚝에서 나가기 전에 붙잡는 CCS 는 배출을 막는 쪽이고, 숲이나 직접 공기 포집(DAC)은 이미 대기에 있는 것을 빼내는 쪽이에요.”</div></div>
           <div class="stage-card"><div id="s3-sort"></div></div>
           <div class="mission" id="m3-3"><span class="m-tag">미션</span>탄소 저감 기술 8가지를 원리에 따라 나누세요.</div>
         </section>
@@ -237,7 +237,7 @@
             <div class="vs" id="e3-vs"></div>
             <span class="stamp">사건 파일 ③ 해결</span>
           </div>
-          <div class="info-card" style="margin:14px 0">📎 과학자의 눈: 저울 화면의 흡수원 크기는 배출량에 견준 <b>상대적 규모</b>로, 실제 국가별 수치와 다릅니다. 천연가스 개질로 수소 1 kg 을 만들 때 나오는 이산화 탄소는 약 9~10 kg 으로 알려져 있으며, 화면에서는 10 kg 으로 계산했습니다.</div>
+          <div class="info-card" style="margin:14px 0">📎 과학자의 눈: 저울 화면의 흡수원 크기는 배출량에 견준 <b>상대적 규모</b>로, 실제 국가별 수치와 다릅니다. 저울에서는 계산을 쉽게 하려고 탄소 포집·저장(CCUS)을 흡수 쪽에 올렸지만, 발전소 굴뚝의 CCS 는 대기로 나갈 이산화 탄소를 붙잡아 <b>배출을 막는</b> 기술이고, 대기 중 이산화 탄소를 실제로 <b>빼내는</b>(제거) 것은 숲·직접 공기 포집(DAC) 같은 기술입니다. 천연가스 개질로 수소 1 kg 을 만들 때 나오는 이산화 탄소는 약 9~10 kg 으로 알려져 있으며, 화면에서는 10 kg 으로 계산했습니다.</div>
           <div class="stage-card" style="padding:6px 0 4px;margin-top:16px"><div id="wk3"></div></div>
         </section>
       </div>
@@ -269,7 +269,7 @@
         </section>
 
         <section class="scene" data-title="탄소예산 시계 — 해마다 몇 %">
-          <div class="story"><div class="who">🧑‍🔬</div><div class="say"><span class="name">IPCC 과학자</span>“2020년 기준으로 1.5 ℃ 에 머물기 위해 남은 탄소예산은 약 <b>500 Gt CO₂</b>, 2 ℃ 는 약 <b>1,150 Gt</b>(50% 확률)이에요. 지금 세계는 해마다 약 40 Gt 을 내보냅니다. 해마다 같은 비율로 줄여 간다면 몇 % 씩 줄여야 할까요?”</div></div>
+          <div class="story"><div class="who">🧑‍🔬</div><div class="say"><span class="name">IPCC 과학자</span>“2020년 기준으로 1.5 ℃ 에 머물기 위해 남은 탄소예산은 약 <b>500 Gt CO₂</b>(50% 확률), 2 ℃ 는 약 <b>1,150 Gt</b>(67% 확률)이에요. 지금 세계는 해마다 약 40 Gt 을 내보냅니다. 해마다 같은 비율로 줄여 간다면 몇 % 씩 줄여야 할까요?”</div></div>
           <div class="gate loose" id="g4b"></div>
           <div class="stage-card" style="margin-top:14px">
             <div class="canvas-wrap"><canvas id="c3" width="900" height="420"></canvas></div>
@@ -331,7 +331,7 @@
       <div class="stage-head">
         <div class="eyebrow">05 · 진짜 관측값으로</div>
         <h2 class="display">실제 자료</h2>
-        <p>이야기에서 배운 생각을 <b>과학자들이 실제로 잰 자료</b>에 대어 봅니다. 사례마다 먼저 예상하고, 자료를 직접 읽어 값을 구한 뒤 판정받습니다. 자료 사본은 이 저장소의 <code>data/</code> 폴더에 출처와 함께 들어 있어, 바깥 누리집이 열리지 않아도 수업할 수 있습니다. <b>🔗 진짜 자료</b>·<b>🛰 현장 보기</b> 카드는 새 창으로 다녀와 찾아온 것을 한 문장으로 남기는 곳입니다.</p>
+        <p>이야기에서 배운 생각을 <b>과학자들이 실제로 잰 자료</b>에 대어 봅니다. 사례마다 먼저 예상하고, 자료를 직접 읽어 값을 구한 뒤 판정받습니다. 자료 사본이 이 페이지에 출처와 함께 들어 있어, 바깥 누리집이 열리지 않아도 풀 수 있습니다. <b>🔗 진짜 자료</b>·<b>🛰 현장 보기</b> 카드가 있는 사례에서는 새 창으로 다녀와 찾아온 것을 한 문장으로 남깁니다.</p>
       </div>
       <div id="real"></div>
     </section>

@@ -49,7 +49,7 @@ window.sthLab({
       cv.canvas._redraw = draw;
       api.slider({ label: "1월 기온 차이", min: 0, max: 20, step: 0.1, value: 0, fmt: function (x) { return x.toFixed(1) + " °C"; }, onInput: function (x) { g = x; api.changed(); draw(); } });
       api.info("두 곳은 위도가 2 ~ 3° 밖에 차이 나지 않습니다. " + SRC1
-        + "<div data-map='{\"id\":\"cornwall\",\"name\":\"영국 콘월 남쪽 해안\",\"lat\":50.15,\"lng\":-5.07,\"zoom\":12,\"ask\":\"해안 마을의 정원이나 길가에 야자수처럼 생긴 나무가 보이는지 찾아보세요. 바다와 얼마나 가까운가요?\"}'></div>");
+        + "<div data-map='{\"id\":\"cornwall\",\"name\":\"영국 콘월 남쪽 해안\",\"lat\":50.15,\"lng\":-5.07,\"zoom\":12,\"ask\":\"이 해안은 어느 바다(대서양·영국 해협)를 향하고 있나요? 마을이 바다에서 몇 km 안에 있는지 재어 보고, 바다가 겨울 기온에 주는 영향과 연결해 적어 보세요.\"}'></div>");
       draw();
       return {
         judge: function () {

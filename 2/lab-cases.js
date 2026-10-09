@@ -42,7 +42,7 @@ window.sthLab({
       cv.canvas._redraw = draw;
       api.seg({ label: "2100년 시나리오", value: "s5", options: [{ v: "s1", t: "SSP1-2.6 (+0.72 m)" }, { v: "s5", t: "SSP5-8.5 (+1.1 m)" }], onPick: function (x) { sc = x; draw(); api.changed(); } });
       api.slider({ label: "방조제 높이", min: 2.0, max: 5.0, step: 0.1, value: 3.0, fmt: function (x) { return x.toFixed(1) + " m"; }, onInput: function (x) { wall = Math.round(x * 10) / 10; draw(); api.changed(); } });
-      api.info("해수면 상승 전망은 우리나라 주변 바다의 2100년 값입니다. 해수면이 오르면 같은 해일도 더 높은 곳까지 올라옵니다.");
+      api.info("해수면 상승 전망은 우리나라 주변 바다의 2100년 값입니다(우리 바다 전망 자료 기준이라 IPCC 세계 평균 범위와 다를 수 있음). 해수면이 오르면 같은 해일도 더 높은 곳까지 올라옵니다.");
       draw();
       return {
         judge: function () {
