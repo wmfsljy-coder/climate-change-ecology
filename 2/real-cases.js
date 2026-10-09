@@ -2,7 +2,8 @@
    r1 위성이 잰 해수면, 한 해에 몇 mm 오를까 — 1993~2025 지구 평균 해수면
    r2 해수면 상승은 빨라지고 있을까 — 처음 10년과 최근 10년의 속도 비교
    r3 우리 동네 여름 — 2026년 창원 폭염일은 평년(1991~2020)의 몇 배였나
-   자료: data/gmsl.js (NOAA 위성 고도계 연구실), data/cw155.js (기상청 창원 155) */
+   r4 우리 동네 벚꽃 — 600 °C 법칙으로 진해 개화일 맞히기, 개화 기온과 변인(기상청 창원·서울)
+   자료: data/gmsl.js (NOAA 위성 고도계 연구실), data/cw155.js (기상청 창원 155), data/bloom.js */
 (function () {
 "use strict";
 var G = (window.REAL_GMSL || { rows: [] }).rows;                    /* [연도, mm] */
@@ -17,6 +18,15 @@ var JJA = (CWD.season || []).filter(function (r) { return r[1] != null; });
 var JJA_N = (function () { var s = 0, n = 0; JJA.forEach(function (r) { if (r[0] >= 1991 && r[0] <= 2020) { s += r[1]; n++; } }); return n ? s / n : 0; })();
 var JJA_RANK = JJA.filter(function (r) { return r[1] > Y26.jja; }).length + 1, JJA_TOP = JJA.slice().sort(function (a, b) { return b[1] - a[1]; })[0] || [0, 0];
 var SRC3 = "<small>출처: 기상청 날씨누리 과거 관측 일별 자료, 창원(155) 날마다의 최고·최저 기온으로 센 값(2026년은 10월 8일까지). 사본은 data/cw155.js.</small>";
+var BL = window.REAL_BLOOM || { cases: [], normalJH: [], coldDays: {} };
+function blDay(i) { var t = new Date(Date.UTC(2001, 1, 1) + i * 864e5); return (t.getUTCMonth() + 1) + "월 " + t.getUTCDate() + "일"; }
+function blIdx(md) { return Math.round((Date.UTC(2001, +md.slice(0, 2) - 1, +md.slice(3)) - Date.UTC(2001, 1, 1)) / 864e5); }
+function blCum(xs, j) { var s = 0; return xs.map(function (r) { s += (j == null ? r : r[j]); return s; }); }
+function blReach(cum) { for (var i = 0; i < cum.length; i++) if (cum[i] >= 600) return i; return cum.length - 1; }
+BL.cases.forEach(function (c) { c.cum = blCum(c.x, 0); c.rule = blReach(c.cum); c.b = blIdx(c.bloom); var s = 0, t = 0; for (var i = c.b - 10; i < c.b; i++) { s += c.x[i][0]; t += c.x[i][1]; } c.preX = s / 10; c.preT = t / 10; });
+var BL_N = blCum(BL.normalJH || []), BL_NR = blReach(BL_N), BL_JH = BL.cases[0] || { rule: 48, b: 51, cum: [], x: [], preX: 16, preT: 10 };
+var BL_PRE = BL.cases.map(function (c) { return c.preT; }), BL_PMIN = Math.min.apply(null, BL_PRE.length ? BL_PRE : [10]), BL_PMAX = Math.max.apply(null, BL_PRE.length ? BL_PRE : [10]);
+var SRC_BL = "<small>출처: 기온 — 기상청 날씨누리 과거 관측 일별 자료, 창원(155)·서울(108). 개화일 — " + BL.cases.map(function (c) { return c.place.replace(/\(.*\)/, "") + " " + c.y + "년 " + blDay(c.b) + "(" + c.src + ")"; }).join(" · ") + ". 600 °C 법칙은 일본 웨더뉴스가 소개한 도쿄 표본목의 경험칙입니다. 사본은 data/bloom.js.</small>";
 
 function chart(H, ctx, W, CH, lines) {
   H.paper(ctx, W, CH);
@@ -147,6 +157,65 @@ window.sthLab({
     why: "2026년 창원의 여름(6 ~ 8월) 평균 기온은 " + Y26.jja.toFixed(1) + " °C로 평년(" + JJA_N.toFixed(1) + " °C)보다 " + (Y26.jja - JJA_N).toFixed(1) + " °C 높았고, 1986년 이후 " + JJA_RANK + "번째로 더웠습니다" + (JJA_RANK > 1 ? "(가장 더웠던 여름은 " + JJA_TOP[0] + "년 " + JJA_TOP[1].toFixed(1) + " °C)" : "") + ". 폭염일과 열대야는 모두 7 ~ 8월에 몰렸고, 7월 29일 ~ 8월 2일 닷새는 내내 38.5 °C를 넘었으며 8월 1일 <b>40.4 °C</b>는 1985년 관측을 시작한 뒤 가장 높은 기온입니다.<br>"
       + "한 해만 이랬다면 날씨의 들쭉날쭉일 수도 있습니다. 그런데 2024년 폭염일 " + Y24[2] + "일, 2025년 " + Y25[2] + "일, 2026년 " + Y26.hot + "일로 평년의 두 배 넘는 여름이 세 해 이어졌습니다. 그런 해가 잦아진다는 것이 기후가 바뀌고 있다는 신호입니다.<br>"
       + "열대야는 밤에도 몸이 식지 못하게 해 온열 질환의 위험을 키우고, 폭염은 사람뿐 아니라 가축·농작물·바닷가 생물에게도 스트레스가 됩니다. ※ 평년값도 고정된 것이 아닙니다. 기상청은 10년마다 평년값을 새로 계산하는데, 더운 해가 쌓이면 ‘보통’의 기준 자체가 올라갑니다."
+  },
+  {
+    id: "r4", tag: "실제 자료 · 우리 동네 벚꽃", title: "진해 벚꽃은 몇 °C에 필까", short: "벚꽃 기온",
+    who: "🌸", name: "창원기상대 벚꽃 관측",
+    say: "“창원기상대는 해마다 진해 여좌천 로망스다리 위쪽 벚나무 세 그루를 지켜보다가, 한 가지에 꽃이 세 송이 넘게 피면 ‘개화’라고 발표합니다. 2026년에는 <b>3월 24일</b>이었어요. 기상학자들이 쓰는 어림법이 있습니다. <b>2월 1일부터 날마다 낮 최고 기온을 더해 600 °C쯤 되면 벚꽃이 핀다</b>는 ‘600 °C 법칙’이에요. 진해의 2026년 기온으로 600 °C가 되는 날을 찾아, 실제 개화일과 맞는지 따져 주세요.”",
+    predict: {
+      q: "벚꽃이 필 무렵(피기 전 열흘) 하루 평균 기온은 대략 몇 °C였을까요?",
+      options: ["㉠ 약 5 °C — 아직 쌀쌀할 때 핀다", "㉡ 약 10 °C — 낮에는 15 °C를 넘는 봄날", "㉢ 약 20 °C — 초여름 같은 날씨"],
+      answer: 1
+    },
+    task: "날짜를 옮겨 <b>진해 2026년의 누적 낮 최고 기온이 600 °C에 이르는 날</b>을 찾으세요(± 1일). 위 단추로 다른 해·다른 곳도 견주어 볼 수 있습니다.",
+    build: function (stage, api) {
+      var H = api.h, cv = api.canvas(300), ctx = cv.ctx, W = cv.W, day = blIdx("03-01"), sel = 0;
+      var x0 = 60, x1 = 640, y0 = 24, y1 = 262, n = (BL_JH.x || []).length || 69;
+      function X(i) { return x0 + i / (n - 1) * (x1 - x0); }
+      function Y(v) { return y1 - v / 900 * (y1 - y0); }
+      function draw() {
+        var c = BL.cases[sel] || BL_JH;
+        H.paper(ctx, W, cv.H); H.axes(ctx, x0, y0, x1, y1);
+        [0, 200, 400, 600, 800].forEach(function (v) { H.text(ctx, v + "°", x0 - 8, Y(v) + 4, { s: 10, a: "right", c: H.v("--mist") }); H.dash(ctx, x0, Y(v), x1, Y(v), H.v("--line"), 0.5); });
+        H.dash(ctx, x0, Y(600), x1, Y(600), H.v("--amber-700"), 1.6);
+        H.text(ctx, "600 °C", x0 + 6, Y(600) - 6, { s: 11, w: "800", c: H.v("--amber-700") });
+        ["02-01", "02-15", "03-01", "03-15", "04-01"].forEach(function (md) { var i = blIdx(md); H.text(ctx, blDay(i), X(i), y1 + 15, { s: 10, a: "center", c: H.v("--mist") }); });
+        H.text(ctx, "2월 1일부터 더한 낮 최고 기온", x0 + 6, y0 - 8, { s: 11, w: "700", c: H.v("--mist") });
+        if (sel < 2 && BL_N.length) H.line(ctx, BL_N.map(function (v, i) { return [X(i), Y(v)]; }), H.v("--mist"), 2);
+        H.line(ctx, c.cum.map(function (v, i) { return [X(i), Y(v)]; }), H.v("--coral-700"), 2.5);
+        H.dash(ctx, X(day), y0, X(day), y1, H.v("--brand"), 1.4);
+        H.dot(ctx, X(day), Y(c.cum[day]), 5, H.v("--brand"));
+        var shown = api.isDone ? api.isDone() : false;
+        if (sel > 0 || shown || Math.abs(day - BL_JH.rule) <= 1) { H.text(ctx, "🌸", X(c.b) - 8, Y(c.cum[c.b]) - 6, { s: 16 }); H.text(ctx, "실제 개화 " + blDay(c.b), X(c.b) + 10, Y(c.cum[c.b]) + 16, { s: 11, w: "800", c: H.v("--coral-700") }); }
+        H.rows(ctx, 680, 34, [[c.place + " " + c.y + "년", "", "--coral-700"], ["고른 날 " + blDay(day), Math.round(c.cum[day]) + " °C", null, true], ["그날까지 날 수", (day + 1) + "일"], [sel < 2 ? "회색 = 평년(1991~2020)" : "", sel < 2 ? "평년엔 " + blDay(BL_NR) + "쯤 600" : ""]], 50);
+      }
+      cv.canvas._redraw = draw;
+      api.seg({ label: "어느 해·어디", options: BL.cases.map(function (c, i) { return { v: i, t: c.place.replace(/\(.*\)/, "") + " " + c.y }; }), value: 0, onPick: function (v) { sel = +v; draw(); } });
+      api.slider({ label: "날짜", min: blIdx("02-20"), max: n - 1, step: 1, value: day, fmt: function (i) { return blDay(i); }, onInput: function (i) { day = i; api.changed(); draw(); } });
+      var tb = "<table style='border-collapse:collapse;margin:6px 0;font-size:13px' cellpadding='4' border='1'><tr><th>곳·해</th><th>600 °C 되는 날</th><th>실제 개화</th><th>피기 전 열흘 평균 기온</th><th>그 열흘 낮 최고 평균</th></tr>"
+        + BL.cases.map(function (c, i) { return "<tr><td>" + c.place.replace(/\(.*\)/, "") + " " + c.y + "</td><td>" + (i ? blDay(c.rule) : "?") + "</td><td>" + blDay(c.b) + "</td><td>" + c.preT.toFixed(1) + " °C</td><td>" + c.preX.toFixed(1) + " °C</td></tr>"; }).join("") + "</table>";
+      api.info("빨간 선은 2월 1일부터 그날까지 낮 최고 기온을 더한 값입니다. 파란 세로선을 옮겨 600 °C 선과 만나는 날을 찾으세요. " + tb + SRC_BL
+        + "<div data-link='{\"id\":\"kma-cw155-mar\",\"title\":\"창원 2026년 3월 일별 기온\",\"src\":\"기상청 날씨누리\",\"url\":\"https://www.weather.go.kr/w/weather/land/past-obs/obs-by-day.do?stn=155&yy=2026&mm=3&obs=1\",\"ask\":\"3월 14일 ~ 23일(개화 전 열흘)의 평균 기온을 찾아 평균을 내 보세요. 표의 값과 같나요?\"}'></div>");
+      draw();
+      return {
+        judge: function () {
+          var c = BL_JH;
+          if (Math.abs(day - c.rule) <= 1) return { ok: true, msg: "2026년 진해는 " + blDay(c.rule) + "에 600 °C를 넘었고, 실제 개화는 " + blDay(c.b) + "로 " + (c.b - c.rule) + "일 차이입니다. 평년 기온이었다면 " + blDay(BL_NR) + "쯤이었을 테니, 따뜻한 봄 덕분에 며칠 일찍 핀 셈입니다." };
+          return { ok: false, msg: blDay(day) + "까지의 합은 " + Math.round(c.cum[day]) + " °C로 " + (c.cum[day] < 600 ? "아직 600 °C에 못 미칩니다. 뒤로 옮기세요." : "이미 600 °C를 넘었습니다. 처음 넘는 날을 찾으세요.") };
+        }
+      };
+    },
+    hints: ["빨간 선과 주황 점선(600 °C)이 처음 만나는 곳의 날짜를 읽으세요.", "단추가 ‘진해 2026’인지 먼저 확인하세요."],
+    solution: "진해 2026년은 <b>" + blDay(BL_JH.rule) + "</b>에 600 °C를 넘었습니다(실제 개화 " + blDay(BL_JH.b) + ").",
+    why: "네 경우 모두 600 °C 법칙이 실제 개화일과 사흘 안으로 맞았고, 피기 전 열흘의 하루 평균 기온은 " + BL_PMIN.toFixed(1) + " ~ " + BL_PMAX.toFixed(1) + " °C, 낮 최고는 16 ~ 18 °C였습니다. <b>낮에는 15 °C를 넘고 하루 평균이 10 °C쯤인 날</b>이 이어질 때 벚꽃이 핀다고 기억하면 됩니다. 진해의 3월 평년 낮 최고 기온은 13.8 °C이고, 2026년 3월은 15.2 °C였습니다.<br>"
+      + "<b>개화에 영향을 주는 변인</b><br>"
+      + "① <b>봄 기온(가장 큼)</b> — 2 ~ 3월이 따뜻할수록 일찍 핍니다. 600 °C 법칙이 바로 이 변인을 잰 것입니다.<br>"
+      + "② <b>겨울 추위</b> — 벚나무 꽃눈은 겨울 동안 충분히 추위를 겪어야 잠(휴면)에서 깹니다. 그래서 겨울이 너무 따뜻하면 오히려 늦어질 수도 있습니다. 2025 ~ 26년 겨울 창원에서 하루 평균 5 °C 이하인 날은 " + BL.coldDays["2026"] + "일로 평년(" + BL.coldDays.normal + "일)보다 적었지만, 봄이 따뜻해 일찍 피었습니다.<br>"
+      + "③ <b>위도</b> — 2026년 서울은 3월 29일로 진해보다 닷새 늦었습니다. 남쪽일수록 봄 기온이 빨리 쌓이기 때문입니다.<br>"
+      + "④ <b>같은 동네 안의 차이(미기후)</b> — 2026년 4월 3일 여좌천은 만개했는데 경화역은 아직 절정이 아니었습니다(경향신문). 햇볕이 드는 정도, 바람, 둘레의 건물·물에 따라 나무가 느끼는 기온이 다릅니다. 그래서 기상청은 정해 둔 같은 나무(표준목)만 관측합니다.<br>"
+      + "⑤ <b>낮 길이</b> — 해마다 같은 날의 낮 길이는 같습니다. 그런데 서울의 개화일은 2023년 3월 25일, 2025년 4월 4일로 열흘이나 달랐습니다. 해마다 같은 낮 길이로는 이런 차이를 설명할 수 없으니, 벚꽃의 날짜를 주로 정하는 것은 낮 길이가 아니라 기온입니다.<br>"
+      + "⑥ <b>비와 바람</b> — 피는 날보다는 꽃이 지는 날에 더 큰 영향을 줍니다.<br>"
+      + "※ 600 °C 법칙은 도쿄 표본목에서 얻은 어림법이라 늘 맞지는 않습니다. 개화 직전이 추우면 크게 어긋나서, 2024년 도쿄에서는 11일이나 틀렸습니다(웨더뉴스)."
   }
   ]
 });
