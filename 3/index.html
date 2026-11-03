@@ -48,8 +48,10 @@
         <section class="scene" data-title="열 일지 — 온도와 기간">
           <div class="story"><div class="who">🤿</div><div class="say"><span class="name">해솔</span>“과학자들은 <b>DHW</b>(누적 열스트레스)를 씁니다. 가장 따뜻한 달의 평균 수온보다 1 ℃ 이상 높은 상태가 최근 12주 동안 쌓인 양이에요. 국제적으로 <b>DHW 4 이상이면 백화가 시작</b>되고 <b>8 이상이면 대량 폐사</b>가 일어난다고 봅니다.”</div></div>
           <div class="stage-card">
-            <div class="canvas-wrap"><canvas id="c0" width="900" height="420"></canvas></div>
-            <div class="controls">
+            <div class="canvas-wrap stage"><canvas id="c0" width="900" height="420"></canvas></div>
+            <div class="sim-side">
+              <div class="readout" id="t0-read"></div>
+              <div style="display:grid;gap:14px">
               <div class="ctrl-group">
                 <div class="ctrl-label">가장 따뜻한 달의 평균보다 높아진 수온<span class="val" id="t0-dtv">+1.0 °C</span></div>
                 <input type="range" id="t0-dt" min="0" max="40" step="1" value="10">
@@ -57,6 +59,8 @@
               <div class="ctrl-group">
                 <div class="ctrl-label">그 상태가 이어진 기간<span class="val" id="t0-wkv">2주</span></div>
                 <input type="range" id="t0-wk" min="0" max="20" step="1" value="2">
+              </div>
+              <button type="button" class="btn sm" id="t0-play">⏸ 움직임 멈추기</button>
               </div>
             </div>
             <div class="info-card" id="t0-info"></div>
@@ -73,8 +77,9 @@
         <section class="scene" data-title="회복의 시간 — 백화는 몇 년마다 오나">
           <div class="story"><div class="who">🧑‍🔬</div><div class="say"><span class="name">산호 생태학자</span>“백화에서 살아남은 산호초가 다시 우거지려면 10년 가까이 걸려요. 그런데 대규모 백화 사이의 간격은 1980년대 25~30년에서 요즘 약 <b>6년</b>으로 짧아졌다는 연구가 있어요. 백화가 몇 년마다 오면 산호초가 버틸 수 있을까요?”</div></div>
           <div class="stage-card">
-            <div class="canvas-wrap"><canvas id="c-reef" width="900" height="300"></canvas></div>
-            <div class="controls">
+            <div class="canvas-wrap stage"><canvas id="c-reef" width="900" height="300"></canvas></div>
+            <div class="sim-side">
+              <div class="readout" id="rf-read"></div>
               <div class="ctrl-group" style="flex:1 1 100%">
                 <div class="ctrl-label">대규모 백화가 오는 간격<span class="val" id="rf-n-val">3년</span></div>
                 <input type="range" id="rf-n" min="2" max="30" step="1" value="3">
@@ -120,8 +125,10 @@
         <section class="scene" data-title="1년의 비 — 몰려 내리는 비">
           <div class="story"><div class="who">🧑‍💼</div><div class="say"><span class="name">소장</span>“기온이 오르면 대기가 품는 수증기량이 1 ℃에 약 7% 늘어요. 같은 지역의 1년 치 비를 기온을 바꿔 가며 다시 그려 봅시다. ‘산불 위험’ 보기로 바꾸면 비가 오지 않은 날이 얼마나 이어졌는지 볼 수 있어요.”</div></div>
           <div class="stage-card">
-            <div class="canvas-wrap"><canvas id="c1" width="900" height="420"></canvas></div>
-            <div class="controls">
+            <div class="canvas-wrap stage"><canvas id="c1" width="900" height="420"></canvas></div>
+            <div class="sim-side">
+              <div class="readout" id="t1-read"></div>
+              <div style="display:grid;gap:14px">
               <div class="ctrl-group">
                 <div class="ctrl-label">기온 상승<span class="val" id="t1-dtv">+0.0 °C</span></div>
                 <input type="range" id="t1-dt" min="0" max="50" step="1" value="0">
@@ -130,6 +137,7 @@
                 <div class="ctrl-label">보기</div>
                 <div class="seg" id="t1-mode"><button class="on" data-m="rain">강수 분포</button><button data-m="fire">산불 위험</button></div>
               </div>
+                          </div>
             </div>
             <div class="info-card" id="t1-info"></div>
           </div>
@@ -146,8 +154,10 @@
         <section class="scene" data-title="스펀지 도시 — 쏟아지는 비를 머금게">
           <div class="story"><div class="who">🏙️</div><div class="say"><span class="name">도시 설계자</span>“콘크리트 도시에는 빗물이 스며들 곳이 없어요. 비가 땅에 스며들게 하는 <b>투수성 포장·녹지</b>를 늘리고, 빗물을 잠시 담아 두는 <b>빗물 저류조</b>를 지으면 도시가 스펀지처럼 비를 머금습니다. 시간당 100 mm 폭우에서 하수관으로 흘러드는 물을 <b>50 mm 이하</b>로 줄이되, 예산 70 안에서 설계해 주세요.”</div></div>
           <div class="stage-card">
-            <div class="canvas-wrap"><canvas id="c-sp" width="900" height="300"></canvas></div>
-            <div class="controls">
+            <div class="canvas-wrap stage"><canvas id="c-sp" width="900" height="300"></canvas></div>
+            <div class="sim-side">
+              <div class="readout" id="sp-read"></div>
+              <div style="display:grid;gap:14px">
               <div class="ctrl-group">
                 <div class="ctrl-label">투수성 포장·녹지 비율<span class="val" id="sp-p-val">0%</span></div>
                 <input type="range" id="sp-p" min="0" max="60" step="5" value="0">
@@ -155,6 +165,8 @@
               <div class="ctrl-group">
                 <div class="ctrl-label">빗물 저류조 용량<span class="val" id="sp-s-val">0 mm</span></div>
                 <input type="range" id="sp-s" min="0" max="40" step="2" value="0">
+              </div>
+              <button type="button" class="btn sm" id="sp-play">⏸ 움직임 멈추기</button>
               </div>
             </div>
             <div class="info-card" id="sp-info"></div>
@@ -197,7 +209,10 @@
         <section class="scene" data-title="탄소 저울 — 순배출 0 만들기">
           <div class="story"><div class="who">👩‍⚖️</div><div class="say"><span class="name">위원장</span>“부문별로 얼마나 줄이고, 무엇으로 흡수할지 저울에 올려 봅시다. 부문별 비중은 IPCC 제6차 평가 보고서의 2019년 전 세계 배출 구성을 100으로 맞춘 값입니다.”</div></div>
           <div class="stage-card">
-            <div class="canvas-wrap"><canvas id="c2" width="900" height="450"></canvas></div>
+            <div class="canvas-wrap stage"><canvas id="c2" width="900" height="450"></canvas></div>
+            <div class="sim-side">
+              <div class="readout full" id="t2-read"></div>
+            </div>
             <div class="controls" id="t2-controls"></div>
             <div class="info-card" id="t2-info"></div>
           </div>
@@ -213,8 +228,10 @@
         <section class="scene" data-title="수소의 색깔 — 깨끗한 연료 만들기">
           <div class="story"><div class="who">👨‍🔬</div><div class="say"><span class="name">에너지 연구원</span>“수소는 탈 때 물만 나오지만, 수소를 <b>만드는 과정</b>에서 이산화 탄소가 나올 수 있어요. 천연가스로 만들면 ‘회색 수소’, 그때 나온 이산화 탄소를 붙잡아 묻으면 ‘블루 수소’, 재생 에너지 전기로 물을 분해하면 ‘그린 수소’라 부릅니다. 수소 1 kg을 만들 때 이산화 탄소를 <b>1 kg 이하</b>로 내보내는 방법을 찾아 주세요.”</div></div>
           <div class="stage-card">
-            <div class="canvas-wrap"><canvas id="c-h2" width="900" height="300"></canvas></div>
-            <div class="controls">
+            <div class="canvas-wrap stage"><canvas id="c-h2" width="900" height="300"></canvas></div>
+            <div class="sim-side">
+              <div class="readout" id="h2-read"></div>
+              <div style="display:grid;gap:14px">
               <div class="ctrl-group">
                 <div class="ctrl-label">만드는 방법</div>
                 <div class="seg" id="h2-m"><button class="on" data-v="grey">천연가스 개질</button><button data-v="blue">개질 + 탄소 포집</button><button data-v="green">재생 전기로 물 분해</button></div>
@@ -222,6 +239,8 @@
               <div class="ctrl-group">
                 <div class="ctrl-label">탄소 포집률 (개질 + 포집일 때)<span class="val" id="h2-c-val">50%</span></div>
                 <input type="range" id="h2-c" min="0" max="95" step="5" value="50">
+              </div>
+              <button type="button" class="btn sm" id="h2-play">⏸ 움직임 멈추기</button>
               </div>
             </div>
             <div class="info-card" id="h2-info"></div>
@@ -271,8 +290,10 @@
           <div class="story"><div class="who">🧑‍🔬</div><div class="say"><span class="name">IPCC 과학자</span>“2020년 기준으로 1.5 ℃에 머물기 위해 남은 탄소예산은 약 <b>500 Gt CO₂</b>(50% 확률), 2 ℃는 약 <b>1,150 Gt</b>(67% 확률)이에요. 지금 세계는 해마다 약 40 Gt을 내보냅니다. 해마다 같은 비율로 줄여 간다면 몇 %씩 줄여야 할까요?”</div></div>
           <div class="gate loose" id="g4b"></div>
           <div class="stage-card" style="margin-top:14px">
-            <div class="canvas-wrap"><canvas id="c3" width="900" height="420"></canvas></div>
-            <div class="controls">
+            <div class="canvas-wrap stage"><canvas id="c3" width="900" height="420"></canvas></div>
+            <div class="sim-side">
+              <div class="readout" id="t3-read"></div>
+              <div style="display:grid;gap:14px">
               <div class="ctrl-group">
                 <div class="ctrl-label">해마다 줄이는 비율<span class="val" id="t3-rv">3.0 %</span></div>
                 <input type="range" id="t3-r" min="0" max="200" step="1" value="30">
@@ -281,6 +302,7 @@
                 <div class="ctrl-label">목표</div>
                 <div class="seg" id="t3-goal"><button class="on" data-b="500">1.5 °C · 500 Gt</button><button data-b="1150">2 °C · 1150 Gt</button></div>
               </div>
+                          </div>
             </div>
             <div class="info-card" id="t3-info"></div>
           </div>
@@ -290,8 +312,10 @@
         <section class="scene" data-title="우리 학교의 몫 — 전기 줄이기 작전">
           <div class="story"><div class="who">🧑‍🎓</div><div class="say"><span class="name">학생회장</span>“국제 협약만 기다릴 수는 없죠. 우리 학교 전기 사용량은 한 해 약 100만 kWh, 전기 1 kWh를 쓰면 이산화 탄소가 약 0.46 kg 나온다고 해요. 학생회가 할 수 있는 일로 학교 전기 배출을 <b>15% 이상</b> 줄이는 계획을 세워 봐요.”</div></div>
           <div class="stage-card">
-            <div class="canvas-wrap"><canvas id="c-sch" width="900" height="300"></canvas></div>
-            <div class="controls">
+            <div class="canvas-wrap stage"><canvas id="c-sch" width="900" height="300"></canvas></div>
+            <div class="sim-side">
+              <div class="readout" id="sc-read"></div>
+              <div style="display:grid;gap:14px">
               <div class="ctrl-group">
                 <div class="ctrl-label">여름 냉방 설정 온도<span class="val" id="sc-t-val">26 ℃</span></div>
                 <input type="range" id="sc-t" min="24" max="28" step="1" value="26">
@@ -304,6 +328,7 @@
                 <div class="ctrl-label">옥상 태양광 설비<span class="val" id="sc-s-val">0 kW</span></div>
                 <input type="range" id="sc-s" min="0" max="100" step="10" value="0">
               </div>
+                          </div>
             </div>
             <div class="info-card" id="sc-info"></div>
           </div>
@@ -379,6 +404,7 @@
 <script src="../assets/account.js"></script>
 <script src="episodes.js"></script>
 <script src="worked.js"></script>
+<script src="handoff.js"></script>
 <script src="quiz-items.js"></script>
 <script src="../assets/review.js"></script>
 <script src="../assets/peer.js"></script>

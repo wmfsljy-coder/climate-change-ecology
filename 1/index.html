@@ -48,8 +48,9 @@
         <section class="scene" data-title="하루와 30년 — 날씨와 기후 가르기">
           <div class="story"><div class="who">🧑‍🏫</div><div class="say"><span class="name">지리 선생님</span>“서윤이가 겪은 건 그날의 <b>날씨</b>야. 순간순간 바뀌는 대기 상태지. <b>기후</b>는 한 지역의 날씨를 <b>약 30년</b> 동안 평균한 것이고. 10년 치 매일 기온을 모아 두었으니, 평균하는 기간을 늘려 가며 무엇이 사라지는지 보자.”</div></div>
           <div class="stage-card">
-            <div class="canvas-wrap"><canvas id="c-avg" width="900" height="360"></canvas></div>
-            <div class="controls">
+            <div class="canvas-wrap stage"><canvas id="c-avg" width="900" height="360"></canvas></div>
+            <div class="sim-side">
+              <div class="readout" id="avg-read"></div>
               <div class="ctrl-group" style="flex:1 1 100%">
                 <div class="ctrl-label">평균하는 기간 — 1일(날씨)부터 1095일(3년)까지 · 막대를 누른 뒤 ← → 방향키로 1일씩 움직일 수 있어요<span class="val" id="avg-w-val">1일</span></div>
                 <input type="range" id="avg-w" min="1" max="1095" step="1" value="1">
@@ -69,8 +70,10 @@
         <section class="scene" data-title="기후 만들기 — 같은 위도, 다른 겨울">
           <div class="story"><div class="who">🧑‍🎓</div><div class="say"><span class="name">서윤</span>“위도가 같아도 다른 기후인자가 다르면 기후가 달라지는 거네. 그럼 기후인자를 직접 바꿔서 콘월과 하바롭스크를 둘 다 만들어 볼래!”</div></div>
           <div class="stage-card">
-            <div class="canvas-wrap"><canvas id="c-clim" width="900" height="360"></canvas></div>
-            <div class="controls">
+            <div class="canvas-wrap stage"><canvas id="c-clim" width="900" height="360"></canvas></div>
+            <div class="sim-side">
+              <div class="readout" id="cl-read"></div>
+              <div style="display:grid;gap:14px">
               <div class="ctrl-group">
                 <div class="ctrl-label">위도<span class="val" id="cl-lat-val">북위 50°</span></div>
                 <input type="range" id="cl-lat" min="0" max="70" step="5" value="50">
@@ -82,6 +85,8 @@
               <div class="ctrl-group">
                 <div class="ctrl-label">주변 해류</div>
                 <div class="seg" id="cl-cur"><button data-v="warm">난류</button><button class="on" data-v="none">없음</button><button data-v="cold">한류</button></div>
+              </div>
+              <button type="button" class="btn sm" id="cl-play">⏸ 움직임 멈추기</button>
               </div>
             </div>
             <div class="info-card" id="cl-info"></div>
@@ -125,11 +130,15 @@
         <section class="scene" data-title="얼음 거울 — 반사율 실험">
           <div class="story"><div class="who">👩‍🔬</div><div class="say"><span class="name">도하</span>“얼음은 햇빛을 잘 반사하는 거울이에요. 얼음이 반사하는 비율(반사율)은 약 <b>60%</b>, 어두운 바닷물은 약 <b>6%</b>뿐이죠. 9월 해빙 면적을 바꿔 가며 <span data-place=80,0,3,sv>북극해</span>가 흡수하는 햇빛이 얼마나 달라지는지 확인해 보세요.”</div></div>
           <div class="stage-card">
-            <div class="canvas-wrap"><canvas id="c-ice" width="900" height="330"></canvas></div>
-            <div class="controls">
-              <div class="ctrl-group" style="flex:1 1 100%">
+            <div class="canvas-wrap stage"><canvas id="c-ice" width="900" height="330"></canvas></div>
+            <div class="sim-side">
+              <div class="readout" id="ice-read"></div>
+              <div style="display:grid;gap:14px">
+              <div class="ctrl-group">
                 <div class="ctrl-label">9월 북극 해빙 면적 (북극해 약 1,400만 km² 가운데)<span class="val" id="ice-a-val">1,000만 km²</span></div>
                 <input type="range" id="ice-a" min="0" max="14" step="0.1" value="10">
+              </div>
+              <button type="button" class="btn sm" id="ice-play">⏸ 움직임 멈추기</button>
               </div>
             </div>
             <div class="info-card" id="ice-info"></div>
@@ -141,8 +150,11 @@
         <section class="scene" data-title="되먹임 조립대 — 키우는 고리, 누르는 고리">
           <div class="story"><div class="who">👩‍🔬</div><div class="say"><span class="name">도하</span>“이산화 탄소가 늘어 처음에 1 ℃가 올랐다고 합시다. 그 결과가 다시 원인을 <b>키우면 양의 되먹임</b>, <b>누그러뜨리면 음의 되먹임</b>이에요. 고리를 하나씩 켜고 끄면서 최종 기온 상승이 어떻게 되는지 보세요. 고리마다 숫자는 ‘한 바퀴에 앞 변화의 몇 배를 더하는지’입니다.”</div></div>
           <div class="stage-card">
-            <div class="canvas-wrap"><canvas id="c-fb" width="900" height="340"></canvas></div>
-            <div class="controls" id="fb-ctrl"></div>
+            <div class="canvas-wrap stage"><canvas id="c-fb" width="900" height="340"></canvas></div>
+            <div class="sim-side">
+              <div class="readout" id="fb-read"></div>
+              <div><div id="fb-ctrl"></div><button type="button" class="btn sm" id="fb-play" style="margin:8px 4px 0">⏸ 움직임 멈추기</button></div>
+            </div>
             <div class="info-card" id="fb-info"></div>
           </div>
           <div class="mission" id="m2-3"><span class="m-tag">미션</span>되먹임 고리를 조립하세요.<ul><li id="m2-3a">처음 1 ℃를 <b>2배(1.9 ℃ 이상)</b>로 키우는 조합</li><li id="m2-3b">처음 1 ℃보다 <b>작게</b> 누그러뜨리는 조합</li></ul></div>
@@ -191,8 +203,9 @@
         <section class="scene" data-title="서식 한계선 — 몇 ℃면 경기도까지 올까">
           <div class="story"><div class="who">🧑‍🔬</div><div class="say"><span class="name">곤충 연구자</span>“이 모형에서 실잠자리는 <b>연평균 기온 14.6 ℃ 이상</b>인 곳에서만 겨울을 난다고 가정해요. 우리나라는 남쪽에서 북쪽으로 위도 1°마다 연평균 기온이 약 0.8 ℃ 낮아지고요. 한반도 전체 기온을 올려 가며 서식 한계선이 어디까지 올라가는지 보세요.”</div></div>
           <div class="stage-card">
-            <div class="canvas-wrap"><canvas id="c-map" width="900" height="380"></canvas></div>
-            <div class="controls">
+            <div class="canvas-wrap stage"><canvas id="c-map" width="900" height="380"></canvas></div>
+            <div class="sim-side">
+              <div class="readout" id="map-read"></div>
               <div class="ctrl-group" style="flex:1 1 100%">
                 <div class="ctrl-label">지금(평년값)보다 더 오른 연평균 기온<span class="val" id="map-t-val">+0.0 ℃</span></div>
                 <input type="range" id="map-t" min="0" max="3" step="0.1" value="0">
@@ -213,7 +226,7 @@
           <div class="story"><div class="who">🏗️</div><div class="say"><span class="name">도시 설계자</span>“<span data-place=35.1059,129.0439,13,s>부산</span>은 유엔 해비타트와 함께 해수면 상승에 대비한 <b>해상 도시</b>를 계획했어요. 기자님도 설계에 참여해 보세요. 바다 위 부지 한 모듈을 <b>태양광 발전</b>, <b>농장</b>, <b>주거</b>로 나눠야 합니다. 셋 다 기준을 넘겨야 해요.”</div></div>
           <div class="stage-card"><div id="s3-q1"></div></div>
           <div class="stage-card" style="margin-top:14px">
-            <div class="canvas-wrap"><canvas id="c-city" width="900" height="330"></canvas></div>
+            <div class="canvas-wrap stage"><canvas id="c-city" width="900" height="330"></canvas></div>
             <div class="controls">
               <div class="ctrl-group">
                 <div class="ctrl-label">태양광 발전 면적<span class="val" id="city-s-val">10%</span></div>
@@ -298,6 +311,7 @@
 <script src="../assets/account.js"></script>
 <script src="episodes.js"></script>
 <script src="worked.js"></script>
+<script src="handoff.js"></script>
 <script src="quiz-items.js"></script>
 <script src="../assets/review.js"></script>
 <script src="../assets/peer.js"></script>

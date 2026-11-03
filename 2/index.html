@@ -48,8 +48,11 @@
         <section class="scene" data-title="용의자 가려내기 — 기온 곡선 맞추기">
           <div class="story"><div class="who">🧑‍🔬</div><div class="say"><span class="name">은호</span>“기후를 바꾸는 원인에는 <b>자연적 원인</b>(태양 활동, 화산 분출 …)과 <b>인위적 원인</b>(온실 기체, 에어로졸 …)이 있어요. 원인을 하나씩 켜서 모형이 관측 기온 곡선을 따라가게 만들어 보세요.”</div></div>
           <div class="stage-card">
-            <div class="canvas-wrap"><canvas id="c-att" width="900" height="340"></canvas></div>
-            <div class="controls" id="att-ctrl"></div>
+            <div class="canvas-wrap stage"><canvas id="c-att" width="900" height="340"></canvas></div>
+            <div class="sim-side">
+              <div class="readout" id="att-read"></div>
+              <div id="att-ctrl"></div>
+            </div>
             <div class="info-card" id="att-info"></div>
           </div>
           <div class="mission" id="m1-2"><span class="m-tag">미션</span><ul><li id="m1-2a"><b>자연적 원인만</b> 켜서 최근 기온 상승을 설명할 수 있는지 확인하기</li><li id="m1-2b">관측 곡선과 거의 겹치는(차이 0.05 ℃ 이하) 조합 찾기</li></ul></div>
@@ -60,8 +63,9 @@
         <section class="scene" data-title="비커 실험 — 무엇이 녹아야 바다가 오를까">
           <div class="story"><div class="who">🧑‍🔬</div><div class="say"><span class="name">은호</span>“해수면을 올리는 범인도 가려야 해요. 비커 세 개로 모형 실험을 합시다. (가) 물에 떠 있는 얼음(해빙) (나) 받침대 위의 얼음(육지의 빙하) (다) 얼음 없이 물을 데우기(열팽창).”</div></div>
           <div class="stage-card">
-            <div class="canvas-wrap"><canvas id="c-bx" width="900" height="330"></canvas></div>
-            <div class="controls">
+            <div class="canvas-wrap stage"><canvas id="c-bx" width="900" height="330"></canvas></div>
+            <div class="sim-side">
+              <div class="readout" id="bx-read"></div>
               <div class="ctrl-group">
                 <div class="ctrl-label">실험</div>
                 <div class="seg" id="bx-exp"><button class="on" data-v="a">(가) 해빙</button><button data-v="b">(나) 빙하</button><button data-v="c">(다) 열팽창</button></div>
@@ -76,8 +80,10 @@
         <section class="scene" data-title="바다의 가계부 — 91.3 mm를 설명하라">
           <div class="story"><div class="who">🧑‍🔬</div><div class="say"><span class="name">은호</span>“위성 관측으로 1993~2020년 전 지구 해수면은 약 <b>91.3 mm</b> 올랐어요. 그 가운데 약 <b>1/3</b>은 바닷물의 열팽창, 약 <b>2/3</b>는 육지 얼음이 녹은 물입니다. 두 경로의 크기를 조절해 관측값을 재현해 보세요.”</div></div>
           <div class="stage-card">
-            <div class="canvas-wrap"><canvas id="c-sl" width="900" height="320"></canvas></div>
-            <div class="controls">
+            <div class="canvas-wrap stage"><canvas id="c-sl" width="900" height="320"></canvas></div>
+            <div class="sim-side">
+              <div class="readout" id="sl-read"></div>
+              <div style="display:grid;gap:14px">
               <div class="ctrl-group">
                 <div class="ctrl-label">바다 위층(700 m)의 수온 상승<span class="val" id="sl-t-val">0.00 ℃</span></div>
                 <input type="range" id="sl-t" min="0" max="0.5" step="0.01" value="0">
@@ -86,6 +92,7 @@
                 <div class="ctrl-label">바다로 흘러든 육지 얼음 녹은 물<span class="val" id="sl-i-val">0 천 km³</span></div>
                 <input type="range" id="sl-i" min="0" max="40" step="1" value="0">
               </div>
+                          </div>
             </div>
             <div class="info-card" id="sl-info"></div>
           </div>
@@ -128,11 +135,15 @@
         <section class="scene" data-title="공기 한 통의 수증기 — 1 ℃에 몇 %">
           <div class="story"><div class="who">🧑‍🔬</div><div class="say"><span class="name">기상청 예보관</span>“공기가 품을 수 있는 최대 수증기량(포화 수증기량)은 기온이 오를수록 빠르게 늘어요. 여름 기온 25 ℃에서 출발해 기온을 올려 보세요. 수증기가 많을수록 한 번에 쏟아질 수 있는 비가 많아지고, 수증기가 응결할 때 나오는 <b>잠열</b>은 태풍의 에너지가 됩니다.”</div></div>
           <div class="stage-card">
-            <div class="canvas-wrap"><canvas id="c-cc" width="900" height="320"></canvas></div>
-            <div class="controls">
+            <div class="canvas-wrap stage"><canvas id="c-cc" width="900" height="320"></canvas></div>
+            <div class="sim-side">
+              <div class="readout" id="cc-read"></div>
+              <div style="display:grid;gap:14px">
               <div class="ctrl-group" style="flex:1 1 100%">
                 <div class="ctrl-label">기온 상승 (25 ℃ 기준)<span class="val" id="cc-t-val">+0.0 ℃</span></div>
                 <input type="range" id="cc-t" min="0" max="4" step="0.1" value="0">
+              </div>
+              <button type="button" class="btn sm" id="cc-play">⏸ 움직임 멈추기</button>
               </div>
             </div>
             <div class="info-card" id="cc-info"></div>
@@ -146,8 +157,9 @@
           <div class="story"><div class="who">🦜</div><div class="say"><span class="name">생태학자</span>“기후가 바뀌면 생물의 모습도 달라져요. 호주의 몇몇 앵무새 종은 1870년대 이후 부리가 조금씩 커졌다는 연구가 있어요. 큰 부리는 몸의 열을 내보내는 데 유리하거든요. 그런데 왜 커졌을까요?”</div></div>
           <div class="gate loose" id="g2b"></div>
           <div class="stage-card" style="margin-top:14px">
-            <div class="canvas-wrap"><canvas id="c-bk" width="900" height="320"></canvas></div>
-            <div class="controls">
+            <div class="canvas-wrap stage"><canvas id="c-bk" width="900" height="320"></canvas></div>
+            <div class="sim-side">
+              <div class="readout" id="bk-read"></div>
               <div class="ctrl-group" style="flex:1 1 100%">
                 <div class="ctrl-label">여름 더위의 세기(큰 부리가 유리한 정도)<span class="val" id="bk-h-val">100%</span></div>
                 <input type="range" id="bk-h" min="0" max="100" step="10" value="100">
@@ -162,8 +174,9 @@
         <section class="scene" data-title="2100년의 예보 — 시나리오를 고르다">
           <div class="story"><div class="who">👩‍💼</div><div class="say"><span class="name">방송국 PD</span>“특집 방송 ‘2100년의 일기 예보’예요. 미래 기후는 우리가 얼마나 탄소를 줄이느냐에 달려 있죠. <b>SSP 시나리오</b>는 인구·경제·기술·정책의 변화를 가정해 미래를 다섯 갈래로 나눕니다. 감축 노력을 조절해 우리 바다의 2100년을 예보해 주세요.”</div></div>
           <div class="stage-card">
-            <div class="canvas-wrap"><canvas id="c-ssp" width="900" height="320"></canvas></div>
-            <div class="controls">
+            <div class="canvas-wrap stage"><canvas id="c-ssp" width="900" height="320"></canvas></div>
+            <div class="sim-side">
+              <div class="readout" id="ssp-read"></div>
               <div class="ctrl-group" style="flex:1 1 100%">
                 <div class="ctrl-label">탄소 감축 노력<span class="val" id="ssp-p-val">50%</span></div>
                 <input type="range" id="ssp-p" min="0" max="100" step="1" value="50">
@@ -209,7 +222,7 @@
 
         <section class="scene" data-title="빨라진 봄 — 지역별 개화 자료">
           <div class="story"><div class="who">🧑‍🔬</div><div class="say"><span class="name">생태 조사원</span>“먼저 봄의 시간표부터 봅시다. 1980년대와 비교해 최근 30년 동안 개나리·진달래·벚나무의 개화 시기는 지역마다 최대 11일까지 빨라졌어요. 자료를 읽어 보세요.”</div></div>
-          <div class="stage-card"><div class="canvas-wrap"><canvas id="c-bloom" width="900" height="300"></canvas></div></div>
+          <div class="stage-card"><div class="canvas-wrap stage"><canvas id="c-bloom" width="900" height="300"></canvas></div></div>
           <div class="stage-card" style="margin-top:14px"><div id="s3-q1"></div></div>
           <div class="mission" id="m3-2"><span class="m-tag">미션</span>개화 자료를 읽고 물음에 답하세요.</div>
         </section>
@@ -217,8 +230,9 @@
         <section class="scene" data-title="엇박자 — 꽃과 곤충의 시간표">
           <div class="story"><div class="who">🧑‍🔬</div><div class="say"><span class="name">생태 조사원</span>“식물은 기온에 민감하게 개화를 앞당기지만, 곤충은 그만큼 빨리 따라가지 못해요. 이 모형에서 개화일은 1 ℃에 8일, 곤충의 활동 시작일은 3일씩 빨라진다고 할게요. 꽃이 피어 있는 기간이 약 10일이라면, 둘이 어긋나는 간격이 10일을 넘으면 곤충은 꽃을 만나지 못합니다.”</div></div>
           <div class="stage-card">
-            <div class="canvas-wrap"><canvas id="c-gap" width="900" height="300"></canvas></div>
-            <div class="controls">
+            <div class="canvas-wrap stage"><canvas id="c-gap" width="900" height="300"></canvas></div>
+            <div class="sim-side">
+              <div class="readout" id="gap-read"></div>
               <div class="ctrl-group" style="flex:1 1 100%">
                 <div class="ctrl-label">봄철 기온 상승<span class="val" id="gap-w-val">+0.5 ℃</span></div>
                 <input type="range" id="gap-w" min="0" max="3" step="0.1" value="0.5">
@@ -232,8 +246,9 @@
         <section class="scene" data-title="따뜻한 겨울의 덫 — 월동 생존율">
           <div class="story"><div class="who">👨‍🌾</div><div class="say"><span class="name">양봉 조합장</span>“그해 겨울은 유난히 따뜻한 날이 많았어요. 벌들이 봄인 줄 알고 밖으로 나갔다가 꽃이 없어 먹이를 못 구하고, 갑자기 추워지면 벌통으로 돌아오지 못했지요.”</div></div>
           <div class="stage-card">
-            <div class="canvas-wrap"><canvas id="c-bee" width="900" height="300"></canvas></div>
-            <div class="controls">
+            <div class="canvas-wrap stage"><canvas id="c-bee" width="900" height="300"></canvas></div>
+            <div class="sim-side">
+              <div class="readout" id="bee-read"></div>
               <div class="ctrl-group" style="flex:1 1 100%">
                 <div class="ctrl-label">겨울철 이상 고온으로 벌이 헛걸음한 날 수<span class="val" id="bee-d-val">0일</span></div>
                 <input type="range" id="bee-d" min="0" max="30" step="1" value="0">
@@ -281,8 +296,10 @@
         <section class="scene" data-title="호수 실험 — 수온과 영양염">
           <div class="story"><div class="who">👩‍⚕️</div><div class="say"><span class="name">나래</span>“물꽃 현상에는 두 가지 조건이 겹쳐요. <b>수온 상승</b>, 그리고 비료·생활 하수의 질소·인이 흘러드는 <b>부영양화</b>. 여름에 수면이 뜨거워지면 따뜻한 윗물과 차가운 아랫물이 섞이지 않는 <b>성층 현상</b>도 강해지는데, 공기주머니로 떠오를 수 있는 남세균은 이때 햇빛을 독차지합니다.”</div></div>
           <div class="stage-card">
-            <div class="canvas-wrap"><canvas id="c-lake" width="900" height="330"></canvas></div>
-            <div class="controls">
+            <div class="canvas-wrap stage"><canvas id="c-lake" width="900" height="330"></canvas></div>
+            <div class="sim-side">
+              <div class="readout" id="lk-read"></div>
+              <div style="display:grid;gap:14px">
               <div class="ctrl-group">
                 <div class="ctrl-label">여름 수면 수온<span class="val" id="lk-t-val">22 ℃</span></div>
                 <input type="range" id="lk-t" min="16" max="32" step="1" value="22">
@@ -290,6 +307,8 @@
               <div class="ctrl-group">
                 <div class="ctrl-label">흘러드는 영양염(질소·인)<span class="val" id="lk-n-val">100%</span></div>
                 <input type="range" id="lk-n" min="0" max="100" step="5" value="100">
+              </div>
+              <button type="button" class="btn sm" id="lk-play">⏸ 움직임 멈추기</button>
               </div>
             </div>
             <div class="info-card" id="lk-info"></div>
@@ -306,8 +325,9 @@
         <section class="scene" data-title="길어지는 모기의 계절">
           <div class="story"><div class="who">👩‍⚕️</div><div class="say"><span class="name">나래</span>“일본뇌염을 옮기는 <b>작은빨간집모기</b>는 추운 겨울에는 활동을 멈췄다가 기온이 오르면 활동을 시작해요. 이 모형에서는 하루 평균 기온이 15 ℃ 이상인 날에 활동한다고 할게요. 기온이 오르면 모기의 계절은 며칠 늘어날까요?”</div></div>
           <div class="stage-card">
-            <div class="canvas-wrap"><canvas id="c-mos" width="900" height="300"></canvas></div>
-            <div class="controls">
+            <div class="canvas-wrap stage"><canvas id="c-mos" width="900" height="300"></canvas></div>
+            <div class="sim-side">
+              <div class="readout" id="mos-read"></div>
               <div class="ctrl-group" style="flex:1 1 100%">
                 <div class="ctrl-label">연평균 기온 상승<span class="val" id="mos-t-val">+0.0 ℃</span></div>
                 <input type="range" id="mos-t" min="0" max="4" step="0.1" value="0">
@@ -387,6 +407,7 @@
 <script src="../assets/account.js"></script>
 <script src="episodes.js"></script>
 <script src="worked.js"></script>
+<script src="handoff.js"></script>
 <script src="quiz-items.js"></script>
 <script src="../assets/review.js"></script>
 <script src="../assets/peer.js"></script>
