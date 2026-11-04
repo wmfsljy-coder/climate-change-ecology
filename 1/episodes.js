@@ -141,7 +141,7 @@ function clipRect(ctx, g) { ctx.save(); ctx.beginPath(); ctx.rect(g.L, g.T, g.R 
   });
   if (ep.cleared(2)) window.sthMission("m1-3", true);
 
-  /* 장면 4 — 기후 만들기 */
+  /* 장면 4 — 기후 만들기 (아이소메트릭 블록 모형: 바다 → 해안 → 내륙, 1월 모습 + 월평균 기온 그래프) */
   (function () {
     var canvas = $("c-clim"), ctx = window.setupCanvas(canvas), W = canvas._w, H = canvas._h;
     var lat = 50, cont = 50, cur = "none", got = window.sthState("climGot") || { a: false, b: false };
@@ -151,56 +151,163 @@ function clipRect(ctx, g) { ctx.save(); ctx.beginPath(); ctx.rect(g.L, g.T, g.R 
       return { jan: Tm - A, jul: Tm + A, rng: 2 * A, mean: Tm };
     }
     var ph = 0, mo = motion("cl-play");
-    function coast(y) { return 112 + 10 * Math.sin(y / 37) + 6 * Math.sin(y / 13 + 1); }
-    function draw() {
-      var r = clim(), y, k;
-      ctx.clearRect(0, 0, W, H);
-      /* ── 왼쪽: 위에서 본 해안 ── */
-      var LW = 330;
-      K.stage(ctx, 0, 0, LW, H, "ocean", { seed: 8 });
-      ctx.save(); ctx.beginPath(); ctx.roundRect(0, 0, LW, H, 14); ctx.clip();
-      ctx.beginPath(); ctx.moveTo(coast(0), 0);
-      for (y = 6; y <= H; y += 6) ctx.lineTo(coast(y), y);
-      ctx.lineTo(LW, H); ctx.lineTo(LW, 0); ctx.closePath();
-      var lgd = ctx.createLinearGradient(110, 0, LW, H); lgd.addColorStop(0, "#5b8a45"); lgd.addColorStop(1, "#26421f");
-      ctx.fillStyle = lgd; ctx.fill();
-      var frost = clamp(-r.jan / 25, 0, .75);
-      if (frost > 0) { ctx.fillStyle = "rgba(232,242,255," + frost.toFixed(2) + ")"; ctx.fill(); }
-      var Rr = K.rng(21);
-      for (k = 0; k < 40; k++) { var tx = 140 + Rr() * 180, ty = Rr() * H; ctx.fillStyle = "rgba(20,50,20," + (0.25 * (1 - frost)).toFixed(2) + ")"; ctx.beginPath(); ctx.arc(tx, ty, 2 + Rr() * 4, 0, 6.2832); ctx.fill(); }
-      ctx.strokeStyle = "rgba(240,220,170,.75)"; ctx.lineWidth = 3; ctx.beginPath();
-      for (y = 0; y <= H; y += 6) { if (y) ctx.lineTo(coast(y), y); else ctx.moveTo(coast(y), y); }
-      ctx.stroke();
-      /* 해류: 난류는 극 쪽(위)으로, 한류는 적도 쪽(아래)으로 */
-      if (cur !== "none") {
-        var up = cur === "warm", col = up ? "rgba(255,150,100," : "rgba(130,225,255,";
-        for (var c = 0; c < 3; c++) {
-          var cx = 26 + c * 28;
-          for (k = 0; k < Math.ceil((H + 40) / 40); k++) {
-            var yy = ((k * 40 + c * 13 + (up ? -1 : 1) * ph * 0.03) % (H + 40) + H + 40) % (H + 40) - 20, dy = up ? 7 : -7;
-            ctx.strokeStyle = col + (0.45 + 0.4 * (c % 2)).toFixed(2) + ")"; ctx.lineWidth = 2.6; ctx.lineCap = "round";
-            ctx.beginPath(); ctx.moveTo(cx - 7, yy + dy); ctx.lineTo(cx, yy); ctx.lineTo(cx + 7, yy + dy); ctx.stroke();
-          }
-        }
-        ctx.lineCap = "butt";
+    /* ── 아이소메트릭 블록 모형: x = 서쪽 바다 → 해안 → 동쪽 내륙, y = 북(뒤) → 남(앞), 1월(겨울) 모습 ── */
+    var DH = 450;                                         /* 모형 칸 높이(아래는 월평균 기온 그래프) */
+    var I = K.iso({ ox: 360, oy: 95, s: 0.84, L: 620, D: 200 });
+    var L = I.L, D = I.D, SL = 42, CY = 104;              /* SL 해수면 높이(그림 단위), CY 도시가 놓인 줄 */
+    function climAt(c) {                                  /* clim() 과 같은 식 — c 는 내륙 쪽 비율(0~1) */
+      var Tm = 30 - 0.5 * lat + CUR[cur] - 3 * c, A = 1.5 + 0.42 * lat * (0.15 + 0.85 * c);
+      return { jan: Tm - A, jul: Tm + A, rng: 2 * A, mean: Tm };
+    }
+    function coastX(y) { return 168 + 16 * Math.sin(y / 37) + 9 * Math.sin(y / 13 + 1); }
+    var XC = coastX(CY), SPAN = L - XC - 70;
+    function cAt(x) { return clamp((x - XC - 22) / SPAN, 0, 1); }
+    function cityX() { return XC + 22 + cont / 100 * SPAN; }
+    function zOf(x, y) {
+      var d = x - coastX(y);
+      if (d < 0) return SL - 5 - Math.min(32, -d * 0.3) + 1.5 * Math.sin(x / 23) * Math.cos(y / 19);
+      return SL + 2 + Math.min(1, d / 14) * (3 + d * 0.035 + 7 * Math.max(0, Math.sin(x / 52 + 0.6)) * (0.6 + 0.4 * Math.cos(y / 41)));
+    }
+    function mix(a, b, t) { return [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t, a[2] + (b[2] - a[2]) * t]; }
+    function rgb(c, f) { f = f || 1; return "rgb(" + Math.round(clamp(c[0] * f, 0, 255)) + "," + Math.round(clamp(c[1] * f, 0, 255)) + "," + Math.round(clamp(c[2] * f, 0, 255)) + ")"; }
+    var JAN = [], NJ = 40;                                /* 그릴 때마다 내륙 쪽 1월 기온을 미리 계산 */
+    function janAt(x) { return JAN[Math.round(cAt(x) * NJ)]; }
+    function landCol(x, y, z, light) {
+      var d = x - coastX(y), base;
+      if (d < 0) return rgb(mix([150, 128, 96], [96, 84, 70], clamp((SL - z) / 38, 0, 1)), light);   /* 해저 */
+      var tj = janAt(x);
+      if (d < 9) base = [216, 194, 142];                                                            /* 바닷가 모래 */
+      else base = tj >= 4 ? [96, 168, 80] : (z > SL + 18 ? [104, 132, 74] : [120, 150, 82]);
+      var snow = clamp(-tj / 16, 0, .92);
+      if (snow > 0) base = mix(base, [238, 244, 250], snow);
+      return rgb(base, light);
+    }
+    function faceZ(side) { return function (u) { return side === "front" ? zOf(u, D) : zOf(L, u); }; }
+    function palm(x, y, z, sc) {
+      var p = I.P(x, y, z), k; sc = sc || 1;
+      ctx.fillStyle = "rgba(0,0,0,.18)"; ctx.beginPath(); ctx.ellipse(p.x + 4 * sc, p.y + 1, 7 * sc, 2.4 * sc, 0, 0, 6.283); ctx.fill();
+      var tx = p.x + 4 * sc, ty = p.y - 22 * sc;
+      ctx.strokeStyle = "#7a5a36"; ctx.lineWidth = 2.4 * sc; ctx.lineCap = "round";
+      ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.quadraticCurveTo(p.x - 1 * sc, p.y - 12 * sc, tx, ty); ctx.stroke();
+      ctx.strokeStyle = "#2f7d32"; ctx.lineWidth = 2.6 * sc;
+      for (k = 0; k < 7; k++) {
+        var a = -Math.PI / 2 + (k - 3) * 0.55, ex = tx + Math.cos(a) * 11 * sc, ey = ty + Math.sin(a) * 6 * sc + 6 * sc;
+        ctx.beginPath(); ctx.moveTo(tx, ty); ctx.quadraticCurveTo(tx + Math.cos(a) * 7 * sc, ty + Math.sin(a) * 9 * sc - 2 * sc, ex, ey); ctx.stroke();
       }
+      ctx.lineCap = "butt";
+    }
+    function snowCap(x, y, z, sc) {
+      var p = I.P(x, y, z); sc = sc || 1;
+      ctx.fillStyle = "rgba(250,252,255,.95)"; ctx.beginPath(); ctx.moveTo(p.x, p.y - 30 * sc); ctx.lineTo(p.x + 4.5 * sc, p.y - 24 * sc); ctx.lineTo(p.x - 4.5 * sc, p.y - 24 * sc); ctx.closePath(); ctx.fill();
+    }
+    var TREES = (function () {
+      var R = K.rng(41), out = [], i;
+      [[24, 30], [40, 150], [30, 182], [58, 60], [22, 128]].forEach(function (q) { out.push([coastX(q[1]) + q[0], q[1], 0.95]); });   /* 바닷가 줄 */
+      for (i = 0; i < 80 && out.length < 31; i++) {
+        var x = 190 + R() * (L - 205), y = 8 + R() * (D - 16);
+        if (x - coastX(y) < 14) continue;
+        out.push([x, y, 0.8 + R() * 0.3]);
+      }
+      return out;
+    })();
+    function chev(x, y, dir, col) {
+      var a = I.P(x - 8, y + dir * 9, SL), b = I.P(x, y, SL), c = I.P(x + 8, y + dir * 9, SL);
+      ctx.strokeStyle = col; ctx.lineWidth = 2.6; ctx.lineCap = "round"; ctx.lineJoin = "round";
+      ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.lineTo(c.x, c.y); ctx.stroke();
+      ctx.lineCap = "butt"; ctx.lineJoin = "miter";
+    }
+    function drawModel(r) {
+      var k, i, box = [0, W];
+      for (k = 0; k <= NJ; k++) JAN[k] = climAt(k / NJ).jan;
+      var seaJan = JAN[0], seaIce = seaJan <= -8;         /* 바닷가 1월이 아주 추우면 연안에 얼음이 낀다 */
+      K.studio(ctx, 0, 0, W, DH, { x: I.P(L, D, 0).x - 160, y: I.P(L, D, 0).y - 24, rx: 330, ry: 52 });
+      ctx.save(); ctx.beginPath(); ctx.roundRect(0, 0, W, DH, 14); ctx.clip();
+      var WC = cur === "warm" ? [64, 158, 206] : (cur === "cold" ? [36, 104, 196] : [52, 138, 214]);
+      I.field(ctx, zOf, landCol, 62, 20, function (c, x0, y0, x1, y1, zMax, zMin) {
+        if (SL > zMin + 0.2) {
+          var a = I.P(x0, y0, SL), b = I.P(x1, y0, SL), cc = I.P(x1, y1, SL), d = I.P(x0, y1, SL);
+          var depth = SL - zMin, col = mix(mix([120, 205, 215], WC, clamp(depth / 8, 0, 1)), [12, 52, 112], clamp((depth - 8) / 40, 0, .55));
+          var iced = seaIce && x1 > coastX((y0 + y1) / 2) - 40 * clamp((-seaJan - 8) / 10, .35, 1);
+          if (iced) col = [226, 238, 248];
+          c.beginPath(); c.moveTo(a.x, a.y); c.lineTo(b.x, b.y); c.lineTo(cc.x, cc.y); c.lineTo(d.x, d.y); c.closePath();
+          c.fillStyle = rgb(col); c.fill(); c.strokeStyle = c.fillStyle; c.lineWidth = .8; c.stroke();
+        }
+      });
+      /* 앞면·오른쪽 면: 땅속 단면 */
+      ["front", "right"].forEach(function (side) {
+        var zf = faceZ(side);
+        I.face(ctx, side, function (Lw) {
+          I.profile(ctx, side, zf, 0);
+          var g = ctx.createLinearGradient(0, 0, 0, 100); g.addColorStop(0, "#5b4d40"); g.addColorStop(.6, "#8a7258"); g.addColorStop(1, "#a88a62");
+          ctx.fillStyle = g; ctx.fill();
+          ctx.save(); I.profile(ctx, side, zf, 0); ctx.clip();
+          var R = K.rng(side === "front" ? 53 : 59);
+          for (var q = 0; q < Lw * 1.4; q++) { ctx.fillStyle = R() > .5 ? "rgba(255,255,255,.16)" : "rgba(40,28,18,.25)"; ctx.fillRect(R() * Lw, R() * 100, 1.6, 1.6); }
+          ctx.strokeStyle = "rgba(50,35,20,.25)"; ctx.lineWidth = 1;
+          for (var y2 = 14; y2 < 100; y2 += 14) { ctx.beginPath(); ctx.moveTo(0, y2); ctx.lineTo(Lw, y2 + 2); ctx.stroke(); }
+          ctx.restore();
+        });
+      });
+      var WT = cur === "warm" ? "rgba(255,140,90,.62)" : (cur === "cold" ? "rgba(120,205,255,.62)" : "rgba(70,160,230,.55)");
+      I.water(ctx, SL, function (u, side) { return faceZ(side)(u); }, { surface: false, top: WT, deep: "rgba(12,50,120,.8)" });
+      I.shade(ctx, "front", function (u) { return Math.max(zOf(u, D), SL); });
+      I.shade(ctx, "right", function (u) { return Math.max(zOf(L, u), SL); });
+      I.edges(ctx, zOf(L, D), zOf(L, D));
+      /* 해류: 난류는 북쪽(뒤)으로, 한류는 남쪽(앞)으로 */
+      if (cur !== "none") {
+        var up = cur === "warm", dir = up ? 1 : -1, ccol = up ? "rgba(255,150,95," : "rgba(150,225,255,";
+        [42, 86, 128].forEach(function (lx, ln) {
+          for (k = 0; k < 6; k++) {
+            var yy = ((k * 40 + ln * 13 - dir * ph * 0.03) % (D + 40) + D + 40) % (D + 40) - 20;
+            if (yy < 8 || yy > D - 14 || lx > coastX(yy) - 12) continue;
+            chev(lx, yy, dir, ccol + (0.7 + 0.25 * (ln % 2)).toFixed(2) + ")");
+          }
+        });
+      }
+      /* 나무와 도시: 먼 것부터 */
+      var cx = cityX(), items = [];
+      TREES.forEach(function (t) { if (Math.abs(t[0] - cx) < 34 && Math.abs(t[1] - CY) < 34) return; items.push({ k: "t", x: t[0], y: t[1], s: t[2] }); });
+      [[-16, -14, "#c0553f"], [6, -18, "#3f6fb5"], [-8, 6, "#d08a2e"], [12, 2, "#c0553f"]].forEach(function (h) { items.push({ k: "h", x: cx + h[0], y: CY + h[1], c: h[2] }); });
+      items.sort(function (a, b) { return (a.x + a.y) - (b.x + b.y); });
+      items.forEach(function (it) {
+        var z = zOf(it.x, it.y);
+        if (it.k === "h") { I.house(ctx, it.x, it.y, zOf(it.x + 7, it.y + 6), 14, 12, 11, it.c); return; }
+        var tj = janAt(it.x);
+        if (tj >= 4) palm(it.x, it.y, z, it.s);
+        else { I.tree(ctx, it.x, it.y, z, it.s); if (tj < 0) snowCap(it.x, it.y, z, it.s); }
+      });
+      /* 해안에서 도시까지 */
+      ctx.save(); ctx.setLineDash([5, 4]); ctx.strokeStyle = "rgba(255,255,255,.9)"; ctx.lineWidth = 1.6; ctx.beginPath();
+      for (i = 0; i <= 20; i++) { var xx = XC + (cx - XC) * i / 20, pp = I.P(xx, CY + 22, zOf(xx, CY + 22) + 1.5); if (i) ctx.lineTo(pp.x, pp.y); else ctx.moveTo(pp.x, pp.y); }
+      ctx.stroke(); ctx.restore();
       ctx.restore();
-      K.pill(ctx, "위에서 본 해안", 14, 28, { s: 13, c: KC.blue });
-      K.pill(ctx, lat === 0 ? "적도 0°" : "북위 " + lat + "°", LW - 14, 28, { a: "right", s: 12, c: KC.yellow, box: [0, LW] });
-      K.pill(ctx, cur === "warm" ? "난류 ↑ 남쪽의 따뜻한 물" : (cur === "cold" ? "한류 ↓ 북쪽의 찬 물" : "해류 없음"), 14, H - 16, { s: 11.5, c: cur === "warm" ? KC.orange : (cur === "cold" ? KC.blue : KC.mute), box: [0, LW] });
-      var cy = H / 2 - 20, x0c = coast(cy), cityX = x0c + 22 + cont / 100 * (LW - x0c - 52);
-      if (cont > 0) K.bracket(ctx, x0c, cityX, cy + 26, "rgba(255,255,255,.7)", "내륙 쪽 " + cont + "%", false);
-      K.glow(ctx, cityX, cy, 5, "rgba(255,236,190,.95)", 4);
-      K.pill(ctx, "가상 도시", cityX, cy - 14, { a: "center", s: 11.5, c: "#fff4d6", box: [0, LW] });
-      var palm = r.jan >= 4 && r.rng <= 14, harsh = r.jan <= -15;
-      if (palm || harsh) K.pill(ctx, palm ? "🌴 야자나무 월동 가능" : "❄️ 혹독한 겨울", cityX, cy + 86, { a: "center", s: 12, c: palm ? KC.green : "#cfe6ff", box: [0, LW] });
-
-      /* ── 오른쪽: 월평균 기온 ── */
-      var RX = LW + 8;
-      K.stage(ctx, RX, 0, W - RX, H, "lab", { seed: 9 });
-      K.pill(ctx, "가상 도시의 월평균 기온", RX + 14, 28, { s: 13, c: KC.blue });
+      /* 이름표 */
+      var palmOk = r.jan >= 4 && r.rng <= 14, harsh = r.jan <= -15;
+      var cz = zOf(cx, CY) + 22, cc2 = palmOk ? "#b6f5c2" : (harsh ? "#cfe6ff" : "#fff4d6");
+      I.label(ctx, cx, CY, cz, "가상 도시 · 1월 " + r.jan.toFixed(1) + " ℃", I.P(cx, CY, 0).x > 560 ? -34 : 34, -62, cc2, box);
+      var mp = I.P((XC + cx) / 2, CY + 22, zOf((XC + cx) / 2, CY + 22) + 2);
+      if (cont > 0) K.pill(ctx, "해안에서 내륙 쪽 " + cont + "%", mp.x - 6, cont >= 60 ? mp.y + 26 : mp.y - 12, { a: "center", s: 11, c: "#ffffff", box: box });
+      else K.pill(ctx, "해안 바로 옆", mp.x - 6, mp.y + 26, { a: "center", s: 11, c: "#ffffff", box: box });
+      I.label(ctx, 70, 150, SL, "바다", -40, 30, "#bfe6ff", box);
+      if (cur !== "none") I.label(ctx, 86, 46, SL, cur === "warm" ? "난류 ↑ 남쪽에서 올라온 따뜻한 물" : "한류 ↓ 북쪽에서 내려온 찬 물", 70, -46, cur === "warm" ? "#ffc39a" : "#bfe6ff", box);
+      if (seaIce) I.label(ctx, coastX(D - 24) - 14, D - 24, SL, "연안 바다가 언다", -12, 70, "#e8f4ff", box);
+      if (JAN[NJ] < 0 && JAN[0] >= 0) {
+        var sx = XC + 22; for (k = 0; k <= NJ; k++) if (JAN[k] < 0) { sx = XC + 22 + k / NJ * SPAN; break; }
+        I.label(ctx, sx, D, zOf(sx, D), "여기부터 1월 영하", 26, 78, "#e8f4ff", box);
+      }
+      /* 큰 글자 */
+      var LT = lat === 0 ? "적도" : "북위 " + lat + "°";
+      if (palmOk) { K.bigText(ctx, LT + "에 야자수가 자란다", 22, 46, 25, "#ffd35a"); K.bigText(ctx, "1월 " + r.jan.toFixed(1) + " ℃ · 연교차 " + r.rng.toFixed(1) + " ℃", 22, 78, 17, "#ffffff"); }
+      else if (harsh) { K.bigText(ctx, "영하 " + Math.abs(r.jan).toFixed(1) + " ℃의 겨울", 22, 46, 25, "#bfe6ff"); K.bigText(ctx, (cont >= 60 ? "바다에서 먼 내륙" : (cur === "cold" ? "찬 해류가 흐르는 바닷가" : "위도가 높은 바닷가")) + " · 연교차 " + r.rng.toFixed(1) + " ℃", 22, 78, 17, "#ffffff"); }
+      else { K.bigText(ctx, LT + "의 가상 도시", 22, 46, 25, "#ffffff"); K.bigText(ctx, "1월 " + r.jan.toFixed(1) + " ℃ · 연교차 " + r.rng.toFixed(1) + " ℃", 22, 78, 17, "#ffd35a"); }
+      K.warn(ctx, W - 14, 30, "⚠ 높이는 과장, 거리는 줄임 · 1월의 모습", "right");
+    }
+    function drawChart(r) {
+      var y0 = DH + 8, h = H - y0;
+      K.stage(ctx, 0, y0, W, h, "lab", { seed: 9 });
+      K.pill(ctx, "가상 도시의 월평균 기온", 14, y0 + 24, { s: 12.5, c: KC.blue });
       var MN = ["1월", "4월", "7월", "10월", "1월"];
-      var g = K.chart(ctx, { x: RX + 4, y: 40, w: W - RX - 8, h: H - 44, x0: 0, x1: 12, y0: -30, y1: 40, xt: 4, yt: 7, yl: "기온(℃)", xf: function (vv) { return MN[Math.round(vv / 3)]; } });
+      var g = K.chart(ctx, { x: 4, y: y0 + 30, w: W - 8, h: h - 34, x0: 0, x1: 12, y0: -30, y1: 40, xt: 4, yt: 7, yl: "기온(℃)", xf: function (vv) { return MN[Math.round(vv / 3)]; } });
       var pts = [];
       for (var m = 0; m <= 12.001; m += 0.25) pts.push([m, r.mean - (r.rng / 2) * Math.cos(2 * Math.PI * m / 12)]);
       clipRect(ctx, g);
@@ -218,6 +325,12 @@ function clipRect(ctx, g) { ctx.save(); ctx.beginPath(); ctx.rect(g.L, g.T, g.R 
       ctx.strokeStyle = KC.violet; ctx.lineWidth = 2;
       ctx.beginPath(); ctx.moveTo(bxr - 6, jy); ctx.lineTo(bxr, jy); ctx.lineTo(bxr, uy); ctx.lineTo(bxr - 6, uy); ctx.stroke();
       K.pill(ctx, "연교차 " + r.rng.toFixed(1) + " ℃", bxr - 10, clamp((jy + uy) / 2 + 5, g.T + 16, g.B - 8), { a: "right", s: 11.5, c: KC.violet });
+    }
+    function draw() {
+      var r = clim();
+      ctx.clearRect(0, 0, W, H);
+      drawModel(r);
+      drawChart(r);
       return r;
     }
     function update() {
