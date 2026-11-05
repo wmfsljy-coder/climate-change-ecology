@@ -48,7 +48,7 @@
         <section class="scene" data-title="용의자 가려내기 — 기온 곡선 맞추기">
           <div class="story"><div class="who">🧑‍🔬</div><div class="say"><span class="name">은호</span>“기후를 바꾸는 원인에는 <b>자연적 원인</b>(태양 활동, 화산 분출 …)과 <b>인위적 원인</b>(온실 기체, 에어로졸 …)이 있어요. 원인을 하나씩 켜서 모형이 관측 기온 곡선을 따라가게 만들어 보세요.”</div></div>
           <div class="stage-card">
-            <div class="canvas-wrap stage"><canvas id="c-att" width="900" height="340"></canvas></div>
+            <div class="canvas-wrap studio"><canvas id="c-att" width="900" height="340"></canvas></div>
             <div class="sim-side">
               <div class="readout" id="att-read"></div>
               <div id="att-ctrl"></div>
@@ -63,7 +63,7 @@
         <section class="scene" data-title="비커 실험 — 무엇이 녹아야 바다가 오를까">
           <div class="story"><div class="who">🧑‍🔬</div><div class="say"><span class="name">은호</span>“해수면을 올리는 범인도 가려야 해요. 비커 세 개로 모형 실험을 합시다. (가) 물에 떠 있는 얼음(해빙) (나) 받침대 위의 얼음(육지의 빙하) (다) 얼음 없이 물을 데우기(열팽창).”</div></div>
           <div class="stage-card">
-            <div class="canvas-wrap stage"><canvas id="c-bx" width="900" height="330"></canvas></div>
+            <div class="canvas-wrap studio"><canvas id="c-bx" width="900" height="330"></canvas></div>
             <div class="sim-side">
               <div class="readout" id="bx-read"></div>
               <div class="ctrl-group">
@@ -131,13 +131,14 @@
         <section class="scene" data-title="시간당 141.5 mm">
           <div class="story narr"><div class="who">🌧️</div><div class="say"><span class="name">이야기</span>2022년 8월, 서울에 시간당 최대 <b>141.5 mm</b>의 비가 쏟아졌습니다. 1942년의 기록 118.6 mm를 80년 만에 넘어선 값입니다. 2년 뒤 2024년 여름(6~8월) 우리나라 전국 평균 기온은 <b>25.6 ℃</b>로 1973년 관측 이래 가장 높았습니다(기상청).</div></div>
           <div class="story"><div class="who">👩‍💼</div><div class="say"><span class="name">방송국 PD</span>“캐스터님, 시청자들이 물어요. ‘더워지는데 왜 비는 더 세게 오나요?’ 방송 전에 답을 정해 두세요.”</div></div>
+          <figure class="hero-art"><img src="img/seoul-cloudburst.webp" alt="도시 한 구역을 블록처럼 잘라 낸 모형. 번개가 치는 짙은 적란운에서 굵은 비가 쏟아져 도로가 흙탕물에 잠기고 차들이 반쯤 잠겼다. 반지하 창문과 지하 주차장 입구로 물이 쏟아져 들어가고, 앞면 단면에는 도로 아래 하수관이 물로 가득 차 있다." width="900" height="900" loading="lazy"><figcaption><b>더워진 공기는 수증기를 더 많이 품었다가 한꺼번에 쏟아냅니다</b> 기온이 1 ℃ 오를 때마다 공기가 품을 수 있는 수증기의 양(포화 수증기량)은 약 7%씩 늘어납니다. 그래서 비구름이 짧은 시간에 더 많은 비를 내릴 수 있고, 하수관이 감당하지 못한 빗물은 반지하·지하 주차장 같은 낮은 곳으로 몰립니다. <span class="art-note">⚠ 건물 높이와 구름 크기는 실제 비율이 아닙니다.</span></figcaption></figure>
           <div class="gate loose" id="g2"></div>
         </section>
 
         <section class="scene" data-title="공기 한 통의 수증기 — 1 ℃에 몇 %">
           <div class="story"><div class="who">🧑‍🔬</div><div class="say"><span class="name">기상청 예보관</span>“공기가 품을 수 있는 최대 수증기량(포화 수증기량)은 기온이 오를수록 빠르게 늘어요. 여름 기온 25 ℃에서 출발해 기온을 올려 보세요. 수증기가 많을수록 한 번에 쏟아질 수 있는 비가 많아지고, 수증기가 응결할 때 나오는 <b>잠열</b>은 태풍의 에너지가 됩니다.”</div></div>
           <div class="stage-card">
-            <div class="canvas-wrap stage"><canvas id="c-cc" width="900" height="320"></canvas></div>
+            <div class="canvas-wrap studio"><canvas id="c-cc" width="900" height="320"></canvas></div>
             <div class="sim-side">
               <div class="readout" id="cc-read"></div>
               <div style="display:grid;gap:14px">
@@ -159,7 +160,7 @@
           <div class="story"><div class="who">🦜</div><div class="say"><span class="name">생태학자</span>“기후가 바뀌면 생물의 모습도 달라져요. 호주의 몇몇 앵무새 종은 1870년대 이후 부리가 조금씩 커졌다는 연구가 있어요. 큰 부리는 몸의 열을 내보내는 데 유리하거든요. 그런데 왜 커졌을까요?”</div></div>
           <div class="gate loose" id="g2b"></div>
           <div class="stage-card" style="margin-top:14px">
-            <div class="canvas-wrap stage"><canvas id="c-bk" width="900" height="320"></canvas></div>
+            <div class="canvas-wrap studio"><canvas id="c-bk" width="900" height="320"></canvas></div>
             <div class="sim-side">
               <div class="readout" id="bk-read"></div>
               <div class="ctrl-group" style="flex:1 1 100%">
@@ -176,7 +177,7 @@
         <section class="scene" data-title="2100년의 예보 — 시나리오를 고르다">
           <div class="story"><div class="who">👩‍💼</div><div class="say"><span class="name">방송국 PD</span>“특집 방송 ‘2100년의 일기 예보’예요. 미래 기후는 우리가 얼마나 탄소를 줄이느냐에 달려 있죠. <b>SSP 시나리오</b>는 인구·경제·기술·정책의 변화를 가정해 미래를 다섯 갈래로 나눕니다. 감축 노력을 조절해 우리 바다의 2100년을 예보해 주세요.”</div></div>
           <div class="stage-card">
-            <div class="canvas-wrap stage"><canvas id="c-ssp" width="900" height="320"></canvas></div>
+            <div class="canvas-wrap studio"><canvas id="c-ssp" width="900" height="320"></canvas></div>
             <div class="sim-side">
               <div class="readout" id="ssp-read"></div>
               <div class="ctrl-group" style="flex:1 1 100%">
@@ -219,12 +220,13 @@
         <section class="scene" data-title="텅 빈 벌통">
           <div class="story narr"><div class="who">🐝</div><div class="say"><span class="name">이야기</span>2021년 말부터 2022년 초까지 겨울 동안, 우리나라에서 월동 중이던 꿀벌 약 <b>39만 봉군</b>이 사라지거나 죽었습니다(농림축산식품부). 피해율은 전라남도 43.0%, 충청북도 19.7%, 제주도 15.1%, 경상남도 11.1%였습니다.</div></div>
           <div class="story"><div class="who">👨‍🌾</div><div class="say"><span class="name">양봉 조합장</span>“벌통을 열어 보니 벌이 거의 없어요. 죽은 벌도 별로 없고요. 벌들이 어디로 갔을까요? 조사를 부탁합니다.”</div></div>
+          <figure class="hero-art"><img src="img/winter-apiary.webp" alt="겨울 양봉장을 블록처럼 잘라 낸 모형. 군데군데 눈이 남은 들판에 나무 벌통들이 줄지어 있고, 옆에는 분홍 꽃나무와 노란 개나리가 일찍 피었다. 따뜻한 오후에 벌통 입구로 꿀벌들이 날아 나오고, 벌통 앞 땅에는 죽은 벌 몇 마리가 떨어져 있다. 잘라 낸 벌통 안에는 벌집 틀 위에 꿀벌들이 뭉쳐 있다." width="900" height="900" loading="lazy"><figcaption><b>따뜻한 겨울은 꿀벌을 너무 일찍 벌통 밖으로 불러냅니다</b> 꿀벌은 겨울 동안 벌통 안에서 서로 뭉쳐 몸의 열로 추위를 견딥니다. 겨울이 따뜻하면 일벌이 일찍 밖으로 나갔다가 갑자기 찾아온 추위에 돌아오지 못하는 일이 늘어, 이것이 월동 피해의 원인 가운데 하나로 꼽힙니다. <span class="art-note">⚠ 꿀벌은 보기 쉽게 크게 그렸습니다.</span></figcaption></figure>
           <div class="gate loose" id="g3"></div>
         </section>
 
         <section class="scene" data-title="빨라진 봄 — 지역별 개화 자료">
           <div class="story"><div class="who">🧑‍🔬</div><div class="say"><span class="name">생태 조사원</span>“먼저 봄의 시간표부터 봅시다. 1980년대와 비교해 최근 30년 동안 개나리·진달래·벚나무의 개화 시기는 지역마다 최대 11일까지 빨라졌어요. 자료를 읽어 보세요.”</div></div>
-          <div class="stage-card"><div class="canvas-wrap stage"><canvas id="c-bloom" width="900" height="300"></canvas></div></div>
+          <div class="stage-card"><div class="canvas-wrap studio"><canvas id="c-bloom" width="900" height="300"></canvas></div></div>
           <div class="stage-card" style="margin-top:14px"><div id="s3-q1"></div></div>
           <div class="mission" id="m3-2"><span class="m-tag">미션</span>개화 자료를 읽고 물음에 답하세요.</div>
         </section>
@@ -232,7 +234,7 @@
         <section class="scene" data-title="엇박자 — 꽃과 곤충의 시간표">
           <div class="story"><div class="who">🧑‍🔬</div><div class="say"><span class="name">생태 조사원</span>“식물은 기온에 민감하게 개화를 앞당기지만, 곤충은 그만큼 빨리 따라가지 못해요. 이 모형에서 개화일은 1 ℃에 8일, 곤충의 활동 시작일은 3일씩 빨라진다고 할게요. 꽃이 피어 있는 기간이 약 10일이라면, 둘이 어긋나는 간격이 10일을 넘으면 곤충은 꽃을 만나지 못합니다.”</div></div>
           <div class="stage-card">
-            <div class="canvas-wrap stage"><canvas id="c-gap" width="900" height="300"></canvas></div>
+            <div class="canvas-wrap studio"><canvas id="c-gap" width="900" height="300"></canvas></div>
             <div class="sim-side">
               <div class="readout" id="gap-read"></div>
               <div class="ctrl-group" style="flex:1 1 100%">
@@ -248,7 +250,7 @@
         <section class="scene" data-title="따뜻한 겨울의 덫 — 월동 생존율">
           <div class="story"><div class="who">👨‍🌾</div><div class="say"><span class="name">양봉 조합장</span>“그해 겨울은 유난히 따뜻한 날이 많았어요. 벌들이 봄인 줄 알고 밖으로 나갔다가 꽃이 없어 먹이를 못 구하고, 갑자기 추워지면 벌통으로 돌아오지 못했지요.”</div></div>
           <div class="stage-card">
-            <div class="canvas-wrap stage"><canvas id="c-bee" width="900" height="300"></canvas></div>
+            <div class="canvas-wrap studio"><canvas id="c-bee" width="900" height="300"></canvas></div>
             <div class="sim-side">
               <div class="readout" id="bee-read"></div>
               <div class="ctrl-group" style="flex:1 1 100%">
@@ -292,13 +294,14 @@
         <section class="scene" data-title="초록색으로 변한 강">
           <div class="story narr"><div class="who">🟢</div><div class="say"><span class="name">이야기</span>한여름, 호수와 강물이 초록 물감을 푼 것처럼 변했습니다. <b>남세균</b>(남조류)이 폭발적으로 늘어난 <b>녹조</b>입니다. 남세균 가운데에는 독소를 내는 것도 있어 물고기가 죽고 사람의 물놀이와 취수가 막힙니다. 바다에서는 와편모조류가 늘어 물이 붉게 변하는 <b>적조</b>가 생깁니다.</div></div>
           <div class="story"><div class="who">👩‍⚕️</div><div class="say"><span class="name">환경 보건 조사관 나래</span>“녹조와 적조를 합쳐 <b>물꽃 현상</b>이라고 해요. 올여름은 왜 이렇게 심할까요?”</div></div>
+          <figure class="hero-art"><img src="img/green-river.webp" alt="보가 있는 느린 강을 블록처럼 잘라 낸 모형. 강물 표면이 초록 물감을 푼 듯한 녹조로 덮여 있고, 강가에는 죽은 물고기가 떠 있으며 취수탑이 서 있다. 앞면 단면에는 따뜻하고 초록빛인 윗물과 차갑고 맑은 아랫물이 경계를 이루어 나뉘어 있다. 강둑 풀숲 위로는 작은 모기 떼가 날고 있다." width="900" height="900" loading="lazy"><figcaption><b>뜨겁고 고인 물, 넘치는 영양염이 녹조를 부릅니다</b> 여름에 윗물이 데워지면 따뜻한 윗물과 차가운 아랫물이 잘 섞이지 않는 성층이 생깁니다. 물이 느리게 흐르는 곳에 질소·인 같은 영양염까지 많으면 남세균이 폭발적으로 늘어납니다. 따뜻해진 날씨는 모기가 활동하는 기간도 늘립니다. <span class="art-note">⚠ 물의 두 층과 모기 떼는 보기 쉽게 과장했습니다.</span></figcaption></figure>
           <div class="gate loose" id="g4"></div>
         </section>
 
         <section class="scene" data-title="호수 실험 — 수온과 영양염">
           <div class="story"><div class="who">👩‍⚕️</div><div class="say"><span class="name">나래</span>“물꽃 현상에는 두 가지 조건이 겹쳐요. <b>수온 상승</b>, 그리고 비료·생활 하수의 질소·인이 흘러드는 <b>부영양화</b>. 여름에 수면이 뜨거워지면 따뜻한 윗물과 차가운 아랫물이 섞이지 않는 <b>성층 현상</b>도 강해지는데, 공기주머니로 떠오를 수 있는 남세균은 이때 햇빛을 독차지합니다.”</div></div>
           <div class="stage-card">
-            <div class="canvas-wrap stage"><canvas id="c-lake" width="900" height="330"></canvas></div>
+            <div class="canvas-wrap studio"><canvas id="c-lake" width="900" height="330"></canvas></div>
             <div class="sim-side">
               <div class="readout" id="lk-read"></div>
               <div style="display:grid;gap:14px">
@@ -327,7 +330,7 @@
         <section class="scene" data-title="길어지는 모기의 계절">
           <div class="story"><div class="who">👩‍⚕️</div><div class="say"><span class="name">나래</span>“일본뇌염을 옮기는 <b>작은빨간집모기</b>는 추운 겨울에는 활동을 멈췄다가 기온이 오르면 활동을 시작해요. 이 모형에서는 하루 평균 기온이 15 ℃ 이상인 날에 활동한다고 할게요. 기온이 오르면 모기의 계절은 며칠 늘어날까요?”</div></div>
           <div class="stage-card">
-            <div class="canvas-wrap stage"><canvas id="c-mos" width="900" height="300"></canvas></div>
+            <div class="canvas-wrap studio"><canvas id="c-mos" width="900" height="300"></canvas></div>
             <div class="sim-side">
               <div class="readout" id="mos-read"></div>
               <div class="ctrl-group" style="flex:1 1 100%">

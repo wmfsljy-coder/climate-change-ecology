@@ -40,6 +40,36 @@ function rd(id, html) { var e = $(id); if (e) e.innerHTML = html; }
 function kv(k, val, c, sub) { return "<span class='k'>" + k + "</span><span class='v " + (c || "") + "'>" + val + "</span>" + (sub ? "<span class='sub'>" + sub + "</span>" : ""); }
 function okp(good, s) { return "<span class='ok " + (good ? "g" : "r") + "'>" + s + "</span>"; }
 function clipRect(ctx, g) { ctx.save(); ctx.beginPath(); ctx.rect(g.L, g.T, g.R - g.L, g.B - g.T); ctx.clip(); }
+/* ---- 스튜디오 블록 모형 도구 (밝은 바탕) ---- */
+var LC = K.LT;
+function zEll(ctx, x, y, rx, ry) { ctx.beginPath(); ctx.ellipse(x, y, rx, ry, 0, 0, 6.2832); }
+/* 땅 블록 옆면(띠 [아래, 위, 색]) + 윗면 */
+function zSlab(ctx, I, zg, bands, topFill, n) {
+  ["front", "right"].forEach(function (sd, k) { I.face(ctx, sd, function (Lw) { bands.forEach(function (b) { ctx.fillStyle = k ? K.tint(b[2], .84) : b[2]; ctx.fillRect(0, b[0], Lw, b[1] - b[0]); }); }); });
+  I.top(ctx, function () { return zg; }, topFill, n || 20);
+  I.edges(ctx, zg, zg);
+}
+var zSOIL = [[0, 6, "#7c818a"], [6, 13, "#9a7650"], [13, 18, "#5a3d26"]];
+/* 흰 카드 오른쪽 판 */
+function zCard(ctx, x, w, H, title, rows, tip, big, y0) {
+  K.card(ctx, x, 0, w, H, title);
+  var x0 = x + 18, x1 = x + w - 18, y = y0 || 58;
+  if (big) { K.t(ctx, big[0], x0, y + 8, { s: 26, w: "900", c: big[1] }); y += 44; }
+  rows.forEach(function (r) { K.row(ctx, r[0], r[1], x0, x1, y, r[2]); if (r[3] != null) { K.bar(ctx, x0, y + 8, x1 - x0, r[3], r[2]); y += 14; } y += 28; });
+  if (tip) K.tip(ctx, tip[0], x0 - 4, H - 46, x1 - x0 + 8, tip[1]);
+  return y;
+}
+/* 기상 관측 백엽상 미니어처 */
+function zStation(ctx, ox, oy, s) {
+  var I = K.iso({ ox: ox, oy: oy, s: s, L: 120, D: 90 });
+  zSlab(ctx, I, 18, zSOIL, function (j) { return j % 2 ? "#8cc46a" : "#84bd62"; }, 12);
+  [[40, 30], [70, 30], [40, 60], [70, 60]].forEach(function (q) { K.line(ctx, I.P(q[0], q[1], 18), I.P(q[0], q[1], 70), "#868e96", 2); });
+  I.box(ctx, 36, 26, 70, 74, 64, 104, "#ffffff", "#eef1f5", "#cfd5de");
+  for (var k = 0; k < 4; k++) K.line(ctx, I.P(36, 64, 76 + k * 7), I.P(74, 64, 76 + k * 7), "#b9c0cc", 1);
+  I.quad(ctx, I.P(32, 22, 106), I.P(78, 22, 106), I.P(78, 68, 106), I.P(32, 68, 106), "#f8f9fa", "#adb5bd");
+  I.tree(ctx, 104, 16, 18, 1.1); I.tree(ctx, 12, 78, 18, .9);
+  return I;
+}
 
 /* =========================================================================
    이야기 ① 콘월의 야자수
@@ -71,29 +101,38 @@ function clipRect(ctx, g) { ctx.save(); ctx.beginPath(); ctx.rect(g.L, g.T, g.R 
     function draw() {
       var s = series(win), d = sd(s), m = s.reduce(function (a, b) { return a + b; }, 0) / s.length, p;
       ctx.clearRect(0, 0, W, H);
-      K.stage(ctx, 0, 0, W, H, "lab", { seed: 3 });
-      K.pill(ctx, "10년 동안 매일 잰 기온 · 평균하는 기간을 늘려 보기", 16, 28, { s: 13, c: KC.blue });
-      var lg = K.pill(ctx, "━ " + win + "일 평균", W - 16, 28, { a: "right", s: 11.5, c: KC.orange });
-      K.pill(ctx, "━ 매일 기온(날씨)", lg.x - 8, 28, { a: "right", s: 11.5, c: "#c9d3f5" });
-      var g = K.chart(ctx, { x: 6, y: 40, w: W - 12, h: H - 44, x0: 0, x1: 10, y0: -5, y1: 30, xt: 10, yt: 7, xl: "지난 시간(년)", yl: "기온(℃)" });
+      var LW = 640;
+      K.studio(ctx, 0, 0, LW, H, null);
+      K.bigText(ctx, "변동 폭 ±" + d.toFixed(2) + " ℃", 16, 36, 24, d < 0.5 ? "#7ee0a0" : "#ffffff");
+      K.bigText(ctx, win === 1 ? "매일의 기온 = 날씨" : win + "일씩 평균한 기온", 16, 60, 15, "#ffd35a");
+      K.t(ctx, "━ 매일 기온", LW - 150, 30, { s: 11.5, w: "900", a: "right", c: "#8a96a8" });
+      K.t(ctx, "━ " + win + "일 평균", LW - 16, 30, { s: 11.5, w: "900", a: "right", c: LC.orange });
+      var g = K.chart(ctx, { x: 4, y: 70, w: LW - 8, h: H - 74, pl: 44, pb: 30, pt: 8, pr: 14, x0: 0, x1: 10, y0: -5, y1: 30, xt: 10, yt: 7, light: true, xl: "지난 시간(년)", yf: function (q) { return Math.round(q) + "℃"; } });
       clipRect(ctx, g);
       /* 평균하는 구간(창) */
       var wy = win / 365, wx0 = g.X(5 - wy / 2), wx1 = g.X(5 + wy / 2);
-      ctx.fillStyle = "rgba(255,179,92,.10)"; ctx.fillRect(wx0, g.T, Math.max(2, wx1 - wx0), g.B - g.T);
-      ctx.strokeStyle = "rgba(255,179,92,.6)"; ctx.lineWidth = 1.2; ctx.setLineDash([4, 4]); ctx.strokeRect(wx0, g.T, Math.max(2, wx1 - wx0), g.B - g.T); ctx.setLineDash([]);
+      ctx.fillStyle = "rgba(245,159,0,.12)"; ctx.fillRect(wx0, g.T, Math.max(2, wx1 - wx0), g.B - g.T);
+      ctx.strokeStyle = "rgba(232,89,12,.6)"; ctx.lineWidth = 1.2; ctx.setLineDash([4, 4]); ctx.strokeRect(wx0, g.T, Math.max(2, wx1 - wx0), g.B - g.T); ctx.setLineDash([]);
       /* 변동 폭 띠 (평균 ± 표준 편차) */
-      ctx.fillStyle = "rgba(127,211,255,.10)"; ctx.fillRect(g.L, g.Y(m + d), g.R - g.L, g.Y(m - d) - g.Y(m + d));
-      ctx.strokeStyle = "rgba(127,211,255,.45)"; ctx.lineWidth = 1; ctx.setLineDash([3, 4]);
+      ctx.fillStyle = "rgba(28,126,214,.10)"; ctx.fillRect(g.L, g.Y(m + d), g.R - g.L, g.Y(m - d) - g.Y(m + d));
+      ctx.strokeStyle = "rgba(28,126,214,.5)"; ctx.lineWidth = 1; ctx.setLineDash([3, 4]);
       [m + d, m - d].forEach(function (t) { ctx.beginPath(); ctx.moveTo(g.L, g.Y(t)); ctx.lineTo(g.R, g.Y(t)); ctx.stroke(); });
       ctx.setLineDash([]);
       /* 매일의 기온 */
-      ctx.strokeStyle = "rgba(200,212,255,.38)"; ctx.lineWidth = 1; ctx.beginPath();
+      ctx.strokeStyle = "rgba(90,110,140,.38)"; ctx.lineWidth = 1; ctx.beginPath();
       for (p = 0; p < 400; p++) { var xx = g.X(p / 40), yy = g.Y(daily[Math.floor(p / 400 * N)]); if (p) ctx.lineTo(xx, yy); else ctx.moveTo(xx, yy); }
       ctx.stroke();
-      K.plot(ctx, g, s.map(function (val, k) { return [k / 40, val]; }), KC.orange, { w: 2.8 });
+      K.plot(ctx, g, s.map(function (val, k) { return [k / 40, val]; }), LC.orange, { w: 2.8, light: true });
       ctx.restore();
-      K.pill(ctx, "평균하는 구간 " + win + "일", g.X(5), g.T + 18, { a: "center", s: 11.5, c: KC.orange });
-      K.pill(ctx, "변동 폭 ±" + d.toFixed(2) + " ℃", g.R - 8, Math.max(g.T + 46, g.Y(m + d) - 8), { a: "right", s: 11.5, c: d < 0.5 ? KC.green : KC.blue });
+      K.t(ctx, "평균하는 구간 " + win + "일", g.X(5), g.T + 14, { s: 11.5, w: "900", a: "center", c: LC.orange });
+      /* 오른쪽: 관측소 미니어처 + 판정 카드 */
+      var RX = LW + 12;
+      zCard(ctx, RX, W - RX, H, "관측소 백엽상에서 잰 10년", [
+        ["평균 기간", win + "일", LC.orange, Math.min(1, win / 1095)],
+        ["변동 폭 σ", d.toFixed(2) + " ℃", d < 0.5 ? LC.green : LC.blue, Math.min(1, d / rawSd)]
+      ], [d < 0.5 ? "계절 변화까지 지워짐" : (win < 300 ? "여름·겨울 물결이 남음" : "계절의 흔적이 남음"), d < 0.5 ? true : null], null, 196);
+      zStation(ctx, RX + 124, 104, 0.66);
+      K.t(ctx, "기후 = 30년 평균 (약 10,950일)", RX + 18, 290, { s: 11, w: "800", c: LC.mute });
       return d;
     }
     function update() {
@@ -398,98 +437,83 @@ function clipRect(ctx, g) { ctx.save(); ctx.beginPath(); ctx.rect(g.L, g.T, g.R 
     var A = 10, TOT = 14, got = window.sthState("iceGot") || { a: false, b: false, q: false };
     function absorb(a) { return (a * 0.4 + (TOT - a) * 0.94) / TOT; }
     var mo = motion("ice-play"), PH = [], spawn = 0, RP = K.rng(17);
-    var cx = 196, cy = 178, R = 118, SUN = { x: 360, y: 60 };
-    function edge(a) { return 1 + .07 * Math.sin(5 * a + 1) + .05 * Math.sin(9 * a + 2) + .03 * Math.sin(17 * a); }
-    function iceR() { return R * Math.sqrt(A / TOT); }
-    function onIce(x, y) { var dx = x - cx, dy = y - cy; return Math.sqrt(dx * dx + dy * dy) < Math.min(R - 2, iceR() * edge(Math.atan2(dy, dx))); }
-    function beam(a, b, w0, w1, fill) {
-      var dx = b.x - a.x, dy = b.y - a.y, L = Math.sqrt(dx * dx + dy * dy) || 1, nx = -dy / L, ny = dx / L;
-      ctx.fillStyle = fill; ctx.beginPath();
-      ctx.moveTo(a.x + nx * w0 / 2, a.y + ny * w0 / 2); ctx.lineTo(b.x + nx * w1 / 2, b.y + ny * w1 / 2);
-      ctx.lineTo(b.x - nx * w1 / 2, b.y - ny * w1 / 2); ctx.lineTo(a.x - nx * w0 / 2, a.y - ny * w0 / 2); ctx.closePath(); ctx.fill();
+    /* 북극해 블록: 윗면 = 해빙과 드러난 바다, 앞·오른쪽 면 = 바닷물 단면 */
+    var IA = K.iso({ ox: 236, oy: 120, s: 0.8, L: 300, D: 190 }), ZS = 64, SUN = { x: 504, y: 44 }, offA = null, offK = null;
+    function fieldV(u, v) { return 0.74 * (u / IA.L) + 0.26 * (v / IA.D) + 0.05 * Math.sin(u / 17 + v / 23) + 0.035 * Math.sin(u / 7 - v / 11); }
+    function iceAt(u, v) { return fieldV(u, v) < A / TOT * 1.02 - 0.01; }
+    function base() {
+      var key = Math.round(A * 10), c = canvas;
+      if (offA && offK === key && offA.width === c.width) return offA;
+      var off = offA || document.createElement("canvas"), dpr = c.width / W; off.width = c.width; off.height = c.height;
+      var o = off.getContext("2d"); o.setTransform(dpr, 0, 0, dpr, 0, 0); o.clearRect(0, 0, W, H);
+      var fc = IA.P(IA.L / 2, IA.D / 2, 0);
+      K.studio(o, 0, 0, 560, H, { x: fc.x + 10, y: fc.y + 36, rx: 250, ry: 44 });
+      var ab = absorb(A);
+      ["front", "right"].forEach(function (sd, k) {
+        IA.face(o, sd, function (Lw) {
+          var wg = o.createLinearGradient(0, ZS, 0, 0); wg.addColorStop(0, k ? "#1f6fb0" : "#2a84c6"); wg.addColorStop(1, k ? "#082a52" : "#0b3566");
+          o.fillStyle = wg; o.fillRect(0, 10, Lw, ZS - 10);
+          o.fillStyle = "rgba(255,140,80," + (Math.max(0, ab - .4) * .5).toFixed(3) + ")"; o.fillRect(0, ZS - 16, Lw, 16);
+          o.fillStyle = k ? "#5d5146" : "#6e6052"; o.fillRect(0, 0, Lw, 10);
+          var R0 = K.rng(3 + k); o.fillStyle = "rgba(255,255,255,.18)"; for (var q = 0; q < 40; q++) o.fillRect(R0() * Lw, R0() * 9, 1.6, 1.6);
+          /* 물 위에 뜨는 얇은 해빙 단면 */
+          var u, st = 3;
+          for (u = 0; u < Lw; u += st) { var on = sd === "front" ? iceAt(u + 1, IA.D - 1) : iceAt(IA.L - 1, u + 1); if (on) { o.fillStyle = "#e9f4fb"; o.fillRect(u, ZS - 2.5, st + .4, 5.5); } }
+        });
+      });
+      IA.shade(o, "right", function () { return ZS; });
+      IA.field(o, function (x, y) { return iceAt(x, y) ? ZS + 3 : ZS; }, function (x, y, z, lt) {
+        return z > ZS + 1 ? K.tint("#eef6fb", Math.min(1.08, lt)) : K.tint("#155a92", .95 + .08 * Math.sin(x / 13 + y / 9));
+      }, 44, 28);
+      IA.edges(o, ZS, ZS);
+      offA = off; offK = key; return off;
     }
     function step(dt) {
       spawn += dt;
       while (spawn > 70) {
         spawn -= 70;
-        var rr = R * Math.sqrt(RP()), aa = RP() * 6.2832;
-        PH.push({ x: SUN.x + (RP() - .5) * 16, y: SUN.y + (RP() - .5) * 16, tx: cx + rr * Math.cos(aa), ty: cy + rr * Math.sin(aa), st: 0, t: 0 });
+        var tu = 8 + RP() * (IA.L - 16), tv = 8 + RP() * (IA.D - 16), tp = IA.P(tu, tv, ZS + 3);
+        PH.push({ x: SUN.x + (RP() - .5) * 16, y: SUN.y + (RP() - .5) * 16, tx: tp.x, ty: tp.y, ice: iceAt(tu, tv), st: 0, t: 0 });
       }
       PH.forEach(function (p) {
         p.t += dt;
         if (p.st === 0) {
-          var dx = p.tx - p.x, dy = p.ty - p.y, d = Math.sqrt(dx * dx + dy * dy), sp = 0.22 * dt;
-          if (d <= sp) { p.x = p.tx; p.y = p.ty; p.t = 0; p.st = RP() < (onIce(p.x, p.y) ? 0.6 : 0.06) ? 1 : 2; p.vx = (SUN.x - p.x) / 900 + (RP() - .5) * .08; p.vy = (SUN.y - p.y) / 900 - .05; }
+          var dx = p.tx - p.x, dy = p.ty - p.y, d = Math.sqrt(dx * dx + dy * dy), sp = 0.24 * dt;
+          if (d <= sp) { p.x = p.tx; p.y = p.ty; p.t = 0; p.st = RP() < (p.ice ? 0.6 : 0.06) ? 1 : 2; p.vx = (SUN.x - p.x) / 1100 + (RP() - .3) * .06; p.vy = -0.16 - RP() * .05; }
           else { p.x += dx / d * sp; p.y += dy / d * sp; }
         } else if (p.st === 1) { p.x += p.vx * dt; p.y += p.vy * dt; }
+        else { p.y += 0.012 * dt; }
       });
       PH = PH.filter(function (p) { return p.st === 0 || (p.st === 1 && p.t < 900) || (p.st === 2 && p.t < 700); });
     }
     function draw() {
-      var ab = absorb(A), full = absorb(TOT), k;
+      var ab = absorb(A), full = absorb(TOT), fi = A / TOT;
       ctx.clearRect(0, 0, W, H);
-      /* ── 왼쪽: 위에서 본 북극해 ── */
-      var LW = 400;
-      K.stage(ctx, 0, 0, LW, H, "night", { seed: 4 });
-      var lg = ctx.createRadialGradient(cx, cy, R, cx, cy, R + 44);
-      lg.addColorStop(0, "#5a4a34"); lg.addColorStop(.5, "rgba(70,58,40,.7)"); lg.addColorStop(1, "rgba(40,32,24,0)");
-      ctx.fillStyle = lg; ctx.beginPath(); ctx.arc(cx, cy, R + 44, 0, 6.2832); ctx.fill();
-      var og = ctx.createRadialGradient(cx - 30, cy - 30, 10, cx, cy, R);
-      og.addColorStop(0, "#16578f"); og.addColorStop(1, "#061f3c");
-      ctx.fillStyle = og; ctx.beginPath(); ctx.arc(cx, cy, R, 0, 6.2832); ctx.fill();
-      var ir = iceR();
-      if (ir > 1) {
-        ctx.save();
-        ctx.beginPath();
-        for (k = 0; k <= 90; k++) { var a = k / 90 * 6.2832, rr = Math.min(R - 2, ir * edge(a)), px = cx + rr * Math.cos(a), py = cy + rr * Math.sin(a); if (k) ctx.lineTo(px, py); else ctx.moveTo(px, py); }
-        ctx.closePath();
-        var ig = ctx.createRadialGradient(cx - ir * .3, cy - ir * .3, 2, cx, cy, ir * 1.1);
-        ig.addColorStop(0, "#ffffff"); ig.addColorStop(.6, "#dcecf8"); ig.addColorStop(1, "#9cc6e4");
-        ctx.fillStyle = ig; ctx.fill(); ctx.strokeStyle = "rgba(255,255,255,.85)"; ctx.lineWidth = 1.2; ctx.stroke();
-        ctx.clip();
-        var Rc = K.rng(9); ctx.strokeStyle = "rgba(110,160,205,.5)"; ctx.lineWidth = 1;
-        for (k = 0; k < 12; k++) { var a0 = Rc() * 6.28, r0 = Rc() * ir; ctx.beginPath(); ctx.moveTo(cx + r0 * Math.cos(a0), cy + r0 * Math.sin(a0)); ctx.lineTo(cx + (r0 + 26) * Math.cos(a0 + .35), cy + (r0 + 26) * Math.sin(a0 + .35)); ctx.stroke(); }
-        ctx.restore();
-      }
-      ctx.strokeStyle = "rgba(160,200,255,.55)"; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.arc(cx, cy, R, 0, 6.2832); ctx.stroke();
-      K.sun(ctx, SUN.x, SUN.y, 10);
+      /* ── 왼쪽: 북극해 블록 모형 + 햇빛 알갱이 ── */
+      var LW = 560;
+      ctx.drawImage(base(), 0, 0, W, H);
+      ctx.save(); ctx.beginPath(); ctx.roundRect(0, 0, LW, H, 14); ctx.clip();
+      K.sun(ctx, SUN.x, SUN.y, 11);
       PH.forEach(function (p) {
-        if (p.st === 0) K.glow(ctx, p.x, p.y, 1.5, "rgba(255,226,140,.95)", 3);
-        else if (p.st === 1) { ctx.globalAlpha = Math.max(0, 1 - p.t / 900); K.glow(ctx, p.x, p.y, 1.6, "rgba(225,240,255,.95)", 3); ctx.globalAlpha = 1; }
-        else { ctx.globalAlpha = Math.max(0, 1 - p.t / 700); K.glow(ctx, p.x, p.y, 2 + p.t / 140, "rgba(255,120,70,.6)", 2.4); ctx.globalAlpha = 1; }
+        if (p.st === 0) K.planet(ctx, p.x, p.y, 2.4, "#ffd43b", "#c77d00");
+        else if (p.st === 1) { ctx.globalAlpha = Math.max(0, 1 - p.t / 900); K.planet(ctx, p.x, p.y, 2.4, "#ffffff", "#74c0fc"); ctx.globalAlpha = 1; }
+        else { ctx.globalAlpha = Math.max(0, 1 - p.t / 700); K.glow(ctx, p.x, p.y, 2 + p.t / 160, "rgba(255,120,70,.7)", 2.4); ctx.globalAlpha = 1; }
       });
-      K.pill(ctx, "북극해 · 위에서 본 모습", 14, 28, { s: 13, c: KC.blue });
-      if (ir > 34) K.pill(ctx, "해빙 · 반사율 약 60%", cx, cy + 5, { a: "center", s: 11, c: "#0b2a4a", bg: "rgba(255,255,255,.72)" });
-      if (R - ir > 30) K.pill(ctx, "드러난 바다 · 약 6%", cx, cy + (ir + R) / 2 + (ir > 34 ? 6 : -10), { a: "center", s: 11, c: KC.blue });
-      K.pill(ctx, "햇빛", SUN.x - 22, SUN.y + 5, { a: "right", s: 11, c: KC.yellow });
-      K.pill(ctx, "해빙 " + A.toFixed(1) + " · 바다 " + (TOT - A).toFixed(1) + " (백만 km²)", cx, H - 12, { a: "center", s: 11.5, c: KC.mute, box: [0, LW] });
-
+      ctx.restore();
+      var BX = [0, LW];
+      if (fi > 0.08) IA.label(ctx, 40, 24, ZS + 3, "해빙 · 반사율 약 60%", 70, -26, "#e8ecff", BX);
+      if (fi < 0.9) IA.label(ctx, 270, 150, ZS, "드러난 바다 · 약 6%", 40, 40, "#bfe6ff", BX);
+      IA.label(ctx, 0, IA.D, 34, "바닷물 단면", -30, 30, "#bfe6ff", BX);
+      K.bigText(ctx, "흡수 " + Math.round(ab * 100) + " / 100", 16, 38, 24, ab > .75 ? "#ff9a7a" : "#ffffff");
+      K.bigText(ctx, "해빙 " + Math.round(A * 100).toLocaleString() + "만 km²", 16, 62, 15, "#ffd35a");
+      K.warn(ctx, LW - 12, H - 12, "⚠ 얼음 두께·바다 깊이는 과장", "right");
       /* ── 오른쪽: 햇빛 100이 가는 곳 ── */
-      var RX = LW + 8, RW = W - RX, sy = 214, mid = RX + RW / 2;
-      K.stage(ctx, RX, 0, RW, H, "lab", { seed: 6 });
-      ctx.save(); ctx.beginPath(); ctx.roundRect(RX, 0, RW, H, 14); ctx.clip();
-      var wg = ctx.createLinearGradient(0, sy, 0, H); wg.addColorStop(0, "#0f4675"); wg.addColorStop(1, "#03122a");
-      ctx.fillStyle = wg; ctx.fillRect(RX, sy, RW, H - sy);
-      var fi = A / TOT, sx0 = RX + 18, sw = RW - 36;
-      ctx.fillStyle = "#e8f4fb"; ctx.fillRect(sx0, sy - 5, sw * fi, 8);
-      ctx.fillStyle = "#2a76b8"; ctx.fillRect(sx0 + sw * fi, sy - 5, sw * (1 - fi), 8);
-      var bw = 92, hit = { x: mid, y: sy - 5 }, A0 = { x: RX + 60, y: 20 }, ddx = hit.x - A0.x, ddy = hit.y - A0.y, dl = Math.sqrt(ddx * ddx + ddy * ddy);
-      ctx.save(); ctx.beginPath(); ctx.rect(RX, 0, RW, sy - 5); ctx.clip();
-      var gi = ctx.createLinearGradient(0, 20, 0, sy); gi.addColorStop(0, "rgba(255,232,140,.95)"); gi.addColorStop(1, "rgba(255,211,107,.6)");
-      beam(A0, { x: hit.x + ddx / dl * 60, y: hit.y + ddy / dl * 60 }, bw * .9, bw, gi);
-      if (ab < 1) beam({ x: hit.x - ddx / dl * 60 + (bw * ab) / 2, y: hit.y + ddy / dl * 60 }, { x: RX + RW - 60 + (bw * ab) / 2, y: 20 }, bw * (1 - ab), bw * (1 - ab) * .9, "rgba(225,242,255,.6)");
-      ctx.restore();
-      ctx.save(); ctx.beginPath(); ctx.rect(RX, sy + 3, RW, H - sy); ctx.clip();
-      var ga = ctx.createLinearGradient(0, sy, 0, H - 20); ga.addColorStop(0, "rgba(255,150,80,.8)"); ga.addColorStop(1, "rgba(255,90,60,0)");
-      if (ab > 0) beam({ x: mid - (bw * (1 - ab)) / 2, y: sy - 40 }, { x: mid - (bw * (1 - ab)) / 2 + 30, y: H - 20 }, bw * ab, bw * ab * 1.4, ga);
-      ctx.restore();
-      ctx.restore();
-      K.pill(ctx, "햇빛 100은 어디로 갈까", RX + 14, 28, { s: 13, c: KC.blue });
-      K.pill(ctx, "들어온 햇빛 100", RX + 16, 66, { s: 11.5, c: KC.yellow });
-      K.pill(ctx, "반사 " + Math.round((1 - ab) * 100) + " → 우주로", RX + RW - 16, 66, { a: "right", s: 11.5, c: "#dff1ff" });
-      K.t(ctx, "표면: 얼음 " + Math.round(fi * 100) + "% · 바다 " + (100 - Math.round(fi * 100)) + "%", RX + 18, sy + 24, { s: 10.5, c: KC.mute });
-      K.pill(ctx, "흡수 " + Math.round(ab * 100) + " → 바다를 데움", mid + 44, H - 18, { s: 11.5, c: KC.orange, box: [RX, W] });
-      K.pill(ctx, "모두 얼음이면 흡수 " + Math.round(full * 100), RX + 16, H - 18, { s: 11, c: KC.mute });
+      var RX = LW + 12;
+      zCard(ctx, RX, W - RX, H, "햇빛 100은 어디로 갈까", [
+        ["표면 얼음 비율", Math.round(fi * 100) + " %", LC.blue, fi],
+        ["반사 → 우주로", Math.round((1 - ab) * 100) + "", LC.teal, 1 - ab],
+        ["흡수 → 바다를 데움", Math.round(ab * 100) + "", LC.orange, ab]
+      ], ["모두 얼음이면 흡수 " + Math.round(full * 100) + " → 지금 ×" + (ab / full).toFixed(2), ab / full > 1.3 ? false : null], ["흡수 " + Math.round(ab * 100), ab > .75 ? LC.red : LC.orange]);
       return ab;
     }
     function update() {
@@ -546,49 +570,51 @@ function clipRect(ctx, g) { ctx.save(); ctx.beginPath(); ctx.rect(g.L, g.T, g.R 
       for (k = 0; k < 8; k++) { tot += add; rounds.push(tot); add *= g; }
       var fin = 1 / (1 - g);
       ctx.clearRect(0, 0, W, H);
-      /* ── 왼쪽: 되먹임 고리 ── */
-      var LW = 320, cx = 172, cy = 182, R = 88;
-      var col = g > 0 ? KC.red : (g < 0 ? KC.blue : KC.dim), dotc = g > 0 ? "rgba(255,120,140,.95)" : "rgba(127,211,255,.95)";
-      K.stage(ctx, 0, 0, LW, H, "night", { seed: 12 });
-      ctx.strokeStyle = "rgba(200,210,255,.12)"; ctx.lineWidth = 18; ctx.beginPath(); ctx.arc(cx, cy, R, 0, 6.2832); ctx.stroke();
-      ctx.save(); ctx.shadowColor = col; ctx.shadowBlur = g ? 10 : 0;
-      ctx.strokeStyle = col; ctx.globalAlpha = g ? .45 + .55 * Math.min(1, Math.abs(g) / .4) : .5; ctx.lineWidth = 2.4;
-      ctx.beginPath(); ctx.arc(cx, cy, R, 0, 6.2832); ctx.stroke(); ctx.restore();
-      for (k = 0; k < 4; k++) {
-        var aa = k * Math.PI / 2 + Math.PI / 4, px = cx + R * Math.cos(aa), py = cy + R * Math.sin(aa);
-        K.arrow(ctx, { x: px + 8 * Math.sin(aa), y: py - 8 * Math.cos(aa) }, { x: px - 8 * Math.sin(aa), y: py + 8 * Math.cos(aa) }, col, 2.4, 10);
+      /* ── 왼쪽: 스튜디오 바닥 위에 누운 입체 고리(도는 구슬 = 되먹임이 한 바퀴 도는 것) ── */
+      var LW = 330, cx = 165, cy = 196, R = 112, RY = 52;
+      var col = g > 0 ? LC.red : (g < 0 ? LC.blue : "#8a96a8"), c2 = g > 0 ? ["#ff8787", "#a61e1e"] : (g < 0 ? ["#74c0fc", "#1864ab"] : ["#ced4da", "#6b7280"]);
+      K.studio(ctx, 0, 0, LW, H, { x: cx, y: cy + 24, rx: R + 30, ry: RY + 14 });
+      function ringPt(a, z) { return { x: cx + R * Math.cos(a), y: cy + RY * Math.sin(a) - (z || 0) }; }
+      function ringBand(a0, a1, front) {
+        ctx.beginPath(); for (k = 0; k <= 40; k++) { var a = a0 + (a1 - a0) * k / 40, p = ringPt(a, 14); if (k) ctx.lineTo(p.x, p.y); else ctx.moveTo(p.x, p.y); }
+        for (k = 40; k >= 0; k--) { var a3 = a0 + (a1 - a0) * k / 40, q = ringPt(a3, 0); ctx.lineTo(q.x, q.y); }
+        ctx.closePath(); var gg = ctx.createLinearGradient(0, cy - RY - 14, 0, cy + RY); gg.addColorStop(0, front ? c2[0] : K.tint(c2[0].length === 7 ? c2[0] : "#cccccc", .8)); gg.addColorStop(1, c2[1]); ctx.fillStyle = gg; ctx.fill();
       }
-      var n = g === 0 ? 0 : Math.round(5 + Math.abs(g) * 30);
-      for (k = 0; k < n; k++) { var a2 = ang + k / n * 6.2832; K.glow(ctx, cx + R * Math.cos(a2), cy + R * Math.sin(a2), 2.2, dotc, 3.6); }
-      K.arrow(ctx, { x: 30, y: 74 }, { x: cx - 52, y: cy - R + 2 }, KC.yellow, 2.4, 11);
-      K.pill(ctx, "되먹임 고리", 14, 28, { s: 13, c: KC.blue });
-      K.pill(ctx, "처음 +1 ℃ · CO₂", 14, 62, { s: 11.5, c: KC.yellow });
-      K.pill(ctx, "🌡 기온 상승", cx + 14, cy - R + 5, { s: 12, c: KC.yellow, box: [0, LW] });
-      K.pill(ctx, g > 0 ? "키우는 고리 (양)" : (g < 0 ? "누르는 고리 (음)" : "켠 고리 없음"), cx, cy + R + 5, { a: "center", s: 12, c: g ? col : KC.mute });
-      K.pill(ctx, "g = " + (g >= 0 ? "+" : "−") + Math.abs(g).toFixed(2), cx, cy - 2, { a: "center", s: 16, c: g ? col : KC.mute });
-      K.t(ctx, "한 바퀴마다 앞 변화 × g", cx, cy + 24, { s: 10.5, a: "center", c: KC.mute });
-      K.pill(ctx, "최종 약 " + fin.toFixed(2) + " ℃", cx, H - 14, { a: "center", s: 13, c: fin >= 1.9 ? KC.red : (fin < 1 ? KC.blue : KC.ink) });
-
-      /* ── 오른쪽: 바퀴마다 쌓이는 기온 상승 ── */
-      var RX = LW + 8;
-      K.stage(ctx, RX, 0, W - RX, H, "lab", { seed: 13 });
-      K.pill(ctx, "바퀴마다 쌓이는 기온 상승", RX + 14, 28, { s: 13, c: KC.blue });
-      var lg = K.pill(ctx, "┄ 수렴 " + fin.toFixed(2) + " ℃", W - 14, 28, { a: "right", s: 11.5, c: KC.violet });
-      K.pill(ctx, "┄ 처음 1 ℃", lg.x - 8, 28, { a: "right", s: 11.5, c: KC.yellow });
-      var gc = K.chart(ctx, { x: RX + 4, y: 44, w: W - RX - 8, h: H - 48, x0: 0, x1: 8, y0: 0, y1: 2, xt: 8, yt: 4, xf: function () { return ""; }, yf: function (vv) { return vv.toFixed(1) + " ℃"; } });
-      var bw = (gc.X(1) - gc.X(0)) * .62, c0 = g > 0 ? ["#ff8a9c", "#b8324a"] : (g < 0 ? ["#9fe0ff", "#2a6ea8"] : ["#b9c3e6", "#55608a"]);
+      ringBand(Math.PI, 2 * Math.PI, false);
+      ctx.strokeStyle = "rgba(255,255,255,.7)"; ctx.lineWidth = 2; ctx.beginPath(); ctx.ellipse(cx, cy - 14, R, RY, 0, 0, 6.2832); ctx.stroke();
+      var n = g === 0 ? 0 : Math.round(5 + Math.abs(g) * 30), balls = [];
+      for (k = 0; k < n; k++) { var a2 = ang + k / n * 6.2832; balls.push([a2, ringPt(a2, 20)]); }
+      balls.filter(function (b) { return Math.sin(b[0]) < 0; }).forEach(function (b) { K.planet(ctx, b[1].x, b[1].y, 4.2, c2[0], c2[1]); });
+      ringBand(0, Math.PI, true);
+      balls.filter(function (b) { return Math.sin(b[0]) >= 0; }).forEach(function (b) { K.planet(ctx, b[1].x, b[1].y, 4.6, c2[0], c2[1]); });
+      for (k = 0; k < 4; k++) { var aa = k * Math.PI / 2 + Math.PI / 4, p0 = ringPt(aa - .14, 16), p1 = ringPt(aa + .14, 16); K.arrow(ctx, p0, p1, "#ffffff", 2.6, 10); }
+      K.arrow(ctx, { x: 26, y: 92 }, { x: cx - 64, y: cy - RY - 2 }, LC.yellow, 3, 11);
+      K.bigText(ctx, "g = " + (g >= 0 ? "+" : "−") + Math.abs(g).toFixed(2), 16, 38, 24, g > 0 ? "#ff9a7a" : (g < 0 ? "#8fd0ff" : "#ffffff"));
+      K.bigText(ctx, "처음 +1 ℃ · CO₂", 16, 76, 14, "#ffd35a");
+      K.t(ctx, g > 0 ? "키우는 고리 (양의 되먹임)" : (g < 0 ? "누르는 고리 (음의 되먹임)" : "켠 고리 없음"), cx, cy - 6, { s: 12.5, w: "900", a: "center", c: g ? col : LC.mute });
+      K.t(ctx, "한 바퀴마다 앞 변화 × g", cx, cy + 12, { s: 11, w: "700", a: "center", c: LC.mute });
+      K.t(ctx, "🌡 기온 상승", cx, cy - RY - 22, { s: 12, w: "900", a: "center", c: "#b7791f" });
+      /* ── 오른쪽: 밝은 그래프 — 바퀴마다 쌓이는 기온 상승(입체 막대) ── */
+      var RX = LW + 10;
+      K.studio(ctx, RX, 0, W - RX, H, null);
+      K.t(ctx, "바퀴마다 쌓이는 기온 상승", RX + 16, 26, { s: 12.5, w: "800", c: LC.mute });
+      K.t(ctx, "┄ 처음 1 ℃", RX + 196, 26, { s: 11, w: "800", c: "#b7791f" });
+      K.t(ctx, "┄ 수렴 " + fin.toFixed(2) + " ℃", RX + 270, 26, { s: 11, w: "800", c: LC.violet });
+      K.tip(ctx, "최종 약 " + fin.toFixed(2) + " ℃" + (fin >= 1.9 ? " · 거의 2배" : (fin < 0.999 ? " · 더 작아짐" : "")), W - 214, 8, 200, fin >= 1.9 || fin < 0.999 ? true : null);
+      var gc = K.chart(ctx, { x: RX + 4, y: 44, w: W - RX - 10, h: H - 48, pl: 46, pb: 28, pt: 10, pr: 14, x0: 0, x1: 8, y0: 0, y1: 2, xt: 8, yt: 4, light: true, xf: function () { return ""; }, yf: function (vv) { return vv.toFixed(1) + "℃"; } });
+      var bw = (gc.X(1) - gc.X(0)) * .5, dep = 9, c0 = g > 0 ? ["#ff8787", "#e03131", "#a61e1e"] : (g < 0 ? ["#74c0fc", "#1c7ed6", "#1864ab"] : ["#dee2e6", "#adb5bd", "#868e96"]);
       rounds.forEach(function (t, i) {
-        var bx = gc.X(i + .5) - bw / 2, top = gc.Y(Math.min(t, 2)), bg = ctx.createLinearGradient(0, top, 0, gc.B);
-        bg.addColorStop(0, c0[0]); bg.addColorStop(1, c0[1]);
-        ctx.save(); ctx.shadowColor = c0[0]; ctx.shadowBlur = 8; ctx.fillStyle = bg; ctx.beginPath(); ctx.roundRect(bx, top, bw, gc.B - top, [5, 5, 0, 0]); ctx.fill(); ctx.restore();
-        K.t(ctx, t.toFixed(2), gc.X(i + .5), top - 6, { s: 10.5, a: "center", c: KC.ink });
-        K.t(ctx, i === 0 ? "처음" : i + "바퀴", gc.X(i + .5), gc.B + 16, { s: 10.5, a: "center", c: KC.mute });
+        var bx = gc.X(i + .5) - bw / 2, top = gc.Y(Math.min(t, 2));
+        ctx.fillStyle = c0[1]; ctx.fillRect(bx, top, bw, gc.B - top);
+        ctx.fillStyle = c0[2]; ctx.beginPath(); ctx.moveTo(bx + bw, top); ctx.lineTo(bx + bw + dep, top - dep * .6); ctx.lineTo(bx + bw + dep, gc.B - dep * .6); ctx.lineTo(bx + bw, gc.B); ctx.closePath(); ctx.fill();
+        ctx.fillStyle = c0[0]; ctx.beginPath(); ctx.moveTo(bx, top); ctx.lineTo(bx + dep, top - dep * .6); ctx.lineTo(bx + bw + dep, top - dep * .6); ctx.lineTo(bx + bw, top); ctx.closePath(); ctx.fill();
+        K.t(ctx, t.toFixed(2), gc.X(i + .5) + 4, top - 10, { s: 11, w: "900", a: "center", c: LC.ink });
+        K.t(ctx, i === 0 ? "처음" : i + "바퀴", gc.X(i + .5), gc.B + 16, { s: 10.5, w: "700", a: "center", c: LC.mute });
       });
-      clipRect(ctx, gc);
       ctx.lineWidth = 1.6; ctx.setLineDash([6, 5]);
-      ctx.strokeStyle = KC.yellow; ctx.beginPath(); ctx.moveTo(gc.L, gc.Y(1)); ctx.lineTo(gc.R, gc.Y(1)); ctx.stroke();
-      ctx.strokeStyle = KC.violet; ctx.beginPath(); ctx.moveTo(gc.L, gc.Y(fin)); ctx.lineTo(gc.R, gc.Y(fin)); ctx.stroke();
-      ctx.setLineDash([]); ctx.restore();
+      ctx.strokeStyle = LC.yellow; ctx.beginPath(); ctx.moveTo(gc.L, gc.Y(1)); ctx.lineTo(gc.R, gc.Y(1)); ctx.stroke();
+      ctx.strokeStyle = LC.violet; ctx.beginPath(); ctx.moveTo(gc.L, gc.Y(Math.min(2, fin))); ctx.lineTo(gc.R, gc.Y(Math.min(2, fin))); ctx.stroke();
+      ctx.setLineDash([]);
       return { g: g, fin: fin };
     }
     function update() {
@@ -703,58 +729,80 @@ function clipRect(ctx, g) { ctx.save(); ctx.beginPath(); ctx.rect(g.L, g.T, g.R 
       ctx.strokeStyle = bg; ctx.lineWidth = 2.4; ctx.lineCap = "round"; ctx.beginPath(); ctx.moveTo(x - 18, y + 1); ctx.lineTo(x + 10, y); ctx.stroke();
       ctx.fillStyle = "#3fd3a3"; ctx.beginPath(); ctx.arc(x + 12, y, 3, 0, 6.2832); ctx.fill(); ctx.restore();
     }
+    /* 비스듬히 내려다본 입체 지도: 바다 판 위에 두께 TK 로 솟은 한반도 블록 */
+    var TK = 12, MX0 = 12, MY0 = 46;
+    function MXp(lon, lat) { return MX0 + 40 + (lon - 124.4) * 46 + (lat - 33) * 6; }
+    function MYp(lat) { return MY0 + (39.6 - lat) / 6.6 * 250; }
+    function landPath(dz) {
+      ctx.beginPath();
+      KOR.forEach(function (p, i) { var x = MXp(p[0], p[1]), y = MYp(p[1]) + dz; if (i) ctx.lineTo(x, y); else ctx.moveTo(x, y); });
+      ctx.lineTo(MXp(129.0, 40.6), MY0 - 30 + dz); ctx.lineTo(MXp(124.4, 40.2), MY0 - 30 + dz); ctx.closePath();
+    }
+    function jeju(dz) { ctx.beginPath(); ctx.ellipse(MXp(126.55, 33.38), MYp(33.38) + dz, 20, 7, -0.1, 0, 6.2832); }
     function draw() {
-      var L = limit(dT), yl = Y(clamp(L, 33, 39)), la;
+      var L = limit(dT), la;
       ctx.clearRect(0, 0, W, H);
-      /* ── 왼쪽: 한반도 ── */
-      var LW = 420;
-      K.stage(ctx, 0, 0, LW, H, "ocean", { seed: 14 });
+      /* ── 왼쪽: 입체 한반도 블록 ── */
+      var LW = 430;
+      K.studio(ctx, 0, 0, LW, H, { x: 220, y: H - 34, rx: 200, ry: 26 });
       ctx.save(); ctx.beginPath(); ctx.roundRect(0, 0, LW, H, 14); ctx.clip();
-      ctx.strokeStyle = "rgba(170,200,255,.16)"; ctx.lineWidth = 1; ctx.setLineDash([3, 5]);
-      for (la = 34; la <= 39; la++) { ctx.beginPath(); ctx.moveTo(0, Y(la)); ctx.lineTo(LW, Y(la)); ctx.stroke(); }
+      /* 바다 판(앞면 두께) */
+      var sx0 = 24, sx1 = LW - 18, sy0 = MY0 - 26, sy1 = H - 46;
+      ctx.fillStyle = "#1d5f99"; ctx.fillRect(sx0, sy1, sx1 - sx0, 14);
+      var sg = ctx.createLinearGradient(0, sy0, 0, sy1); sg.addColorStop(0, "#7cc4ef"); sg.addColorStop(1, "#3d93d1");
+      ctx.fillStyle = sg; ctx.fillRect(sx0, sy0, sx1 - sx0, sy1 - sy0);
+      ctx.strokeStyle = "rgba(255,255,255,.35)"; ctx.lineWidth = 1; ctx.setLineDash([3, 5]);
+      for (la = 34; la <= 39; la++) { ctx.beginPath(); ctx.moveTo(sx0, MYp(la)); ctx.lineTo(sx1, MYp(la)); ctx.stroke(); }
       ctx.setLineDash([]);
-      land();
-      var lgd = ctx.createLinearGradient(0, 0, LW, H); lgd.addColorStop(0, "#3f5c3a"); lgd.addColorStop(1, "#2d4329");
-      ctx.fillStyle = lgd; ctx.fill("evenodd");
-      ctx.save(); land(); ctx.clip("evenodd");
-      var hg = ctx.createLinearGradient(0, yl, 0, H); hg.addColorStop(0, "rgba(63,211,163,.75)"); hg.addColorStop(1, "rgba(63,211,163,.35)");
+      /* 땅 옆면(아래로 두께) → 윗면 */
+      ctx.fillStyle = "#6b4f32"; landPath(TK); ctx.fill(); jeju(TK); ctx.fill();
+      for (var dz = TK; dz > 0; dz -= 2) { ctx.fillStyle = dz > TK * .5 ? "#7d5d3b" : "#9a7650"; landPath(dz); ctx.fill(); jeju(dz); ctx.fill(); }
+      ctx.save(); landPath(0); ctx.clip();
+      var yl = MYp(clamp(L, 33, 39.6));
+      var tg = ctx.createLinearGradient(0, MY0 - 30, 0, H); tg.addColorStop(0, "#a9b98a"); tg.addColorStop(1, "#8fae6c");
+      ctx.fillStyle = tg; ctx.fillRect(0, 0, LW, H);
+      var hg = ctx.createLinearGradient(0, yl, 0, H); hg.addColorStop(0, "#5fd39c"); hg.addColorStop(1, "#2f9e6a");
       ctx.fillStyle = hg; ctx.fillRect(0, yl, LW, H - yl);
-      ctx.fillStyle = "rgba(150,170,230,.12)"; ctx.fillRect(0, 0, LW, yl);
+      var Rm = K.rng(4); for (var q = 0; q < 26; q++) { var mx = 60 + Rm() * 300, my = MY0 + Rm() * 200; ctx.fillStyle = "rgba(60,70,40,.18)"; ctx.beginPath(); ctx.moveTo(mx, my); ctx.lineTo(mx + 9, my - 10); ctx.lineTo(mx + 18, my); ctx.closePath(); ctx.fill(); }
       ctx.restore();
-      land(); ctx.strokeStyle = "rgba(230,240,210,.55)"; ctx.lineWidth = 1.4; ctx.stroke();
-      ctx.save(); ctx.shadowColor = KC.red; ctx.shadowBlur = 10; ctx.strokeStyle = KC.red; ctx.lineWidth = 2.6; ctx.setLineDash([9, 6]);
-      ctx.beginPath(); ctx.moveTo(0, yl); ctx.lineTo(LW, yl); ctx.stroke(); ctx.restore();
+      ctx.fillStyle = clamp(L, 33, 39.6) > 33.38 ? "#4fc28c" : "#a9b98a"; jeju(0); ctx.fill();
+      landPath(0); ctx.strokeStyle = "rgba(255,255,255,.75)"; ctx.lineWidth = 1.4; ctx.stroke();
+      /* 한계선 = 붉은 반투명 칸막 */
+      var cg = ctx.createLinearGradient(0, yl - 34, 0, yl); cg.addColorStop(0, "rgba(224,49,49,0)"); cg.addColorStop(1, "rgba(224,49,49,.38)");
+      ctx.fillStyle = cg; ctx.fillRect(sx0, yl - 34, sx1 - sx0, 34);
+      ctx.strokeStyle = "#e03131"; ctx.lineWidth = 2.6; ctx.setLineDash([9, 6]); ctx.beginPath(); ctx.moveTo(sx0, yl); ctx.lineTo(sx1, yl); ctx.stroke(); ctx.setLineDash([]);
       ctx.restore();
-      for (la = 34; la <= 39; la++) K.t(ctx, la + "°N", LW - 8, Y(la) - 4, { s: 10, a: "right", c: KC.mute });
-      dfly(X(129.9), yl - 16);
-      K.pill(ctx, "한계선", 10, yl + 5, { s: 11, c: KC.red });
+      for (la = 34; la <= 39; la++) K.t(ctx, la + "°N", LW - 22, MYp(la) - 4, { s: 10, w: "800", a: "right", c: "rgba(255,255,255,.9)" });
+      dfly(LW - 64, yl - 18);
+      K.pill(ctx, "한계선 북위 " + L.toFixed(2) + "°", 30, yl + 22, { s: 11.5, c: "#ffc9c9", box: [0, LW] });
       PLACES.forEach(function (p) {
-        var ok = p[1] <= L, x = X(p[2]), y = Y(p[1]);
-        if (ok) K.glow(ctx, x, y, 4, "rgba(120,255,200,.95)", 4); else { ctx.fillStyle = "#8a93b5"; ctx.beginPath(); ctx.arc(x, y, 4, 0, 6.2832); ctx.fill(); }
-        K.pill(ctx, p[0] + " " + T(p[1], dT).toFixed(1) + " ℃", p[3] === "l" ? x - 10 : x + 10, y + 4, { a: p[3] === "l" ? "right" : "left", s: 11, c: ok ? "#9ff5d2" : "#aab3d6", box: [0, LW - 40] });
+        var ok = p[1] <= L, x = MXp(p[2], p[1]), y = MYp(p[1]);
+        K.line(ctx, { x: x, y: y }, { x: x, y: y - 14 }, "#495057", 1.6);
+        K.planet(ctx, x, y - 16, 4.4, ok ? "#69db7c" : "#ced4da", ok ? "#2b8a3e" : "#6b7280");
+        K.pill(ctx, p[0] + " " + T(p[1], dT).toFixed(1) + " ℃", p[3] === "l" ? x - 10 : x + 10, y - 12, { a: p[3] === "l" ? "right" : "left", s: 11, c: ok ? "#c3f5dc" : "#e8ecff", box: [0, LW - 44] });
       });
-      K.pill(ctx, "한반도 · 실잠자리가 살 수 있는 곳", 14, 28, { s: 13, c: KC.blue });
-      K.warn(ctx, 14, H - 12, "⚠ 해안선은 단순화한 모양");
-
-      /* ── 오른쪽: 위도에 따른 연평균 기온 ── */
-      var RX = LW + 8;
-      K.stage(ctx, RX, 0, W - RX, H, "lab", { seed: 15 });
-      K.pill(ctx, "위도에 따른 연평균 기온", RX + 14, 28, { s: 13, c: KC.blue });
-      var lg = K.pill(ctx, "━ +" + dT.toFixed(1) + " ℃", W - 14, 28, { a: "right", s: 11.5, c: KC.orange });
-      K.pill(ctx, "┄ 지금(평년)", lg.x - 8, 28, { a: "right", s: 11.5, c: "#c9d3f5" });
-      var g = K.chart(ctx, { x: RX + 4, y: 44, w: W - RX - 8, h: H - 48, x0: 33, x1: 39, y0: 10, y1: 20, xt: 6, yt: 5, xl: "위도(°N)", yl: "기온(℃)", xf: function (vv) { return vv + "°"; } });
+      K.bigText(ctx, "+" + dT.toFixed(1) + " ℃", LW - 16, 38, 24, "#ffffff", "right");
+      K.warn(ctx, LW - 12, H - 12, "⚠ 해안선은 단순화한 모양", "right");
+      /* ── 오른쪽: 밝은 그래프 — 위도에 따른 연평균 기온 ── */
+      var RX = LW + 10;
+      K.studio(ctx, RX, 0, W - RX, H, null);
+      K.t(ctx, "위도에 따른 연평균 기온", RX + 16, 26, { s: 12.5, w: "800", c: LC.mute });
+      var km = Math.round((L - limit(0)) * 111);
+      K.tip(ctx, L >= 38 ? "북위 38°를 넘었습니다" : (L >= 37.5 ? "경기도(37.5°)에 닿음 · 약 " + km + " km 북상" : "북쪽으로 약 " + km + " km"), W - 252, 8, 238, L >= 37.5 && L < 38 ? true : (L >= 38 ? false : null));
+      var g = K.chart(ctx, { x: RX + 4, y: 44, w: W - RX - 10, h: H - 48, pl: 44, pb: 30, pt: 10, pr: 14, x0: 33, x1: 39, y0: 10, y1: 20, xt: 6, yt: 5, light: true, xl: "위도(°N)", xf: function (vv) { return vv + "°"; }, yf: function (vv) { return vv + "℃"; } });
       clipRect(ctx, g);
-      if (L > 33) { ctx.fillStyle = "rgba(63,211,163,.10)"; ctx.fillRect(g.L, g.T, Math.min(g.X(L), g.R) - g.L, g.B - g.T); }
-      ctx.strokeStyle = KC.green; ctx.lineWidth = 1.6; ctx.setLineDash([6, 5]); ctx.beginPath(); ctx.moveTo(g.L, g.Y(TH)); ctx.lineTo(g.R, g.Y(TH)); ctx.stroke(); ctx.setLineDash([]);
-      K.plot(ctx, g, [[33, T(33, 0)], [39, T(39, 0)]], "rgba(200,212,255,.6)", { w: 1.6, dash: [5, 5], glow: false });
-      K.plot(ctx, g, [[33, T(33, dT)], [39, T(39, dT)]], KC.orange, { w: 3 });
+      if (L > 33) { ctx.fillStyle = "rgba(15,159,118,.10)"; ctx.fillRect(g.L, g.T, Math.min(g.X(L), g.R) - g.L, g.B - g.T); }
+      ctx.strokeStyle = LC.green; ctx.lineWidth = 1.6; ctx.setLineDash([6, 5]); ctx.beginPath(); ctx.moveTo(g.L, g.Y(TH)); ctx.lineTo(g.R, g.Y(TH)); ctx.stroke(); ctx.setLineDash([]);
+      K.plot(ctx, g, [[33, T(33, 0)], [39, T(39, 0)]], "#8a96a8", { w: 1.6, dash: [5, 5], glow: false });
+      K.plot(ctx, g, [[33, T(33, dT)], [39, T(39, dT)]], LC.orange, { w: 3, light: true });
       ctx.restore();
-      K.pill(ctx, "실잠자리 월동 기준 " + TH + " ℃", g.R - 6, g.Y(TH) + 20, { a: "right", s: 11, c: KC.green });
+      K.t(ctx, "실잠자리 월동 기준 " + TH + " ℃", g.R - 6, g.Y(TH) + 16, { s: 11, w: "800", a: "right", c: LC.green });
+      K.t(ctx, "┄ 지금(평년)   ━ +" + dT.toFixed(1) + " ℃", g.L + 8, g.T + 14, { s: 11, w: "800", c: LC.orange });
       if (L >= 33 && L <= 39) {
         var lx = g.X(L);
-        ctx.strokeStyle = "rgba(255,107,129,.8)"; ctx.lineWidth = 1.4; ctx.setLineDash([4, 4]); ctx.beginPath(); ctx.moveTo(lx, g.Y(TH)); ctx.lineTo(lx, g.B); ctx.stroke(); ctx.setLineDash([]);
-        K.glow(ctx, lx, g.Y(TH), 4, "rgba(255,140,150,.95)", 4);
-        K.pill(ctx, "북위 " + L.toFixed(2) + "°", lx + 8, g.B - 10, { s: 11.5, c: KC.red, box: [RX, W] });
+        ctx.strokeStyle = "rgba(224,49,49,.8)"; ctx.lineWidth = 1.4; ctx.setLineDash([4, 4]); ctx.beginPath(); ctx.moveTo(lx, g.Y(TH)); ctx.lineTo(lx, g.B); ctx.stroke(); ctx.setLineDash([]);
+        K.planet(ctx, lx, g.Y(TH), 5, "#ff8787", "#a61e1e");
+        K.t(ctx, "북위 " + L.toFixed(2) + "°", Math.min(lx + 8, g.R - 80), g.B - 10, { s: 11.5, w: "900", c: LC.red });
       }
       return L;
     }
@@ -833,7 +881,88 @@ function clipRect(ctx, g) { ctx.save(); ctx.beginPath(); ctx.rect(g.L, g.T, g.R 
         }
       }
     }
+    /* 바다 블록 위에 떠 있는 육각형 모듈(아이소메트릭) */
+    var IY = K.iso({ ox: 214, oy: 92, s: 0.78, L: 290, D: 210 }), ZW = 46, ZP = 56, HC = { x: 150, y: 108 }, HR = 92;
+    function hx(a, r) { return { x: HC.x + (r || HR) * Math.cos(a), y: HC.y + (r || HR) * Math.sin(a) }; }
+    function drawIso() {
+      var r = calc(), k, LW = 440;
+      var fc = IY.P(IY.L / 2, IY.D / 2, 0);
+      K.studio(ctx, 0, 0, LW, H, { x: fc.x + 6, y: fc.y + 30, rx: 220, ry: 40 });
+      ctx.save(); ctx.beginPath(); ctx.roundRect(0, 0, LW, H, 14); ctx.clip();
+      ["front", "right"].forEach(function (sd, j) { IY.face(ctx, sd, function (Lw) { var wg = ctx.createLinearGradient(0, ZW, 0, 0); wg.addColorStop(0, j ? "#1f6fb0" : "#2a84c6"); wg.addColorStop(1, j ? "#0a2d57" : "#0d3b70"); ctx.fillStyle = wg; ctx.fillRect(0, 8, Lw, ZW - 8); ctx.fillStyle = j ? "#7a6a4e" : "#8d7b5a"; ctx.fillRect(0, 0, Lw, 8); }); });
+      IY.shade(ctx, "right", function () { return ZW; });
+      IY.plane(ctx, ZW, "#4aa3dc", "rgba(255,255,255,.6)");
+      ctx.strokeStyle = "rgba(255,255,255,.35)"; ctx.lineWidth = 1;
+      for (k = 0; k < 14; k++) { var wx = (k * 53) % 280, wy = (k * 37) % 200, a1 = IY.P(wx, wy, ZW), a2 = IY.P(wx + 16, wy, ZW); ctx.beginPath(); ctx.moveTo(a1.x, a1.y); ctx.quadraticCurveTo((a1.x + a2.x) / 2, a1.y - 3, a2.x, a2.y); ctx.stroke(); }
+      /* 계류줄: 모듈 꼭짓점 → 바닥 닻 */
+      ctx.setLineDash([4, 4]); ctx.strokeStyle = "rgba(255,255,255,.75)"; ctx.lineWidth = 1.4;
+      [[0, 280, 160], [2, 40, 200], [4, 70, 10], [5, 250, 20]].forEach(function (m) { var v0 = hx(m[0] * Math.PI / 3), p0 = IY.P(v0.x, v0.y, ZW), p1 = IY.P(m[1], m[2], ZW); ctx.beginPath(); ctx.moveTo(p0.x, p0.y); ctx.lineTo(p1.x, p1.y); ctx.stroke(); K.planet(ctx, p1.x, p1.y, 3, "#ffd43b", "#a36b00"); });
+      ctx.setLineDash([]);
+      /* 육각 떠받침 옆면(보이는 면만) */
+      for (k = 0; k < 6; k++) {
+        var aa = k * Math.PI / 3, bb = (k + 1) * Math.PI / 3, mid = (aa + bb) / 2, nx = Math.cos(mid), ny = Math.sin(mid);
+        if (nx + ny <= 0) continue;
+        var v1 = hx(aa), v2 = hx(bb);
+        IY.quad(ctx, IY.P(v1.x, v1.y, ZW - 4), IY.P(v2.x, v2.y, ZW - 4), IY.P(v2.x, v2.y, ZP), IY.P(v1.x, v1.y, ZP), nx > ny ? "#9aa3b0" : "#c3cad6", "rgba(255,255,255,.5)");
+      }
+      /* 윗면 부채꼴 구역 */
+      function topHex() { ctx.beginPath(); for (var q = 0; q < 6; q++) { var v = hx(q * Math.PI / 3), p = IY.P(v.x, v.y, ZP); if (q) ctx.lineTo(p.x, p.y); else ctx.moveTo(p.x, p.y); } ctx.closePath(); }
+      topHex(); ctx.fillStyle = "#e3e7ee"; ctx.fill();
+      var a0 = -Math.PI / 2, parts = [[s, "s"], [f, "f"], [Math.max(0, r.h), "h"]], spots = [];
+      ctx.save(); topHex(); ctx.clip();
+      parts.forEach(function (p) {
+        if (p[0] <= 0) return;
+        var a1 = a0 + Math.min(p[0], 100) / 100 * Math.PI * 2, n = 18, q;
+        ctx.beginPath(); var c0 = IY.P(HC.x, HC.y, ZP); ctx.moveTo(c0.x, c0.y);
+        for (q = 0; q <= n; q++) { var e = hx(a0 + (a1 - a0) * q / n, HR * 1.3), pe = IY.P(e.x, e.y, ZP); ctx.lineTo(pe.x, pe.y); }
+        ctx.closePath();
+        ctx.fillStyle = p[1] === "s" ? "#2f5fb3" : (p[1] === "f" ? "#5fae46" : "#c9c2b4"); ctx.fill();
+        ctx.save(); ctx.clip();
+        ctx.strokeStyle = p[1] === "s" ? "rgba(190,215,255,.55)" : (p[1] === "f" ? "rgba(220,255,180,.6)" : "rgba(255,255,255,.4)"); ctx.lineWidth = 1;
+        for (q = -100; q <= 100; q += p[1] === "s" ? 10 : 8) { var l1 = IY.P(HC.x + q, HC.y - 100, ZP), l2 = IY.P(HC.x + q, HC.y + 100, ZP); ctx.beginPath(); ctx.moveTo(l1.x, l1.y); ctx.lineTo(l2.x, l2.y); ctx.stroke(); }
+        if (p[1] === "s") for (q = -100; q <= 100; q += 14) { var m1 = IY.P(HC.x - 100, HC.y + q, ZP), m2 = IY.P(HC.x + 100, HC.y + q, ZP); ctx.beginPath(); ctx.moveTo(m1.x, m1.y); ctx.lineTo(m2.x, m2.y); ctx.stroke(); }
+        ctx.restore();
+        var b0 = IY.P(HC.x, HC.y, ZP), b1 = hx(a0, HR), pb = IY.P(b1.x, b1.y, ZP); ctx.strokeStyle = "rgba(255,255,255,.9)"; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(b0.x, b0.y); ctx.lineTo(pb.x, pb.y); ctx.stroke();
+        if (p[0] >= 6) { var am = (a0 + a1) / 2, lp = hx(am, HR * .58); spots.push([p[1], lp, p[0], a0, a1]); }
+        a0 = a1;
+      });
+      ctx.restore();
+      /* 주거 구역의 집들 */
+      var hz = spots.filter(function (q) { return q[0] === "h"; })[0];
+      if (hz) {
+        var hs = [], Rh = K.rng(7), tries = 0, want = Math.round(hz[2] / 6);
+        while (hs.length < want && tries < 400) { tries++; var ang2 = hz[3] + Rh() * (hz[4] - hz[3]), rr = HR * (.25 + Rh() * .6), pt = hx(ang2, rr); if (hs.every(function (o) { return Math.abs(o.x - pt.x) + Math.abs(o.y - pt.y) > 22; })) hs.push(pt); }
+        hs.sort(function (a, b) { return (a.x + a.y) - (b.x + b.y); }).forEach(function (pt) { IY.house(ctx, pt.x - 6, pt.y - 5, ZP, 12, 10, 9, "#d9480f"); });
+      }
+      var fz = spots.filter(function (q) { return q[0] === "f"; })[0];
+      if (fz) for (k = 0; k < Math.round(fz[2] / 8); k++) { var fa = fz[3] + (k + .5) / Math.round(fz[2] / 8) * (fz[4] - fz[3]), fp = hx(fa, HR * .7); IY.tree(ctx, fp.x, fp.y, ZP, .7); }
+      ctx.restore();
+      var BX = [0, LW];
+      spots.forEach(function (q) { var nm = q[0] === "s" ? "☀️ 태양광 " + s + "%" : (q[0] === "f" ? "🥬 농장 " + f + "%" : "🏘️ 주거 " + Math.max(0, r.h) + "%"); var pp = IY.P(q[1].x, q[1].y, ZP + 4); K.pill(ctx, nm, pp.x, pp.y - 10, { a: "center", s: 11.5, c: "#ffffff", box: BX }); });
+      IY.label(ctx, 280, 160, ZW, "바닥에 묶어 둔 계류줄", 20, 50, "#e8ecff", BX);
+      IY.label(ctx, 0, IY.D, 26, "오르는 바다", -24, 30, "#bfe6ff", BX);
+      if (r.h < 0) K.pill(ctx, "⚠️ 면적 합이 100%를 넘었습니다", LW / 2, H - 40, { a: "center", s: 12.5, c: "#ffc9c9", box: BX });
+      K.bigText(ctx, "해상 도시 한 모듈", 16, 36, 20, "#ffffff");
+      K.warn(ctx, LW - 12, H - 12, "⚠ 크기는 실제 비율이 아님", "right");
+      return r;
+    }
     function draw() {
+      ctx.clearRect(0, 0, W, H);
+      var r = drawIso(), LW = 440, RX = LW + 12, x0 = RX + 18, x1 = W - 18, TW = x1 - x0;
+      K.card(ctx, RX, 0, W - RX, H, "세 가지 기준을 모두 넘겨야 합니다");
+      var rows2 = [["⚡ 전력 자급률", r.pow, 200, 100, Math.round(r.pow) + "%", "기준 100%"], ["🥬 채소 자급률", r.food, 120, 60, Math.round(r.food) + "%", "기준 60%"], ["🏘️ 살 수 있는 주민", r.people, 30000, 12000, Math.round(r.people).toLocaleString() + "명", "기준 12,000명"]];
+      var nOk = 0;
+      rows2.forEach(function (w, k2) {
+        var y = 70 + k2 * 76, ok = w[1] >= w[3]; if (ok) nOk++;
+        K.row(ctx, w[0], w[4] + (ok ? " ✔" : " ✘"), x0, x1, y, ok ? LC.green : LC.red);
+        K.bar(ctx, x0, y + 10, TW, clamp(w[1] / w[2], 0, 1), ok ? LC.green : LC.orange);
+        var tx = x0 + TW * w[3] / w[2]; ctx.fillStyle = LC.ink; ctx.fillRect(tx - 1, y + 5, 2, 20);
+        K.t(ctx, w[5], tx, y + 40, { s: 10.5, w: "700", a: "center", c: LC.mute });
+      });
+      K.tip(ctx, nOk === 3 && r.h >= 0 ? "에너지·식량·주거를 모두 맞춤" : "기준을 넘은 것 " + nOk + " / 3", x0 - 4, H - 46, TW + 8, nOk === 3 && r.h >= 0 ? true : null);
+      return r;
+    }
+    function drawOld() {
       var r = calc(), k;
       ctx.clearRect(0, 0, W, H);
       /* ── 왼쪽: 바다 위 모듈 ── */

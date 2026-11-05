@@ -28,8 +28,37 @@ var BL_N = blCum(BL.normalJH || []), BL_NR = blReach(BL_N), BL_JH = BL.cases[0] 
 var BL_PRE = BL.cases.map(function (c) { return c.preT; }), BL_PMIN = Math.min.apply(null, BL_PRE.length ? BL_PRE : [10]), BL_PMAX = Math.max.apply(null, BL_PRE.length ? BL_PRE : [10]);
 var SRC_BL = "<small>출처: 기온 — 기상청 날씨누리 과거 관측 일별 자료, 창원(155)·서울(108). 개화일 — " + BL.cases.map(function (c) { return c.place.replace(/\(.*\)/, "") + " " + c.y + "년 " + blDay(c.b) + "(" + c.src + ")"; }).join(" · ") + ". 600 °C 법칙은 일본 웨더뉴스가 소개한 도쿄 표본목의 경험칙입니다. 사본은 data/bloom.js.</small>";
 
+var K = window.sthKit, LT = K.LT;
+/* 밝은 스튜디오 바탕 + 왼쪽 그래프 판(흰 판) */
+function studioPaper(ctx, W, CH, cardX) {
+  ctx.clearRect(0, 0, W, CH);
+  K.studio(ctx, 0, 0, (cardX || 650) - 26, CH, null);
+  ctx.fillStyle = "rgba(255,255,255,.72)"; ctx.fillRect(56, 20, (cardX || 650) - 92, CH - 52);
+}
+/* 오른쪽 흰 판정 카드 + 줄(이름·값) + 작은 입체 모형 */
+function cardRows(ctx, x, y, list, gap, mini) {
+  var W = 900, CH = ctx.canvas._h || 300;
+  K.card(ctx, x - 16, 0, W - x + 16, CH, "");
+  list.forEach(function (r, i) {
+    var yy = y + i * gap;
+    K.t(ctx, r[0], x, yy, { s: 12, w: "800", c: LT.mute });
+    K.t(ctx, r[1], x, yy + 19, { s: r[3] ? 21 : 15, w: "900", c: r[2] ? window.sthKit && (window.cssVarStudio || window.cssVar)(r[2]) : LT.ink });
+  });
+  if (mini) mini(ctx, x, W, CH);
+}
+/* 해안 블록 미니어처(바다가 오르면 모래사장이 잠긴다) */
+function seaMini(ctx, x, W, CH) {
+  var I = K.iso({ ox: (x + W) / 2 - 4, oy: CH - 96, s: 0.5, L: 160, D: 90 });
+  ["front", "right"].forEach(function (sd, j) { I.face(ctx, sd, function (Lw) { ctx.fillStyle = j ? "#5e4530" : "#6e5238"; ctx.fillRect(0, 0, Lw, 10); ctx.fillStyle = j ? "#1f6fb0" : "#2a84c6"; ctx.fillRect(0, 10, sd === "front" ? 90 : Lw, 14); }); });
+  I.plane(ctx, 24, "rgba(77,171,247,.9)", "rgba(255,255,255,.7)", 0, 90, 0, 90);
+  I.box(ctx, 90, 0, 10, 160, 90, 26, "#8cc46a", "#e9d8a6", "#c9b48a");
+  I.house(ctx, 120, 30, 26, 14, 12, 10, "#e8590c"); I.tree(ctx, 146, 62, 26, .9);
+}
+function heatMini(ctx, x, W, CH) {
+  var cx = W - 46, cy = 36; K.sun(ctx, cx, cy, 9);
+}
 function chart(H, ctx, W, CH, lines) {
-  H.paper(ctx, W, CH);
+  studioPaper(ctx, W, CH, 660);
   var x0 = 60, x1 = 620, y0 = 24, y1 = CH - 36;
   function X(y) { return x0 + (y - 1992) / 34 * (x1 - x0); }
   function Y(v) { return y1 - (v + 30) / 130 * (y1 - y0); }
@@ -59,7 +88,7 @@ window.sthLab({
       var H = api.h, cv = api.canvas(280), ctx = cv.ctx, W = cv.W, sl = 1;
       function draw() {
         chart(H, ctx, W, cv.H, [[1993, 2025.3, ALL, sl, "--amber-700"]]);
-        H.rows(ctx, 660, 60, [["내 답", sl.toFixed(1) + " mm / 년", null, true], ["30년이면", (sl * 30 / 10).toFixed(1) + " cm"]], 60);
+        cardRows(ctx, 660, 60, [["내 답", sl.toFixed(1) + " mm / 년", null, true], ["30년이면", (sl * 30 / 10).toFixed(1) + " cm"]], 60, seaMini);
       }
       cv.canvas._redraw = draw;
       api.slider({ label: "한 해 해수면 상승량", min: 0, max: 8, step: 0.1, value: 1, fmt: function (x) { return x.toFixed(1) + " mm/년"; }, onInput: function (x) { sl = x; api.changed(); draw(); } });
@@ -92,7 +121,7 @@ window.sthLab({
       var H = api.h, cv = api.canvas(280), ctx = cv.ctx, W = cv.W, g = 1;
       function draw() {
         chart(H, ctx, W, cv.H, [[1993, 2002.9, EARLY, EARLY.b, "--teal"], [2015, 2024.9, LATE, LATE.b, "--coral-700"]]);
-        H.rows(ctx, 660, 40, [["1993~2002", EARLY.b.toFixed(2) + " mm/년", "--teal-700"], ["2015~2024", LATE.b.toFixed(2) + " mm/년", "--coral-700"], ["내 답 (몇 배)", g.toFixed(1) + " 배", null, true]], 58);
+        cardRows(ctx, 660, 40, [["1993~2002", EARLY.b.toFixed(2) + " mm/년", "--teal-700"], ["2015~2024", LATE.b.toFixed(2) + " mm/년", "--coral-700"], ["내 답 (몇 배)", g.toFixed(1) + " 배", null, true]], 58, seaMini);
       }
       cv.canvas._redraw = draw;
       api.slider({ label: "최근 속도는 처음의 몇 배", min: 0.5, max: 3, step: 0.05, value: 1, fmt: function (x) { return x.toFixed(2) + " 배"; }, onInput: function (x) { g = x; api.changed(); draw(); } });
@@ -127,7 +156,7 @@ window.sthLab({
       function X(i) { return x0 + i / (n - 1) * (x1 - x0); }
       function Y(t) { return y1 - (t - 18) / 24 * (y1 - y0); }
       function draw() {
-        H.paper(ctx, W, cv.H); H.axes(ctx, x0, y0, x1, y1);
+        studioPaper(ctx, W, cv.H, 680); H.axes(ctx, x0, y0, x1, y1);
         [20, 25, 30, 35, 40].forEach(function (t) { H.text(ctx, t + "°", x0 - 8, Y(t) + 4, { s: 10, a: "right", c: H.v("--mist") }); H.dash(ctx, x0, Y(t), x1, Y(t), H.v("--line"), 0.6); });
         H.dash(ctx, x0, Y(33), x1, Y(33), H.v("--amber-700"), 1.6);
         H.text(ctx, "33 °C", x1 - 4, Y(33) - 5, { s: 11, w: "800", a: "right", c: H.v("--amber-700") });
@@ -137,7 +166,7 @@ window.sthLab({
         var top = 0; S26.forEach(function (r, i) { if (r[1] >= 33) H.dot(ctx, X(i), Y(r[1]), 2.6, H.v("--coral-700")); if (r[1] > S26[top][1]) top = i; });
         if (S26.length) H.text(ctx, (+S26[top][0].slice(0, 2)) + "월 " + (+S26[top][0].slice(3)) + "일 " + S26[top][1] + " °C", X(top) + 8, Y(S26[top][1]) + 2, { s: 11, w: "800", c: H.v("--coral-700") });
         H.text(ctx, "최고 기온 (°C)", x0 + 6, y0 - 8, { s: 11, w: "700", c: H.v("--mist") });
-        H.rows(ctx, 680, 34, [["2026년 폭염일", Y26.hot + "일", "--coral-700"], ["2026년 열대야", Y26.trop + "일", "--brand"], ["평년 폭염일", "아래 표로 구하세요", "--mist"], ["내 답 (몇 배)", k.toFixed(1) + " 배", null, true]], 54);
+        cardRows(ctx, 680, 34, [["2026년 폭염일", Y26.hot + "일", "--coral-700"], ["2026년 열대야", Y26.trop + "일", "--brand"], ["평년 폭염일", "아래 표로 구하세요", "--mist"], ["내 답 (몇 배)", k.toFixed(1) + " 배", null, true]], 54, heatMini);
       }
       cv.canvas._redraw = draw;
       api.slider({ label: "2026년 ÷ 평년", min: 1, max: 5, step: 0.1, value: 1, fmt: function (x) { return x.toFixed(1) + " 배"; }, onInput: function (x) { k = x; api.changed(); draw(); } });
@@ -175,7 +204,7 @@ window.sthLab({
       function Y(v) { return y1 - v / 900 * (y1 - y0); }
       function draw() {
         var c = BL.cases[sel] || BL_JH;
-        H.paper(ctx, W, cv.H); H.axes(ctx, x0, y0, x1, y1);
+        studioPaper(ctx, W, cv.H, 680); H.axes(ctx, x0, y0, x1, y1);
         [0, 200, 400, 600, 800].forEach(function (v) { H.text(ctx, v + "°", x0 - 8, Y(v) + 4, { s: 10, a: "right", c: H.v("--mist") }); H.dash(ctx, x0, Y(v), x1, Y(v), H.v("--line"), 0.5); });
         H.dash(ctx, x0, Y(600), x1, Y(600), H.v("--amber-700"), 1.6);
         H.text(ctx, "600 °C", x0 + 6, Y(600) - 6, { s: 11, w: "800", c: H.v("--amber-700") });
@@ -187,7 +216,7 @@ window.sthLab({
         H.dot(ctx, X(day), Y(c.cum[day]), 5, H.v("--brand"));
         var shown = api.isDone ? api.isDone() : false;
         if (sel > 0 || shown || Math.abs(day - BL_JH.rule) <= 1) { H.text(ctx, "🌸", X(c.b) - 8, Y(c.cum[c.b]) - 6, { s: 16 }); H.text(ctx, "실제 개화 " + blDay(c.b), X(c.b) + 10, Y(c.cum[c.b]) + 16, { s: 11, w: "800", c: H.v("--coral-700") }); }
-        H.rows(ctx, 680, 34, [[c.place + " " + c.y + "년", "", "--coral-700"], ["고른 날 " + blDay(day), Math.round(c.cum[day]) + " °C", null, true], ["그날까지 날 수", (day + 1) + "일"], [sel < 2 ? "회색 = 평년(1991~2020)" : "", sel < 2 ? "평년엔 " + blDay(BL_NR) + "쯤 600" : ""]], 50);
+        cardRows(ctx, 680, 34, [[c.place + " " + c.y + "년", "", "--coral-700"], ["고른 날 " + blDay(day), Math.round(c.cum[day]) + " °C", null, true], ["그날까지 날 수", (day + 1) + "일"], [sel < 2 ? "회색 = 평년(1991~2020)" : "", sel < 2 ? "평년엔 " + blDay(BL_NR) + "쯤 600" : ""]], 50);
       }
       cv.canvas._redraw = draw;
       api.seg({ label: "어느 해·어디", options: BL.cases.map(function (c, i) { return { v: i, t: c.place.replace(/\(.*\)/, "") + " " + c.y }; }), value: 0, onPick: function (v) { sel = +v; draw(); } });

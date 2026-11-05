@@ -3,6 +3,19 @@
 (function () {
 "use strict";
 
+var K = window.sthKit, LT = K.LT;
+function vcard(ctx, x, w, h, title, big, rows, tip, y0) {
+  K.card(ctx, x, 0, w, h, title);
+  var x0 = x + 18, x1 = x + w - 18, y = y0 || 70;
+  if (big) { K.t(ctx, big[0], x0, y, { s: 26, w: "900", c: big[1] }); y += 36; }
+  rows.forEach(function (r) { K.row(ctx, r[0], r[1], x0, x1, y, r[2]); y += 26; });
+  if (tip) K.tip(ctx, tip[0], x0 - 4, h - 46, x1 - x0 + 8, tip[1]);
+}
+function cyl(ctx, cx, y, r, h, c0, c1) {
+  var g = ctx.createLinearGradient(cx - r, 0, cx + r, 0); g.addColorStop(0, c1); g.addColorStop(.42, c0); g.addColorStop(1, c1);
+  ctx.fillStyle = g; ctx.fillRect(cx - r, y, 2 * r, h); ctx.beginPath(); ctx.ellipse(cx, y + h, r, r * .35, 0, 0, Math.PI); ctx.fill();
+  ctx.fillStyle = c0; ctx.beginPath(); ctx.ellipse(cx, y, r, r * .35, 0, 0, 6.2832); ctx.fill();
+}
 window.sthLab({
   mount: "lab", key: "lab", result: "rLab",
   cases: [
@@ -23,14 +36,22 @@ window.sthLab({
       function sim(q) { var C = 60, tr = [60], s = 0, c = 0; for (var y = 1; y <= 60; y++) { C = Math.min(60, C + 0.25 * C * (1 - C / 60) + q); if (y % 6 === 0) C *= 0.5; tr.push(C); if (y > 40) { s += C; c++; } } return { tr: tr, avg: s / c }; }
       function draw() {
         H.paper(ctx, W, cv.H);
-        var r = sim(p), x0 = 60, x1 = 600, y0 = 30, y1 = 240;
-        function X(y) { return x0 + y / 60 * (x1 - x0); }
-        function Y(c) { return y1 - c / 60 * (y1 - y0); }
-        H.axes(ctx, x0, y0, x1, y1);
-        H.box(ctx, X(40), y0, X(60) - X(40), y1 - y0, H.v("--mist"), 0.15);
-        H.line(ctx, r.tr.map(function (c, y) { return [X(y), Y(c)]; }), H.v("--coral"), 2.5);
-        [0, 30, 60].forEach(function (c) { H.text(ctx, c + "%", x0 - 6, Y(c) + 4, { s: 10, a: "right", c: H.v("--mist") }); });
-        H.rows(ctx, 650, 60, [["해마다 옮겨 심기", "+" + p.toFixed(1) + " %p"], ["마지막 20년 평균", r.avg.toFixed(1) + "%", r.avg >= 40 && r.avg <= 45 ? "--green-700" : "--rose-700", true]], 70);
+        var r = sim(p), ok = r.avg >= 40 && r.avg <= 45;
+        K.studio(ctx, 0, 0, 620, cv.H, null);
+        K.bigText(ctx, "마지막 20년 평균 " + r.avg.toFixed(1) + "%", 16, 34, 20, ok ? "#7ee0a0" : "#ffffff");
+        K.t(ctx, "6년마다 대규모 백화 · 해마다 옮겨 심기 +" + p.toFixed(1) + " %p", 604, 28, { s: 11.5, w: "800", a: "right", c: LT.mute });
+        var g = K.chart(ctx, { x: 4, y: 44, w: 612, h: cv.H - 48, pl: 40, pb: 28, pt: 8, pr: 14, x0: 0, x1: 60, y0: 0, y1: 60, xt: 6, yt: 2, light: true, xf: function (v) { return v + "년"; }, yf: function (v) { return v + "%"; } });
+        ctx.fillStyle = "rgba(28,126,214,.08)"; ctx.fillRect(g.X(40), g.T, g.X(60) - g.X(40), g.B - g.T);
+        K.plot(ctx, g, r.tr.map(function (c, y) { return [y, c]; }), LT.orange, { w: 2.8, light: true });
+        K.line(ctx, { x: g.X(40), y: g.Y(r.avg) }, { x: g.X(60), y: g.Y(r.avg) }, ok ? LT.green : LT.yellow, 1.6, [6, 5]);
+        vcard(ctx, 632, W - 632, cv.H, "산호 정원사의 계획", null, [["해마다 옮겨 심기", "+" + p.toFixed(1) + " %p", LT.blue], ["마지막 20년 평균", r.avg.toFixed(1) + "%", ok ? LT.green : LT.red]], [ok ? "목표 40~45% 달성" : (r.avg < 40 ? "아직 모자람" : "지나치게 많음"), ok], 166);
+        /* 산호 묘목장 미니어처: 바닥 틀에 매단 산호 조각 */
+        var I = K.iso({ ox: 766, oy: 60, s: 0.5, L: 170, D: 110 });
+        ["front", "right"].forEach(function (sd, j) { I.face(ctx, sd, function (Lw) { ctx.fillStyle = j ? "#c9b48a" : "#e0cc9e"; ctx.fillRect(0, 0, Lw, 8); var wg = ctx.createLinearGradient(0, 40, 0, 8); wg.addColorStop(0, "rgba(70,170,230,.75)"); wg.addColorStop(1, "rgba(20,90,160,.85)"); ctx.fillStyle = wg; ctx.fillRect(0, 8, Lw, 34); }); });
+        I.plane(ctx, 8, "#e9d8a6", null);
+        for (var q = 0; q < 4; q++) { K.line(ctx, I.P(20 + q * 40, 20, 8), I.P(20 + q * 40, 20, 30), "#868e96", 1.6); K.line(ctx, I.P(20 + q * 40, 90, 8), I.P(20 + q * 40, 90, 30), "#868e96", 1.6); K.line(ctx, I.P(20 + q * 40, 20, 30), I.P(20 + q * 40, 90, 30), "#adb5bd", 1.4); }
+        var nC = Math.round(4 + p * 4); for (q = 0; q < nC; q++) { var pp = I.P(20 + (q % 4) * 40, 26 + Math.floor(q / 4) * 14, 28); K.planet(ctx, pp.x, pp.y, 4, ["#ff8787", "#ffa94d", "#b197fc", "#63e6be"][q % 4], "#5c2a2a"); }
+        I.plane(ctx, 42, "rgba(120,200,255,.28)", "rgba(255,255,255,.6)");
       }
       cv.canvas._redraw = draw;
       api.slider({ label: "해마다 옮겨 심는 산호 (덮임률 %p)", min: 0, max: 6, step: 0.5, value: 0, fmt: function (x) { return "+" + x.toFixed(1) + " %p"; }, onInput: function (x) { p = x; draw(); api.changed(); } });
@@ -66,15 +87,19 @@ window.sthLab({
       function need() { return 16 * 2000 * (1 + 0.07 * 2); }
       function draw() {
         H.paper(ctx, W, cv.H);
-        var n = need(), x0 = 70, y1 = 240, sc = 180 / 60000;
-        H.axes(ctx, x0, 30, 560, y1);
-        [["지금 필요 (13일)", 26000, "--mist"], ["미래 필요 (16일, 증발 +14%)", n, "--rose"], ["새 저수지", cap, cap >= n && cap <= n * 1.1 ? "--green" : "--amber"]].forEach(function (b, k) {
-          var bx = x0 + 20 + k * 160;
-          H.box(ctx, bx, y1 - b[1] * sc, 110, b[1] * sc, H.v(b[2]), 0.85);
-          H.text(ctx, Math.round(b[1]).toLocaleString() + " t", bx + 55, y1 - b[1] * sc - 8, { s: 12.5, w: "900", a: "center" });
-          H.text(ctx, b[0], bx + 55, y1 + 18, { s: 10.5, a: "center", c: H.v("--mist") });
+        var n = need(), okr = cap >= n && cap <= n * 1.1;
+        K.studio(ctx, 0, 0, 560, cv.H, null);
+        K.bigText(ctx, "여유 " + ((cap / n - 1) * 100).toFixed(0) + "%", 16, 34, 22, okr ? "#7ee0a0" : "#ffffff");
+        /* 세 저수지 블록: 물 높이 ∝ 저수량 */
+        [["지금 필요 (13일)", 26000, "#adb5bd"], ["미래 필요 (16일, 증발 +14%)", n, "#ff8787"], ["새 저수지", cap, okr ? "#69db7c" : "#ffc078"]].forEach(function (b, k) {
+          var I = K.iso({ ox: 96 + k * 176, oy: 150, s: 0.62, L: 120, D: 90 }), lv = 6 + b[1] / 60000 * 70;
+          ["front", "right"].forEach(function (sd, j) { I.face(ctx, sd, function (Lw) { ctx.fillStyle = j ? "#5e4530" : "#6e5238"; ctx.fillRect(0, 0, Lw, 6); ctx.fillStyle = j ? "#868e96" : "#adb5bd"; ctx.fillRect(0, 6, Lw, 80); var wg = ctx.createLinearGradient(0, lv, 0, 6); wg.addColorStop(0, "rgba(77,171,247,.95)"); wg.addColorStop(1, "rgba(24,100,171,.95)"); ctx.fillStyle = wg; ctx.fillRect(6, 6, Lw - 12, lv - 6); }); });
+          I.plane(ctx, lv, "rgba(116,192,252,.9)", "rgba(255,255,255,.7)", 6, 114, 6, 84);
+          I.quad(ctx, I.P(0, 0, 86), I.P(120, 0, 86), I.P(120, 90, 86), I.P(0, 90, 86), null, b[2]);
+          var tp = I.P(60, 45, 90); K.t(ctx, Math.round(b[1]).toLocaleString() + " t", tp.x, tp.y - 10, { s: 13, w: "900", a: "center", c: LT.ink });
+          var bt = I.P(120, 90, 0); K.t(ctx, b[0], I.P(60, 90, 0).x, bt.y + 22, { s: 11, w: "900", a: "center", c: k === 2 ? (okr ? LT.green : LT.orange) : LT.mute });
         });
-        H.text(ctx, "여유 " + ((cap / n - 1) * 100).toFixed(0) + "%", 620, 120, { s: 22, w: "900", c: cap >= n && cap <= n * 1.1 ? H.v("--green-700") : H.v("--rose-700") });
+        vcard(ctx, 572, W - 572, cv.H, "마른 날을 버틸 저수지", [cap.toLocaleString() + " t", okr ? LT.green : LT.red], [["미래 필요량", Math.round(n).toLocaleString() + " t", LT.red], ["계산", "16일 × 2,000 t × 1.14", LT.ink]], [okr ? "필요량 이상 · 여유 10% 안" : (cap < n ? "물이 모자람" : "지나치게 큼"), okr]);
       }
       cv.canvas._redraw = draw;
       api.slider({ label: "저수지 용량", min: 20000, max: 60000, step: 1000, value: 26000, fmt: function (x) { return x.toLocaleString() + " t"; }, onInput: function (x) { cap = x; draw(); api.changed(); } });
@@ -110,18 +135,21 @@ window.sthLab({
       function minR() { return 40 / left(); }
       function draw() {
         H.paper(ctx, W, cv.H);
-        var x0 = 60, x1 = 600, y0 = 30, y1 = 250, Y0 = 2020, YEARS = 50;
-        function X(y) { return x0 + (y - Y0) / YEARS * (x1 - x0); }
-        function Y(e) { return y1 - e / 45 * (y1 - y0); }
-        H.axes(ctx, x0, y0, x1, y1);
-        var pts = [], cum = 0;
-        for (var y = Y0; y <= Y0 + YEARS; y += 0.5) { var e = y < start ? 40 : 40 * Math.pow(1 - r, y - start); pts.push([X(y), Y(e)]); }
-        ctx.beginPath(); ctx.moveTo(X(Y0), Y(0)); pts.forEach(function (p) { ctx.lineTo(p[0], p[1]); }); ctx.lineTo(X(Y0 + YEARS), Y(0)); ctx.closePath(); ctx.fillStyle = H.v("--coral"); ctx.globalAlpha = .28; ctx.fill(); ctx.globalAlpha = 1;
-        H.line(ctx, pts, H.v("--coral"), 2.5);
-        [2020, 2030, 2040, 2050, 2060, 2070].forEach(function (yy) { H.text(ctx, yy + "", X(yy), y1 + 16, { s: 10, a: "center", c: H.v("--mist") }); });
-        cum = 40 * (start - 2020) + 40 / r;
-        var ok = start === 2025 && r >= minR() - 1e-9 && r <= minR() + 0.005 + 1e-9;
-        H.rows(ctx, 650, 50, [["시작 연도", start + "년"], ["감축률", (r * 100).toFixed(1) + " %/년"], ["누적 배출", Math.round(cum) + " Gt", cum <= 500 + 1e-6 ? "--green-700" : "--rose-700", true], ["필요한 최소 감축률", (minR() * 100).toFixed(1) + " %"]], 48);
+        var Y0 = 2020, YEARS = 50, pts = [], cum = 40 * (start - 2020) + 40 / r, ok = start === 2025 && r >= minR() - 1e-9 && r <= minR() + 0.005 + 1e-9;
+        K.studio(ctx, 0, 0, 620, cv.H, null);
+        K.bigText(ctx, "누적 " + Math.round(cum) + " Gt", 16, 34, 22, cum <= 500 + 1e-6 ? "#7ee0a0" : "#ff9a7a");
+        K.t(ctx, start + "년부터 해마다 " + (r * 100).toFixed(1) + "%씩 줄이기 (Gt CO₂/년)", 604, 28, { s: 11.5, w: "800", a: "right", c: LT.mute });
+        var g = K.chart(ctx, { x: 4, y: 44, w: 612, h: cv.H - 48, pl: 40, pb: 28, pt: 8, pr: 14, x0: Y0, x1: Y0 + YEARS, y0: 0, y1: 45, xt: 5, yt: 3, light: true, xf: function (v) { return String(Math.round(v)); }, yf: function (v) { return String(Math.round(v)); } });
+        for (var y = Y0; y <= Y0 + YEARS; y += 0.5) pts.push([y, y < start ? 40 : 40 * Math.pow(1 - r, y - start)]);
+        ctx.beginPath(); ctx.moveTo(g.X(Y0), g.Y(0)); pts.forEach(function (p) { ctx.lineTo(g.X(p[0]), g.Y(p[1])); }); ctx.lineTo(g.X(Y0 + YEARS), g.Y(0)); ctx.closePath(); ctx.fillStyle = "rgba(232,89,12,.22)"; ctx.fill();
+        K.plot(ctx, g, pts, LT.orange, { w: 2.8, light: true });
+        K.line(ctx, { x: g.X(start), y: g.T }, { x: g.X(start), y: g.B }, LT.violet, 1.4, [4, 4]); K.t(ctx, "감축 시작 " + start, g.X(start) + 6, g.T + 14, { s: 11, w: "900", c: LT.violet });
+        vcard(ctx, 632, W - 632, cv.H, "남은 탄소예산 500 Gt", null, [["시작 연도", start + "년", LT.violet], ["감축률", (r * 100).toFixed(1) + " %/년", LT.blue], ["필요한 최소", (minR() * 100).toFixed(1) + " %", LT.mute]], [ok ? "예산 안에서 멈춤" : (cum > 500 ? "예산을 넘음" : "조건을 다시 보세요"), ok], 160);
+        var frac = Math.min(1, cum / 500), cx = 766, by0 = 54, bh = 72;
+        ctx.fillStyle = "rgba(200,225,250,.4)"; ctx.fillRect(cx - 30, by0, 60, bh);
+        if (frac > 0) cyl(ctx, cx, by0 + bh - bh * frac, 27, bh * frac, cum > 500 ? "#ff8787" : "#ffa94d", cum > 500 ? "#a61e1e" : "#c2410c");
+        ctx.strokeStyle = "rgba(80,100,130,.8)"; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(cx - 30, by0); ctx.lineTo(cx - 30, by0 + bh); ctx.ellipse(cx, by0 + bh, 30, 10.5, 0, Math.PI, 0, true); ctx.lineTo(cx + 30, by0); ctx.stroke(); ctx.beginPath(); ctx.ellipse(cx, by0, 30, 10.5, 0, 0, 6.2832); ctx.stroke();
+        K.t(ctx, Math.round(frac * 100) + "%", cx + 42, by0 + bh - bh * frac + 4, { s: 12, w: "900", c: LT.ink });
       }
       cv.canvas._redraw = draw;
       api.seg({ label: "감축 시작 연도", value: 2025, options: [{ v: 2020, t: "2020년" }, { v: 2025, t: "2025년" }, { v: 2030, t: "2030년" }], onPick: function (x) { start = +x; draw(); api.changed(); } });

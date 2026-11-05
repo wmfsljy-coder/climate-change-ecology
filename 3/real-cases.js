@@ -11,8 +11,29 @@ function cnt(a, b, th) { return R.filter(function (r) { return r[0] >= a && r[0]
 var N1 = cnt(1985, 1994, 4), N2 = cnt(2015, 2024, 4);
 var SRC = "<small>출처: 미국 해양대기청(NOAA) 산호초 감시(Coral Reef Watch) 5 km 지역 가상 관측소 — " + (C.station || "그레이트배리어리프 중부") + ", 해마다 가장 높았던 누적 열 스트레스(DHW, °C-주), 1985~2025. 사본은 data/crw-gbr.js.</small>";
 
+var K = window.sthKit, LT = K.LT;
+function studioPaper(ctx, W, CH, cardX) {
+  ctx.clearRect(0, 0, W, CH);
+  K.studio(ctx, 0, 0, (cardX || 650) - 26, CH, null);
+  ctx.fillStyle = "rgba(255,255,255,.72)"; ctx.fillRect(56, 20, (cardX || 650) - 92, CH - 52);
+}
+/* 오른쪽 흰 카드 + 줄 + 산호초 블록 미니어처(DHW 가 클수록 하얗게) */
+function cardRows(ctx, x, y, list, gap, dhw) {
+  var W = 900, CH = ctx.canvas._h || 280;
+  K.card(ctx, x - 16, 0, W - x + 16, CH, "");
+  list.forEach(function (r, i) {
+    var yy = y + i * gap;
+    K.t(ctx, r[0], x, yy, { s: 12, w: "800", c: LT.mute });
+    K.t(ctx, r[1], x, yy + 19, { s: r[3] ? 21 : 15, w: "900", c: r[2] ? (window.cssVarStudio || window.cssVar)(r[2]) : LT.ink });
+  });
+  var I = K.iso({ ox: (x + W) / 2 - 6, oy: CH - 110, s: 0.5, L: 170, D: 110 }), bl = Math.max(0, Math.min(1, (dhw || 0) / 8));
+  ["front", "right"].forEach(function (sd, j) { I.face(ctx, sd, function (Lw) { ctx.fillStyle = j ? "#c9b48a" : "#e0cc9e"; ctx.fillRect(0, 0, Lw, 8); var wg = ctx.createLinearGradient(0, 40, 0, 8); wg.addColorStop(0, "rgba(70,170,230,.7)"); wg.addColorStop(1, "rgba(20,90,160,.85)"); ctx.fillStyle = wg; ctx.fillRect(0, 8, Lw, 32); }); });
+  I.plane(ctx, 8, "#e9d8a6", null);
+  var Rq = K.rng(5); for (var q = 0; q < 22; q++) { var p = I.P(10 + Rq() * 150, 10 + Rq() * 90, 8), white = q / 22 < bl; K.planet(ctx, p.x, p.y - 5, 5.5, white ? "#f8f9fa" : ["#ff8787", "#ffa94d", "#b197fc", "#63e6be"][q % 4], white ? "#adb5bd" : "#5c2a2a"); }
+  I.plane(ctx, 40, "rgba(120,200,255,.25)", "rgba(255,255,255,.6)");
+}
 function chart(H, ctx, W, CH, pick, shade) {
-  H.paper(ctx, W, CH);
+  studioPaper(ctx, W, CH, 680);
   var x0 = 60, x1 = 640, y0 = 24, y1 = CH - 36;
   function X(y) { return x0 + (y - 1984.5) / 41 * (x1 - x0); }
   function Y(v) { return y1 - v / 14 * (y1 - y0); }
@@ -45,7 +66,7 @@ window.sthLab({
       function val(yy) { for (var i = 0; i < R.length; i++) if (R[i][0] === yy) return R[i][1]; return 0; }
       function draw() {
         chart(H, ctx, W, cv.H, y, null);
-        H.rows(ctx, 680, 60, [["고른 해", y + "년", "--amber-700"], ["가장 높은 DHW", val(y).toFixed(1) + " °C-주", null, true]], 60);
+        cardRows(ctx, 690, 40, [["고른 해", y + "년", "--amber-700"], ["가장 높은 DHW", val(y).toFixed(1) + " °C-주", null, true]], 50, val(y));
       }
       cv.canvas._redraw = draw;
       api.slider({ label: "연도", min: 1985, max: 2025, step: 1, value: 1985, fmt: function (x) { return x + "년"; }, onInput: function (x) { y = x; api.changed(); draw(); } });
@@ -78,7 +99,7 @@ window.sthLab({
       var H = api.h, cv = api.canvas(280), ctx = cv.ctx, W = cv.W, g = 1;
       function draw() {
         chart(H, ctx, W, cv.H, null, [[1985, 1994], [2015, 2024]]);
-        H.rows(ctx, 680, 60, [["내 답 (몇 배)", g + " 배", null, true]], 60);
+        cardRows(ctx, 690, 40, [["내 답 (몇 배)", g + " 배", null, true]], 50, 8 * Math.min(1, g / 5));
       }
       cv.canvas._redraw = draw;
       api.slider({ label: "최근 10년은 처음 10년의 몇 배", min: 1, max: 10, step: 1, value: 1, fmt: function (x) { return x + " 배"; }, onInput: function (x) { g = x; api.changed(); draw(); } });

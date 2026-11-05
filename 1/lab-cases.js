@@ -2,6 +2,28 @@
    이야기에서 찾은 개념을 처음 보는 상황에 써 본다. 공용 엔진: ../assets/lab.js (sthLab) */
 (function () {
 "use strict";
+var K = window.sthKit, LT = K.LT;
+/* 흰 판정 카드: big = [글, 색], rows = [[이름, 값, 색]], tip = [글, 좋음] */
+function vcard(ctx, x, w, h, title, big, rows, tip) {
+  K.card(ctx, x, 0, w, h, title);
+  var x0 = x + 18, x1 = x + w - 18, y = 70;
+  if (big) { K.t(ctx, big[0], x0, y, { s: 28, w: "900", c: big[1] }); y += 38; }
+  rows.forEach(function (r) { K.row(ctx, r[0], r[1], x0, x1, y, r[2]); y += 28; });
+  if (tip) K.tip(ctx, tip[0], x0 - 4, h - 46, x1 - x0 + 8, tip[1]);
+}
+/* 원뿔 산 블록: 높이 함수 zOf, 색 colOf(x, y, z, 밝기) */
+function mountain(ctx, I, zOf, colOf, n) {
+  ["front", "right"].forEach(function (sd, k) {
+    I.face(ctx, sd, function (Lw) {
+      I.profile(ctx, sd, function (u) { return sd === "front" ? zOf(u, I.D) : zOf(I.L, u); }, 0); ctx.save(); ctx.clip();
+      var g = ctx.createLinearGradient(0, 0, 0, 60); g.addColorStop(0, k ? "#5e4530" : "#6e5238"); g.addColorStop(1, k ? "#8a7258" : "#a08468");
+      ctx.fillStyle = g; ctx.fillRect(0, 0, Lw, 400); ctx.restore();
+    });
+  });
+  I.shade(ctx, "right", function (u) { return zOf(I.L, u); });
+  I.field(ctx, zOf, colOf, n || 34, n || 34);
+  I.edges(ctx, zOf(I.L, I.D), zOf(I.L, I.D));
+}
 
 window.sthLab({
   mount: "lab", key: "lab", result: "rLab",
@@ -21,18 +43,33 @@ window.sthLab({
     build: function (stage, api) {
       var H = api.h, cv = api.canvas(300), ctx = cv.ctx, W = cv.W, h = 0;
       function T(m) { return 27 - 6.5 * m / 1000; }
+      /* 적도 해안에서 솔은 산 블록(높이 1 m = 0.036 단위). 도시는 그 높이의 비탈에 선다 */
+      var IM = K.iso({ ox: 250, oy: 116, s: 0.72, L: 300, D: 220 }), ZK = 0.036, ZB = 12;
+      function mz(x, y) { var dx = (x - 160) / 130, dy = (y - 100) / 105, r = Math.sqrt(dx * dx + dy * dy); return ZB + 3800 * ZK * Math.pow(Math.max(0, 1 - r), 1.1); }
       function draw() {
         H.paper(ctx, W, cv.H);
-        var x0 = 70, x1 = 470, y0 = 30, y1 = 270;
-        function Y(m) { return y1 - m / 4000 * (y1 - y0); }
-        ctx.fillStyle = H.v("--green"); ctx.globalAlpha = .35;
-        ctx.beginPath(); ctx.moveTo(x0, y1); ctx.lineTo((x0 + x1) / 2, Y(3800)); ctx.lineTo(x1, y1); ctx.closePath(); ctx.fill(); ctx.globalAlpha = 1;
-        ctx.fillStyle = "#f4f8fb"; ctx.beginPath(); ctx.moveTo((x0 + x1) / 2 - 38, Y(3400)); ctx.lineTo((x0 + x1) / 2, Y(3800)); ctx.lineTo((x0 + x1) / 2 + 38, Y(3400)); ctx.closePath(); ctx.fill();
-        [0, 1000, 2000, 3000, 4000].forEach(function (m) { H.text(ctx, m + " m", x0 - 8, Y(m) + 4, { s: 10.5, a: "right", c: H.v("--mist") }); });
-        H.dash(ctx, x0, Y(h), x1 + 20, Y(h), H.v("--brand"), 2);
-        H.text(ctx, "🏙️", (x0 + x1) / 2 + 60, Y(h) - 4, { s: 22 });
-        var t = T(h), ok = t >= 18 && t <= 20;
-        H.rows(ctx, 560, 60, [["도시의 높이", h.toLocaleString() + " m"], ["연평균 기온", t.toFixed(1) + " ℃", ok ? "--green-700" : "--rose-700", true], ["해안(0 m)과의 차이", (27 - t).toFixed(1) + " ℃"]], 64);
+        var t = T(h), ok = t >= 18 && t <= 20, zh = ZB + h * ZK;
+        K.studio(ctx, 0, 0, 520, cv.H, { x: 250, y: 262, rx: 220, ry: 30 });
+        ctx.save(); ctx.beginPath(); ctx.roundRect(0, 0, 520, cv.H, 14); ctx.clip();
+        mountain(ctx, IM, mz, function (x, y, z, lt) {
+          var m = (z - ZB) / ZK;
+          if (h > 0 && Math.abs(z - zh) < 2.2) return K.tint("#f08c00", lt);
+          if (m > 3300) return K.tint("#f4f7fb", lt);
+          if (m > 2600) return K.tint("#9c8b78", lt);
+          if (m > 1600) return K.tint("#5f8f46", lt);
+          return z <= ZB + .5 ? K.tint("#d9c99a", lt) : K.tint("#3f8f3a", lt);
+        }, 36);
+        /* 도시: 앞쪽 비탈에서 높이가 zh 인 곳 */
+        var hs = [];
+        [0.55, 0.85, 1.15].forEach(function (a) { for (var r = 0; r <= 1.3; r += 0.01) { var x = 160 + 130 * r * Math.cos(a), y = 100 + 105 * r * Math.sin(a); if (x > IM.L - 4 || y > IM.D - 4 || mz(x, y) <= zh) { hs.push([Math.min(x, IM.L - 12), Math.min(y, IM.D - 12)]); break; } } });
+        hs.sort(function (p, q) { return (p[0] + p[1]) - (q[0] + q[1]); }).forEach(function (p) { IM.house(ctx, p[0] - 6, p[1] - 5, mz(p[0], p[1]), 12, 10, 9, "#e8590c"); IM.house(ctx, p[0] + 8, p[1] - 2, mz(p[0] + 8, p[1]), 9, 8, 13, "#c92a2a"); });
+        ctx.restore();
+        if (hs.length) IM.label(ctx, hs[hs.length - 1][0], hs[hs.length - 1][1], zh + 10, "새 도시 " + h.toLocaleString() + " m", 60, -30, "#ffe8cc", [0, 520]);
+        IM.label(ctx, 160, 100, mz(160, 100), "정상 약 3,800 m · 눈", 50, -10, "#e8ecff", [0, 520]);
+        IM.label(ctx, 20, 210, ZB, "해안 0 m · 27 ℃", -10, 30, "#ffe8cc", [0, 520]);
+        K.bigText(ctx, t.toFixed(1) + " ℃", 16, 38, 26, ok ? "#7ee0a0" : "#ffffff");
+        K.warn(ctx, 508, cv.H - 12, "⚠ 산의 높이는 과장", "right");
+        vcard(ctx, 532, W - 532, cv.H, "새 도시의 기후", [t.toFixed(1) + " ℃", ok ? LT.green : LT.red], [["도시의 높이", h.toLocaleString() + " m", LT.blue], ["해안(0 m)과의 차이", "−" + (27 - t).toFixed(1) + " ℃", LT.ink], ["기온 감률", "1 km마다 6.5 ℃", LT.mute]], [ok ? "늘 봄 같은 18~20 ℃" : (t > 20 ? "아직 덥습니다" : "너무 서늘합니다"), ok]);
       }
       cv.canvas._redraw = draw;
       api.slider({ label: "도시를 세울 높이", min: 0, max: 4000, step: 50, value: 0, fmt: function (x) { return x.toLocaleString() + " m"; },
@@ -73,16 +110,26 @@ window.sthLab({
       function T(x) { return 288 * Math.pow(L * (1 - alb(x)) / 0.7, 0.25) - 273; }
       function draw() {
         H.paper(ctx, W, cv.H);
-        var cx = 200, cy = 150, R = 110, t = T(w), ok = t >= 20 && t <= 25;
-        H.text(ctx, "☀️ 20% 더 밝아진 태양", 30, 30, { s: 13, w: "800", c: H.v("--amber-700") });
-        ctx.fillStyle = H.v("--coral-100"); ctx.beginPath(); ctx.arc(cx, cy, R, 0, Math.PI * 2); ctx.fill();
-        var n = Math.round(w / 100 * 60);
-        for (var i = 0; i < 60; i++) {
-          var a = i * 2.39996, rr = R * 0.92 * Math.sqrt((i + 0.5) / 60);
-          H.dot(ctx, cx + Math.cos(a) * rr, cy + Math.sin(a) * rr, 7, i < n ? "#fbfbf4" : H.v("--coral"));
+        var cx = 300, cy = 146, R = 104, t = T(w), ok = t >= 20 && t <= 25, i;
+        K.studio(ctx, 0, 0, 520, cv.H, { x: cx, y: cy + R + 14, rx: 120, ry: 16 });
+        K.sun(ctx, 60, 70, 16);
+        [[90, 80], [96, 110], [84, 140]].forEach(function (q, k) { K.arrow(ctx, { x: q[0], y: q[1] }, { x: cx - R * .85, y: cy - 40 + k * 40 }, "#f59f00", 2.4, 9); });
+        /* 입체 행성: 더울수록 붉게 */
+        var warm = Math.max(0, Math.min(1, (t - 10) / 25));
+        K.planet(ctx, cx, cy, R, warm > .6 ? "#e8775a" : (warm > .35 ? "#c9a46c" : "#8fbf6a"), warm > .6 ? "#6b2515" : "#3d4f22");
+        /* 흰 데이지(보이는 반구에 황금각으로 고루 흩어 둔다) */
+        var n = Math.round(w / 100 * 90);
+        for (i = 0; i < 90; i++) {
+          var zz = 1 - 2 * (i + .5) / 90, rr = Math.sqrt(1 - zz * zz), a = i * 2.39996, px = cx + R * rr * Math.cos(a) * .96, py = cy + R * zz * .96, front = rr * Math.sin(a);
+          if (i >= n || front < -0.1) continue;
+          var sc = 0.6 + 0.4 * Math.max(0, Math.sin(a) * rr + .4);
+          ctx.fillStyle = "#ffffff"; for (var k = 0; k < 6; k++) { var pa = k / 6 * 6.2832; ctx.beginPath(); ctx.ellipse(px + Math.cos(pa) * 3.6 * sc, py + Math.sin(pa) * 3.6 * sc, 2.8 * sc, 1.5 * sc, pa, 0, 6.2832); ctx.fill(); }
+          ctx.fillStyle = "#ffd43b"; ctx.beginPath(); ctx.arc(px, py, 1.8 * sc, 0, 6.2832); ctx.fill();
         }
-        H.text(ctx, "흰 데이지 " + w + "%", cx, cy + R + 26, { s: 12.5, w: "800", a: "center" });
-        H.rows(ctx, 520, 60, [["행성 반사율", Math.round(alb(w) * 100) + "%"], ["행성 평균 기온", t.toFixed(1) + " ℃", ok ? "--green-700" : "--rose-700", true], ["태양이 밝아지기 전 기온", "15.0 ℃"]], 64);
+        K.bigText(ctx, t.toFixed(1) + " ℃", 16, 38, 26, ok ? "#7ee0a0" : "#ffffff");
+        K.bigText(ctx, "20% 더 밝아진 태양", 16, cv.H - 18, 15, "#ffd35a");
+        K.pill(ctx, "흰 데이지 " + w + "%", cx, cy + R + 40, { a: "center", s: 12, c: "#ffffff", box: [0, 520] });
+        vcard(ctx, 532, W - 532, cv.H, "행성의 에너지 장부", [t.toFixed(1) + " ℃", ok ? LT.green : LT.red], [["행성 반사율", Math.round(alb(w) * 100) + "%", LT.blue], ["흰 데이지 면적", w + "%", LT.teal], ["태양이 밝아지기 전", "15.0 ℃", LT.mute]], [ok ? "생물이 살기 좋은 20~25 ℃" : (t > 25 ? "아직 너무 덥습니다" : "너무 추워졌습니다"), ok]);
       }
       cv.canvas._redraw = draw;
       api.slider({ label: "흰 데이지가 덮은 면적", min: 0, max: 100, step: 1, value: 0, fmt: function (x) { return x + "%"; },
@@ -121,23 +168,30 @@ window.sthLab({
       var H = api.h, cv = api.canvas(300), ctx = cv.ctx, W = cv.W, dT = 0, TOP = 1950, LOW0 = 1400;
       function low(d) { return LOW0 + d / 6.5 * 1000; }
       function frac(d) { return Math.max(0, (TOP - low(d)) / (TOP - LOW0)); }
+      /* 한라산 블록(높이 1 m = 0.07 단위), 구상나무는 아랫경계 위에만 선다 */
+      var IH = K.iso({ ox: 250, oy: 112, s: 0.72, L: 300, D: 220 }), ZK = 0.07, ZB = 10;
+      function hz(x, y) { var dx = (x - 160) / 140, dy = (y - 104) / 110, r = Math.sqrt(dx * dx + dy * dy); return ZB + TOP * ZK * Math.pow(Math.max(0, 1 - r), 1.25); }
+      var FIR = (function () { var R = K.rng(21), out = [], n = 0; while (out.length < 160 && n < 6000) { n++; var x = 10 + R() * 280, y = 10 + R() * 200; out.push([x, y]); } return out.sort(function (a, b) { return (a[0] + a[1]) - (b[0] + b[1]); }); })();
       function draw() {
         H.paper(ctx, W, cv.H);
-        var x0 = 60, x1 = 480, yb = 280, yt = 40;
-        function Y(m) { return yb - m / 2000 * (yb - yt); }
-        ctx.fillStyle = H.v("--green-700"); ctx.globalAlpha = .25;
-        ctx.beginPath(); ctx.moveTo(x0, yb); ctx.lineTo((x0 + x1) / 2, Y(TOP)); ctx.lineTo(x1, yb); ctx.closePath(); ctx.fill(); ctx.globalAlpha = 1;
-        var L = Math.min(low(dT), TOP), k = (Y(L) - Y(TOP)) / (yb - Y(TOP)), hw = (x1 - x0) / 2 * k;
-        if (L < TOP) {
-          ctx.fillStyle = H.v("--green"); ctx.beginPath(); ctx.moveTo((x0 + x1) / 2 - hw, Y(L)); ctx.lineTo((x0 + x1) / 2, Y(TOP)); ctx.lineTo((x0 + x1) / 2 + hw, Y(L)); ctx.closePath(); ctx.fill();
-        }
-        H.dash(ctx, x0, Y(LOW0), x1 + 30, Y(LOW0), H.v("--mist"), 1.5);
-        H.text(ctx, "지금 아랫경계 1,400 m", x1 + 34, Y(LOW0) + 4, { s: 10.5, c: H.v("--mist") });
-        H.dash(ctx, x0, Y(L), x1 + 30, Y(L), H.v("--coral"), 2);
-        H.text(ctx, "새 아랫경계 " + Math.round(L).toLocaleString() + " m", x1 + 34, Y(L) - 6, { s: 11.5, w: "800", c: H.v("--coral-700") });
-        [0, 500, 1000, 1500, 2000].forEach(function (m) { H.text(ctx, m + " m", x0 - 6, Y(m) + 4, { s: 10, a: "right", c: H.v("--mist") }); });
-        var f = frac(dT), ok = f >= 0.4 && f <= 0.6;
-        H.text(ctx, "기온 +" + dT.toFixed(1) + " ℃ · 서식 폭 " + Math.round(f * 100) + "%", 620, 250, { s: 16, w: "900", c: ok ? H.v("--green-700") : H.v("--rose-700") });
+        var L = Math.min(low(dT), TOP), f = frac(dT), ok = f >= 0.4 && f <= 0.6, zl = ZB + L * ZK, z0 = ZB + LOW0 * ZK;
+        K.studio(ctx, 0, 0, 520, cv.H, { x: 250, y: 262, rx: 220, ry: 30 });
+        ctx.save(); ctx.beginPath(); ctx.roundRect(0, 0, 520, cv.H, 14); ctx.clip();
+        mountain(ctx, IH, hz, function (x, y, z, lt) {
+          if (Math.abs(z - zl) < 1.6) return K.tint("#e8590c", lt);
+          if (dT > 0 && Math.abs(z - z0) < 1.2) return K.tint("#adb5bd", lt);
+          if (z >= zl) return K.tint("#2f6b3a", lt);
+          return z > ZB + 600 * ZK ? K.tint("#7fae55", lt) : K.tint("#9cc26a", lt);
+        }, 36);
+        FIR.forEach(function (p) { var z = hz(p[0], p[1]); if (z >= zl + 1 && z > ZB + 2) IH.tree(ctx, p[0], p[1], z, .62); });
+        ctx.restore();
+        var BX = [0, 520];
+        if (L < TOP) IH.label(ctx, 160, 104 + 110 * (1 - Math.pow((zl - ZB) / (TOP * ZK), 1 / 1.25)), zl, "새 아랫경계 " + Math.round(L).toLocaleString() + " m", 60, 46, "#ffd8a8", BX);
+        if (dT > 0) IH.label(ctx, 160 - 140 * (1 - Math.pow((z0 - ZB) / (TOP * ZK), 1 / 1.25)) * .9, 104, z0, "지금 아랫경계 1,400 m", -40, 50, "#e8ecff", BX);
+        IH.label(ctx, 160, 104, hz(160, 104), "정상 약 1,950 m", 40, -14, "#e8ecff", BX);
+        K.bigText(ctx, "서식 폭 " + Math.round(f * 100) + "%", 16, 38, 24, ok ? "#7ee0a0" : "#ffffff");
+        K.warn(ctx, 508, cv.H - 12, "⚠ 산의 높이는 과장", "right");
+        vcard(ctx, 532, W - 532, cv.H, "구상나무 서식지", ["+" + dT.toFixed(1) + " ℃", LT.orange], [["새 아랫경계", Math.round(L).toLocaleString() + " m", LT.orange], ["서식할 수 있는 폭", Math.round(TOP - L) + " m", LT.green], ["지금의 폭과 비교", Math.round(f * 100) + "%", ok ? LT.green : LT.red]], [ok ? "서식지가 절반쯤으로 줄어듦" : (f > 0.6 ? "아직 절반보다 넉넉함" : "너무 많이 줄었음"), ok]);
       }
       cv.canvas._redraw = draw;
       api.slider({ label: "기온 상승", min: 0, max: 4, step: 0.1, value: 0, fmt: function (x) { return "+" + x.toFixed(1) + " ℃"; },

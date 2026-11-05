@@ -3,6 +3,15 @@
 (function () {
 "use strict";
 
+var K = window.sthKit, LT = K.LT;
+/* 흰 판정 카드: big = [글, 색], rows = [[이름, 값, 색]], tip = [글, 좋음] */
+function vcard(ctx, x, w, h, title, big, rows, tip) {
+  K.card(ctx, x, 0, w, h, title);
+  var x0 = x + 18, x1 = x + w - 18, y = 70;
+  if (big) { K.t(ctx, big[0], x0, y, { s: 28, w: "900", c: big[1] }); y += 38; }
+  rows.forEach(function (r) { K.row(ctx, r[0], r[1], x0, x1, y, r[2]); y += 28; });
+  if (tip) K.tip(ctx, tip[0], x0 - 4, h - 46, x1 - x0 + 8, tip[1]);
+}
 window.sthLab({
   mount: "lab", key: "lab", result: "rLab",
   cases: [
@@ -24,20 +33,31 @@ window.sthLab({
       function need() { return 2.0 + 1.2 + RISE[sc]; }
       function draw() {
         H.paper(ctx, W, cv.H);
-        var y1 = 270, sc2 = 45, x0 = 80;
-        function Y(m) { return y1 - m * sc2; }
-        var water = need();
-        H.box(ctx, x0, Y(water), 300, y1 - Y(water), H.v("--brand"), 0.35);
-        H.box(ctx, x0 + 300, Y(wall), 36, y1 - Y(wall), H.v("--mist"), 1);
-        H.box(ctx, x0 + 336, Y(1.0), 200, y1 - Y(1.0), H.v("--green"), 0.35);
-        H.text(ctx, "🏘️ 도시", x0 + 400, Y(1.0) - 10, { s: 13, w: "800" });
-        [[2.0, "만조 2.0 m"], [3.2, "+ 해일 1.2 m"], [water, "+ 해수면 " + RISE[sc] + " m (" + NM[sc] + ")"]].forEach(function (l) {
-          H.dash(ctx, x0, Y(l[0]), x0 + 300, Y(l[0]), H.v("--amber"), 1.5);
-          H.text(ctx, l[1], x0 + 6, Y(l[0]) - 5, { s: 10.5, w: "800", c: H.v("--amber-700") });
+        /* 바닷가 블록: 왼쪽 바다, 가운데 방조제, 오른쪽 도시(1 m = 20 단위) */
+        var I = K.iso({ ox: 196, oy: 96, s: 0.74, L: 320, D: 150 }), M = 20, XW = 170, water = need(), ok = wall >= need() - 1e-9 && wall <= need() + 0.3 + 1e-9, over = water > wall;
+        var fc = I.P(160, 75, 0); K.studio(ctx, 0, 0, 560, cv.H, { x: fc.x + 8, y: fc.y + 26, rx: 230, ry: 34 });
+        ctx.save(); ctx.beginPath(); ctx.roundRect(0, 0, 560, cv.H, 14); ctx.clip();
+        function gz(u) { return u < XW ? 4 : M; }
+        I.face(ctx, "front", function (Lw) { I.profile(ctx, "front", gz, 0); ctx.fillStyle = "#7a5c3e"; ctx.fill(); });
+        I.face(ctx, "right", function (Lw) { ctx.fillStyle = "#5e4530"; ctx.fillRect(0, 0, Lw, M); });
+        I.plane(ctx, M, "#8cc46a", null, XW + 16, 320, 0, 150);
+        I.water(ctx, water * M, function (u, sd) { return sd === "front" ? (u < XW ? 4 : (over ? M : 999)) : (over ? M : 999); }, { surface: false, top: "rgba(70,160,230,.6)" });
+        I.plane(ctx, water * M, "rgba(80,170,235,.62)", "rgba(255,255,255,.7)", 0, over ? 320 : XW, 0, 150);
+        I.box(ctx, XW, 0, 0, XW + 16, 150, wall * M, "#dee2e6", "#adb5bd", "#868e96");
+        [[214, 30], [250, 80], [290, 40], [230, 118], [280, 112]].forEach(function (h, k) { I.house(ctx, h[0], h[1], M, 16, 14, 12 + (k % 2) * 8, k % 2 ? "#c92a2a" : "#e8590c"); });
+        I.face(ctx, "front", function (Lw) {
+          [[2.0, "#f59f00"], [3.2, "#e8590c"], [water, "#e03131"]].forEach(function (l) { ctx.strokeStyle = l[1]; ctx.lineWidth = 1.4; ctx.setLineDash([5, 4]); ctx.beginPath(); ctx.moveTo(0, l[0] * M); ctx.lineTo(XW, l[0] * M); ctx.stroke(); ctx.setLineDash([]); });
         });
-        [0, 1, 2, 3, 4, 5].forEach(function (m) { H.text(ctx, m + " m", x0 - 8, Y(m) + 4, { s: 10, a: "right", c: H.v("--mist") }); });
-        var ok = wall >= need() - 1e-9 && wall <= need() + 0.3 + 1e-9;
-        H.rows(ctx, 640, 60, [["필요한 높이", need().toFixed(2) + " m"], ["방조제", wall.toFixed(1) + " m", ok ? "--green-700" : "--rose-700", true], ["여유", (wall - need() >= 0 ? "+" : "") + (wall - need()).toFixed(2) + " m"]], 60);
+        I.edges(ctx, M, M);
+        ctx.restore();
+        var BX = [0, 560];
+        I.label(ctx, 0, 150, 2.0 * M, "만조 2.0 m", -20, 26, "#ffe8cc", BX);
+        I.label(ctx, 60, 150, 3.2 * M, "+ 해일 1.2 m", -40, 6, "#ffd8a8", BX);
+        I.label(ctx, 120, 150, water * M, "+ 해수면 " + RISE[sc] + " m (" + NM[sc] + ")", -60, -24, "#ffc9c9", BX);
+        I.label(ctx, XW + 8, 0, wall * M, "방조제 " + wall.toFixed(1) + " m", 30, -26, ok ? "#c3f5dc" : "#ffc9c9", BX);
+        K.bigText(ctx, over ? "바닷물이 넘친다" : "도시는 안전", 16, 36, 22, over ? "#ff9a7a" : "#7ee0a0");
+        K.warn(ctx, 548, cv.H - 12, "⚠ 높이는 과장", "right");
+        vcard(ctx, 572, W - 572, cv.H, "2100년 방조제 설계", [wall.toFixed(1) + " m", ok ? LT.green : LT.red], [["필요한 높이", need().toFixed(2) + " m", LT.ink], ["여유", (wall - need() >= 0 ? "+" : "") + (wall - need()).toFixed(2) + " m", ok ? LT.green : LT.orange], ["시나리오", NM[sc], LT.blue]], [ok ? "알맞은 높이" : (over ? "너무 낮음" : "지나치게 높음"), ok]);
       }
       cv.canvas._redraw = draw;
       api.seg({ label: "2100년 시나리오", value: "s5", options: [{ v: "s1", t: "SSP1-2.6 (+0.72 m)" }, { v: "s5", t: "SSP5-8.5 (+1.1 m)" }], onPick: function (x) { sc = x; draw(); api.changed(); } });
@@ -75,16 +95,24 @@ window.sthLab({
       function need() { return 100 * Math.pow(1.07, 3); }
       function draw() {
         H.paper(ctx, W, cv.H);
-        var x0 = 80, y1 = 250, s = 1.15;
-        H.axes(ctx, x0, 30, 560, y1);
-        [["지금 설계", 100, "--mist"], ["2100년 필요", need(), "--rose"], ["새 빗물관", cap, cap >= need() && cap <= need() * 1.1 ? "--green" : "--amber"]].forEach(function (b, k) {
-          var bx = x0 + 30 + k * 160;
-          H.box(ctx, bx, y1 - b[1] * s, 110, b[1] * s, H.v(b[2]), 0.85);
-          H.text(ctx, Math.round(b[1]) + " mm/h", bx + 55, y1 - b[1] * s - 8, { s: 13, w: "900", a: "center" });
-          H.text(ctx, b[0], bx + 55, y1 + 18, { s: 11.5, a: "center", c: H.v("--mist") });
+        /* 땅속에 묻힌 세 빗물관(원통). 관의 단면 넓이 ∝ 처리 용량 */
+        var okc = cap >= need() && cap <= need() * 1.1;
+        K.studio(ctx, 0, 0, 560, cv.H, null);
+        ctx.fillStyle = "#a08468"; ctx.fillRect(20, 120, 520, cv.H - 140);
+        var sg = ctx.createLinearGradient(0, 108, 0, 128); sg.addColorStop(0, "#868e96"); sg.addColorStop(1, "#6c757d"); ctx.fillStyle = sg; ctx.fillRect(20, 108, 520, 14);
+        var R0 = K.rng(4); ctx.fillStyle = "rgba(255,255,255,.2)"; for (var q = 0; q < 160; q++) ctx.fillRect(20 + R0() * 520, 124 + R0() * (cv.H - 148), 2, 2);
+        [["지금 설계", 100, "#adb5bd"], ["2100년 필요", need(), "#ff8787"], ["새 빗물관", cap, okc ? "#69db7c" : "#ffc078"]].forEach(function (b, k) {
+          var cx = 110 + k * 170, cy = 190, r = 26 * Math.sqrt(b[1] / 100);
+          var pg = ctx.createLinearGradient(cx - r, 0, cx + r, 0); pg.addColorStop(0, "#495057"); pg.addColorStop(.5, "#ced4da"); pg.addColorStop(1, "#495057");
+          ctx.fillStyle = pg; ctx.fillRect(cx - r, cy - 10, 2 * r, 40); ctx.beginPath(); ctx.ellipse(cx, cy + 30, r, r * .45, 0, 0, Math.PI); ctx.fill();
+          ctx.fillStyle = "#343a40"; ctx.beginPath(); ctx.ellipse(cx, cy - 10, r, r * .45, 0, 0, 6.2832); ctx.fill();
+          ctx.fillStyle = b[2]; ctx.beginPath(); ctx.ellipse(cx, cy - 10, r * .82, r * .37, 0, 0, 6.2832); ctx.fill();
+          K.t(ctx, Math.round(b[1]) + " mm/h", cx, cy - r * .45 - 20, { s: 13, w: "900", a: "center", c: "#ffffff" });
+          K.t(ctx, b[0], cx, cv.H - 26, { s: 12, w: "900", a: "center", c: "#ffffff" });
         });
-        H.text(ctx, "참고: 2022년 8월 서울 시간당 141.5 mm", 600, 80, { s: 11.5, c: H.v("--mist") });
-        H.text(ctx, "여유 " + ((cap / need() - 1) * 100).toFixed(0) + "%", 600, 130, { s: 22, w: "900", c: cap >= need() && cap <= need() * 1.1 ? H.v("--green-700") : H.v("--rose-700") });
+        for (q = 0; q < 26; q++) { var rx = 30 + (q * 41) % 500, ry = 20 + (q * 23) % 70; K.line(ctx, { x: rx, y: ry }, { x: rx - 4, y: ry + 12 }, "#4dabf7", 1.6); }
+        K.bigText(ctx, "여유 " + ((cap / need() - 1) * 100).toFixed(0) + "%", 16, 34, 22, okc ? "#7ee0a0" : "#ffffff");
+        vcard(ctx, 572, W - 572, cv.H, "더 세진 비 받아내기", [cap + " mm/h", okc ? LT.green : LT.red], [["2100년 필요", Math.round(need()) + " mm/h", LT.red], ["계산", "100 × 1.07³", LT.ink], ["참고: 2022년 서울", "141.5 mm/h", LT.mute]], [okc ? "필요량 이상 · 여유 10% 안" : (cap < need() ? "용량이 모자람" : "지나치게 큼"), okc]);
       }
       cv.canvas._redraw = draw;
       api.slider({ label: "새 빗물관의 처리 용량 (시간당 mm)", min: 80, max: 180, step: 1, value: 100, fmt: function (x) { return x + " mm/h"; }, onInput: function (x) { cap = x; draw(); api.changed(); } });
@@ -119,18 +147,24 @@ window.sthLab({
       function top(d) { return (27 + d - 18) / 6.5 * 1000; }
       function draw() {
         H.paper(ctx, W, cv.H);
-        var x0 = 70, x1 = 500, yb = 280, yt = 30;
-        function Y(m) { return yb - m / 3000 * (yb - yt); }
-        ctx.fillStyle = H.v("--green-700"); ctx.globalAlpha = .25; ctx.beginPath(); ctx.moveTo(x0, yb); ctx.lineTo((x0 + x1) / 2, Y(2900)); ctx.lineTo(x1, yb); ctx.closePath(); ctx.fill(); ctx.globalAlpha = 1;
-        var t = Math.min(top(dT), 2900);
-        H.box(ctx, x0, Y(t), x1 - x0, yb - Y(t), H.v("--rose"), 0.22);
-        H.dash(ctx, x0, Y(t), x1 + 20, Y(t), H.v("--rose"), 2);
-        H.text(ctx, "위험 지역 윗경계 " + Math.round(top(dT)).toLocaleString() + " m", x1 + 24, Y(t) + 4, { s: 11.5, w: "800", c: H.v("--rose-700") });
-        H.text(ctx, "🏠 마을 1,700 m", (x0 + x1) / 2 + 40, Y(TOWN) + 4, { s: 12.5, w: "900" });
-        H.dot(ctx, (x0 + x1) / 2 + 30, Y(TOWN), 5, H.v("--ink"));
-        [0, 1000, 2000, 3000].forEach(function (m) { H.text(ctx, m + " m", x0 - 6, Y(m) + 4, { s: 10, a: "right", c: H.v("--mist") }); });
-        var safe = top(dT) < TOWN;
-        H.text(ctx, "기온 +" + dT.toFixed(1) + " ℃ · 마을 " + (safe ? "안전" : "위험"), 560, 60, { s: 16, w: "900", c: safe ? H.v("--green-700") : H.v("--rose-700") });
+        /* 적도 고원의 산 블록: 위험 지역(빨강) 윗경계 아래로 말라리아 모기가 산다(1 m = 0.045 단위) */
+        var I = K.iso({ ox: 250, oy: 112, s: 0.72, L: 300, D: 220 }), ZK = 0.045, ZB = 10, t = Math.min(top(dT), 2900), zt = ZB + t * ZK, safe = top(dT) < TOWN;
+        function mz(x, y) { var dx = (x - 160) / 135, dy = (y - 105) / 108, r = Math.sqrt(dx * dx + dy * dy); return ZB + 2900 * ZK * Math.pow(Math.max(0, 1 - r), 1.15); }
+        K.studio(ctx, 0, 0, 540, cv.H, { x: 250, y: 262, rx: 220, ry: 30 });
+        ctx.save(); ctx.beginPath(); ctx.roundRect(0, 0, 540, cv.H, 14); ctx.clip();
+        ["front", "right"].forEach(function (sd, k) { I.face(ctx, sd, function (Lw) { I.profile(ctx, sd, function (u) { return sd === "front" ? mz(u, I.D) : mz(I.L, u); }, 0); ctx.fillStyle = k ? "#5e4530" : "#6e5238"; ctx.fill(); }); });
+        I.field(ctx, mz, function (x, y, z, lt) { if (Math.abs(z - zt) < 1.4) return K.tint("#e03131", lt); if (z < zt) return K.tint("#e8a07a", lt); return (z - ZB) / ZK > 2400 ? K.tint("#9c8b78", lt) : K.tint("#5f9e45", lt); }, 34, 34);
+        var vz = ZB + TOWN * ZK, vh = [];
+        [0.6, 0.9].forEach(function (a) { for (var r = 0; r <= 1.2; r += 0.01) { var x = 160 + 135 * r * Math.cos(a), y = 105 + 108 * r * Math.sin(a); if (mz(x, y) <= vz) { vh.push([x, y]); break; } } });
+        vh.forEach(function (p) { I.house(ctx, p[0] - 6, p[1] - 5, mz(p[0], p[1]), 12, 10, 9, "#1c7ed6"); });
+        var R1 = K.rng(9); for (var q = 0; q < 10; q++) { var mx = 20 + R1() * 260, my = 120 + R1() * 90; if (mz(mx, my) > zt) continue; var mp = I.P(mx, my, mz(mx, my) + 14); ctx.strokeStyle = "#343a40"; ctx.lineWidth = 1.3; ctx.beginPath(); ctx.moveTo(mp.x - 4, mp.y); ctx.lineTo(mp.x + 4, mp.y); ctx.stroke(); ctx.fillStyle = "rgba(220,230,240,.9)"; ctx.beginPath(); ctx.ellipse(mp.x - 1, mp.y - 3, 3, 1.4, -.5, 0, 6.2832); ctx.fill(); }
+        ctx.restore();
+        var BX = [0, 540];
+        if (vh.length) I.label(ctx, vh[0][0], vh[0][1], vz + 10, "고지대 마을 1,700 m", 50, -30, safe ? "#c3f5dc" : "#ffc9c9", BX);
+        I.label(ctx, 160, 105, mz(160, 105), "정상 약 2,900 m", 40, -10, "#e8ecff", BX);
+        K.bigText(ctx, "마을 " + (safe ? "안전" : "위험"), 16, 36, 24, safe ? "#7ee0a0" : "#ff9a7a");
+        K.warn(ctx, 528, cv.H - 12, "⚠ 산의 높이는 과장", "right");
+        vcard(ctx, 552, W - 552, cv.H, "말라리아 위험 지역", ["+" + dT.toFixed(1) + " ℃", LT.orange], [["위험 지역 윗경계", Math.round(top(dT)).toLocaleString() + " m", LT.red], ["마을 높이", "1,700 m", LT.blue], ["18 ℃가 되는 높이", "(27 + 상승 − 18) ÷ 6.5 km", LT.mute]], [safe ? "마을은 아직 위험 지역 밖" : "마을이 위험 지역에 들어감", safe]);
       }
       cv.canvas._redraw = draw;
       api.slider({ label: "기온 상승", min: 0, max: 4, step: 0.1, value: 0, fmt: function (x) { return "+" + x.toFixed(1) + " ℃"; }, onInput: function (x) { dT = x; draw(); api.changed(); } });

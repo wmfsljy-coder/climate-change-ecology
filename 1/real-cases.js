@@ -26,6 +26,23 @@ var CW_L0 = cwAvgS(CWA, function (r) { return r[3]; }), CW_L1 = cwAvgS(CWB, func
 var CW_Y0 = CWS.length ? CWS[0][0] : 1986, CW_YL = CWS.length ? CWS[CWS.length - 1][0] : 2025;
 var SRC_CW = "<small>출처: 기상청 날씨누리 과거 관측 일별 자료, 창원(155) 일평균 기온(" + CW_Y0 + " ~ " + CW_YL + "). 기상청이 계절을 나눌 때 쓰는 기준(일평균 20 °C, 9일 이동 평균)을 본떠, 9일 이동 평균이 처음 20 °C에 이른 날부터 마지막으로 20 °C 이상인 날까지를 여름으로 셌습니다. 사본은 data/cw155.js.</small>";
 
+var K = window.sthKit, LT = K.LT;
+function rcard(ctx, x, w, h, title, rows, big) {
+  K.card(ctx, x, 0, w, h, title);
+  var x0 = x + 16, x1 = x + w - 16, y = h - 26 * rows.length - 6;
+  if (big) K.t(ctx, big[0], x1, y - 30, { s: 24, w: "900", a: "right", c: big[1] });
+  rows.forEach(function (r) { K.row(ctx, r[0], r[1], x0, x1, y, r[2]); y += 26; });
+}
+/* 카드 위 작은 해안 블록: warm 이면 푸른 바다·초록 땅, 아니면 얼음 떠다니는 바다·눈 땅 */
+function coast(ctx, ox, oy, s, warm) {
+  var I = K.iso({ ox: ox, oy: oy, s: s, L: 120, D: 80 });
+  ["front", "right"].forEach(function (sd, k) { I.face(ctx, sd, function (Lw) { ctx.fillStyle = k ? "#5e4530" : "#6e5238"; ctx.fillRect(0, 0, Lw, 10); ctx.fillStyle = k ? "#1f6fb0" : "#2a84c6"; ctx.fillRect(sd === "front" ? 0 : 0, 10, sd === "front" ? 60 : Lw, 8); }); });
+  I.plane(ctx, 18, warm ? "#4dabf7" : "#4a7aa6", null, 0, 60, 0, 80);
+  I.box(ctx, 60, 0, 10, 120, 80, 24, warm ? "#8cc46a" : "#f1f3f5", warm ? "#6e5238" : "#ced4da", warm ? "#5e4530" : "#adb5bd");
+  if (warm) { I.tree(ctx, 90, 30, 24, 1); I.tree(ctx, 104, 56, 24, .9); I.house(ctx, 70, 44, 24, 12, 10, 9, "#e8590c"); }
+  else { [[20, 20], [36, 52], [12, 64]].forEach(function (q) { I.box(ctx, q[0], q[1], 18, q[0] + 12, q[1] + 9, 21, "#ffffff", "#dbe4ee", "#c3cfdc"); }); I.house(ctx, 78, 40, 24, 12, 10, 9, "#495057"); }
+}
+
 window.sthLab({
   mount: "real", key: "real", result: "rReal", label: "실제 자료",
   doneNote: "정리하기 탭에서 실제 자료로 기후를 정하는 요인과 기후 변화를 설명해 보세요.",
@@ -41,21 +58,21 @@ window.sthLab({
     },
     task: "두 곳의 1월 평균 기온 차이를 슬라이더로 맞추세요(± 0.5 °C).",
     build: function (stage, api) {
-      var H = api.h, cv = api.canvas(270), ctx = cv.ctx, W = cv.W, g = 0;
+      var H = api.h, cv = api.canvas(300), ctx = cv.ctx, W = cv.W, g = 0;
       function draw() {
         H.paper(ctx, W, cv.H);
-        var x0 = 60, x1 = 620, y0 = 24, y1 = cv.H - 36;
-        function X(i) { return x0 + (i + 0.5) / 12 * (x1 - x0); }
-        function Y(t) { return y1 - (t + 6) / 26 * (y1 - y0); }
-        H.axes(ctx, x0, y0, x1, y1);
-        [-5, 0, 5, 10, 15, 20].forEach(function (t) { H.text(ctx, t + "°C", x0 - 6, Y(t) + 4, { s: 10, a: "right", c: H.v("--mist") }); });
-        H.dash(ctx, x0, Y(0), x1, Y(0), H.v("--line"), 1);
-        M.forEach(function (m, i) { H.text(ctx, m + "월", X(i), y1 + 15, { s: 10, a: "center", c: H.v("--mist") }); });
-        H.line(ctx, CO.t.map(function (t, i) { return [X(i), Y(t)]; }), H.v("--coral-700"), 2.5);
-        H.line(ctx, SJ.t.map(function (t, i) { return [X(i), Y(t)]; }), H.v("--brand"), 2.5);
-        H.text(ctx, "빨강 = " + CO.name, x0 + 8, y0 + 4, { s: 11, w: "800", c: H.v("--coral-700") });
-        H.text(ctx, "파랑 = " + SJ.name, x0 + 8, y0 + 20, { s: 11, w: "800", c: H.v("--brand-700") });
-        H.rows(ctx, 660, 50, [["콘월 1월", CO.t[0].toFixed(1) + " °C"], ["세인트존스 1월", SJ.t[0].toFixed(1) + " °C"], ["내 답 (차이)", g.toFixed(1) + " °C", null, true]], 58);
+        K.studio(ctx, 0, 0, 620, cv.H, null);
+        K.bigText(ctx, "1월 " + CO.t[0].toFixed(1) + " ℃ vs " + SJ.t[0].toFixed(1) + " ℃", 16, 34, 20, "#ffffff");
+        var gr = K.chart(ctx, { x: 4, y: 44, w: 612, h: cv.H - 48, pl: 46, pb: 28, pt: 10, pr: 14, x0: 0, x1: 12, y0: -5, y1: 20, xt: 12, yt: 5, light: true, xf: function (q) { return q < 12 ? (Math.round(q) + 1) + "월" : ""; }, yf: function (q) { return Math.round(q) + "℃"; } });
+        K.line(ctx, { x: gr.L, y: gr.Y(0) }, { x: gr.R, y: gr.Y(0) }, LT.line, 1.2, [4, 4]);
+        K.plot(ctx, gr, CO.t.map(function (t, i) { return [i + .5, t]; }), LT.red, { w: 2.8, light: true, dots: 3.5 });
+        K.plot(ctx, gr, SJ.t.map(function (t, i) { return [i + .5, t]; }), LT.blue, { w: 2.8, light: true, dots: 3.5 });
+        K.t(ctx, "● " + CO.name + " (따뜻한 해류 옆)", 360, 24, { s: 11.5, w: "900", c: LT.red });
+        K.t(ctx, "● " + SJ.name + " (차가운 해류 옆)", 360, 40, { s: 11.5, w: "900", c: LT.blue });
+        K.line(ctx, { x: gr.X(.5), y: gr.Y(CO.t[0]) }, { x: gr.X(.5), y: gr.Y(SJ.t[0]) }, LT.orange, 2.4);
+        rcard(ctx, 632, W - 632, cv.H, "같은 위도, 다른 바다", [["콘월 1월", CO.t[0].toFixed(1) + " °C", LT.red], ["세인트존스 1월", SJ.t[0].toFixed(1) + " °C", LT.blue], ["내 답 (차이)", g.toFixed(1) + " °C", LT.orange]]);
+        coast(ctx, 706, 74, 0.5, true); coast(ctx, 830, 74, 0.5, false);
+        K.t(ctx, "콘월", 706, 160, { s: 11, w: "900", a: "center", c: LT.red }); K.t(ctx, "세인트존스", 830, 160, { s: 11, w: "900", a: "center", c: LT.blue });
       }
       cv.canvas._redraw = draw;
       api.slider({ label: "1월 기온 차이", min: 0, max: 20, step: 0.1, value: 0, fmt: function (x) { return x.toFixed(1) + " °C"; }, onInput: function (x) { g = x; api.changed(); draw(); } });
@@ -85,18 +102,18 @@ window.sthLab({
     },
     task: "직선의 기울기(10년마다 기온 변화)를 맞추세요(± 0.05 °C).",
     build: function (stage, api) {
-      var H = api.h, cv = api.canvas(270), ctx = cv.ctx, W = cv.W, sl = 0;
+      var H = api.h, cv = api.canvas(300), ctx = cv.ctx, W = cv.W, sl = 0;
       function draw() {
         H.paper(ctx, W, cv.H);
-        var x0 = 60, x1 = 620, y0 = 24, y1 = cv.H - 36;
-        function X(y) { return x0 + (y - 1980) / 46 * (x1 - x0); }
-        function Y(t) { return y1 - (t - 12.5) / 4 * (y1 - y0); }
-        H.axes(ctx, x0, y0, x1, y1);
-        [13, 14, 15, 16].forEach(function (t) { H.text(ctx, t + "°C", x0 - 6, Y(t) + 4, { s: 10, a: "right", c: H.v("--mist") }); });
-        [1985, 1995, 2005, 2015, 2025].forEach(function (y) { H.text(ctx, y, X(y), y1 + 15, { s: 10, a: "center", c: H.v("--mist") }); });
-        B.forEach(function (r) { H.dot(ctx, X(r[0]), Y(r[1]), 3.6, H.v("--brand")); });
-        H.line(ctx, [[X(1981), Y(FIT.my + sl / 10 * (1981 - FIT.mx))], [X(2024), Y(FIT.my + sl / 10 * (2024 - FIT.mx))]], H.v("--amber-700"), 2.5);
-        H.rows(ctx, 660, 60, [["내 기울기", (sl >= 0 ? "+" : "") + sl.toFixed(2) + " °C / 10년", null, true], ["1981 → 2024(43년)", (sl * 4.3 >= 0 ? "+" : "") + (sl * 4.3).toFixed(1) + " °C"]], 60);
+        K.studio(ctx, 0, 0, 620, cv.H, null);
+        K.bigText(ctx, (sl >= 0 ? "+" : "") + sl.toFixed(2) + " ℃ / 10년", 16, 34, 22, "#ffffff");
+        K.t(ctx, "부산 격자 연평균 기온 1981~2024", 604, 28, { s: 11.5, w: "800", a: "right", c: LT.mute });
+        var gr = K.chart(ctx, { x: 4, y: 44, w: 612, h: cv.H - 48, pl: 46, pb: 28, pt: 10, pr: 14, x0: 1980, x1: 2026, y0: 12.5, y1: 16.5, xt: 5, yt: 4, light: true, xf: function (q) { return String(Math.round(q)); }, yf: function (q) { return q.toFixed(0) + "℃"; } });
+        B.forEach(function (r) { K.planet(ctx, gr.X(r[0]), gr.Y(r[1]), 3.8, "#74c0fc", "#1864ab"); });
+        K.plot(ctx, gr, [[1981, FIT.my + sl / 10 * (1981 - FIT.mx)], [2024, FIT.my + sl / 10 * (2024 - FIT.mx)]], LT.orange, { w: 3, light: true });
+        rcard(ctx, 632, W - 632, cv.H, "바닷가 도시 부산", [["내 기울기", (sl >= 0 ? "+" : "") + sl.toFixed(2) + " °C/10년", LT.orange], ["1981 → 2024 (43년)", (sl * 4.3 >= 0 ? "+" : "") + (sl * 4.3).toFixed(1) + " °C", LT.ink]]);
+        coast(ctx, 766, 80, 0.75, true);
+        K.t(ctx, "점 하나 = 한 해의 평균", 650, 200, { s: 11, w: "800", c: LT.mute });
       }
       cv.canvas._redraw = draw;
       api.slider({ label: "10년마다 기온 변화", min: -0.5, max: 1, step: 0.01, value: 0, fmt: function (x) { return (x >= 0 ? "+" : "") + x.toFixed(2) + " °C"; }, onInput: function (x) { sl = x; api.changed(); draw(); } });
@@ -130,7 +147,8 @@ window.sthLab({
       function YE(d) { return y0 + 8 + (292 - d) / 37 * 100; }      /* 위 칸: 여름이 끝난 날(늦을수록 위) */
       function YS(d) { return y1 - 4 - (d - 130) / 33 * 100; }      /* 아래 칸: 여름이 시작한 날(이를수록 아래) */
       function draw() {
-        H.paper(ctx, W, cv.H); H.axes(ctx, x0, y0, x1, y1);
+        H.paper(ctx, W, cv.H); K.studio(ctx, 0, 0, 664, cv.H, null);
+        ctx.fillStyle = "rgba(255,255,255,.7)"; ctx.fillRect(x0, y0, x1 - x0, y1 - y0); H.axes(ctx, x0, y0, x1, y1);
         [["9월 15일", 257], ["10월 1일", 273], ["10월 15일", 287]].forEach(function (m) { H.text(ctx, m[0], x0 - 8, YE(m[1]) + 4, { s: 10, a: "right", c: H.v("--mist") }); H.dash(ctx, x0, YE(m[1]), x1, YE(m[1]), H.v("--line"), 0.5); });
         [["5월 15일", 134], ["6월 1일", 151], ["6월 10일", 160]].forEach(function (m) { H.text(ctx, m[0], x0 - 8, YS(m[1]) + 4, { s: 10, a: "right", c: H.v("--mist") }); H.dash(ctx, x0, YS(m[1]), x1, YS(m[1]), H.v("--line"), 0.5); });
         H.text(ctx, "여름이 끝난 날 ↑ 늦어짐", x0 + 6, y0 + 4, { s: 11, w: "800", c: H.v("--mist") });
@@ -147,7 +165,13 @@ window.sthLab({
           H.line(ctx, [[X(p[0]) - 4, YE(p[2])], [X(p[0] + 9) + 4, YE(p[2])]], H.v("--ink"), 3);
           H.line(ctx, [[X(p[0]) - 4, YS(p[1])], [X(p[0] + 9) + 4, YS(p[1])]], H.v("--ink"), 3);
         });
-        H.rows(ctx, 680, 34, [["처음 10년 평균", cwDate(CW_ST0) + " ~ " + cwDate(CW_EN0), "--brand"], ["마지막 10년 평균", cwDate(CW_ST1) + " ~ " + cwDate(CW_EN1), "--coral-700"], ["가장 긴 여름", (function () { var m = CWS.reduce(function (p, r) { return r[3] > p[3] ? r : p; }, [0, "", "", 0]); return m[0] + "년 " + m[3] + "일"; })()], ["내 답", "+" + dd + "일", null, true]], 54);
+        K.card(ctx, 674, 0, W - 674, cv.H, "창원의 여름 달력");
+        var mx = CWS.reduce(function (p, r) { return r[3] > p[3] ? r : p; }, [0, "", "", 0]);
+        [["처음 10년 평균", cwDate(CW_ST0) + " ~ " + cwDate(CW_EN0), LT.blue], ["마지막 10년 평균", cwDate(CW_ST1) + " ~ " + cwDate(CW_EN1), LT.red], ["가장 긴 여름", mx[0] + "년 " + mx[3] + "일", LT.ink]].forEach(function (r, k) { K.t(ctx, r[0], 690, 156 + k * 40, { s: 11.5, w: "700", c: LT.mute }); K.t(ctx, r[1], 690, 174 + k * 40, { s: 13, w: "900", c: r[2] }); });
+        K.t(ctx, "+" + dd + "일", W - 18, 110, { s: 26, w: "900", a: "right", c: LT.orange }); K.t(ctx, "내 답", 690, 110, { s: 12, w: "800", c: LT.mute });
+        /* 달력 미니어처: 두 기간의 여름 띠 */
+        var bx0 = 690, bx1 = W - 18; function BX(d) { return bx0 + (d - 120) / 180 * (bx1 - bx0); }
+        [[CW_ST0, CW_EN0, LT.blue, 52], [CW_ST1, CW_EN1, LT.red, 70]].forEach(function (b) { ctx.fillStyle = "#e3e9f1"; ctx.beginPath(); ctx.roundRect(bx0, b[3], bx1 - bx0, 10, 5); ctx.fill(); ctx.fillStyle = b[2]; ctx.beginPath(); ctx.roundRect(BX(b[0]), b[3], BX(b[1]) - BX(b[0]), 10, 5); ctx.fill(); });
       }
       cv.canvas._redraw = draw;
       api.slider({ label: "여름이 길어진 날 수", min: 0, max: 25, step: 1, value: 0, fmt: function (x) { return "+" + x + "일"; }, onInput: function (x) { dd = x; api.changed(); draw(); } });
