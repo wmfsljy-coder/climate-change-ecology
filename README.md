@@ -2,15 +2,15 @@
 
 학생이 직접 조작하며 배우는 **이야기형 인터랙티브 단원** 모음입니다. 브라우저만 있으면 되고, 설치·회원 가입이 없습니다.
 
-- 바로 열기: https://wmfsljy-coder.github.io/climate-change-ecology/
+- 바로 열기: https://wmfsljy-coder.github.io/climate-change-ecology-ux3gtk/
 
 ## 단원
 
 | 단원 | 제목 | 이야기(탭) | 수준별 문제 | 응용 실험실 |
 |---|---|---|---|---|
-| [1](https://wmfsljy-coder.github.io/climate-change-ecology/1/) | 기후와 환경생태의 특성 | 날씨와 기후 · 기후시스템과 상호작용 · 기후변화와 생태계·생활환경 | ○ | ○ |
-| [2](https://wmfsljy-coder.github.io/climate-change-ecology/2/) | 기후위기와 환경생태 변화 | 기후위기의 원인과 해수면 상승 · 극한 기상 현상과 미래의 기후 · 개화 시기와 곤충의 개체 수 · 수생태계와 곤충 매개 감염병 | ○ | ○ |
-| [3](https://wmfsljy-coder.github.io/climate-change-ecology/3/) | 기후위기에 대응하는 우리의 노력 | 산호의 백화 · 기후 재해 · 탄소 수지 · 탄소예산 시계 | ○ | ○ |
+| [1](https://wmfsljy-coder.github.io/climate-change-ecology-ux3gtk/1/) | 기후와 환경생태의 특성 | 날씨와 기후 · 기후시스템과 상호작용 · 기후변화와 생태계·생활환경 | ○ | ○ |
+| [2](https://wmfsljy-coder.github.io/climate-change-ecology-ux3gtk/2/) | 기후위기와 환경생태 변화 | 기후위기의 원인과 해수면 상승 · 극한 기상 현상과 미래의 기후 · 개화 시기와 곤충의 개체 수 · 수생태계와 곤충 매개 감염병 | ○ | ○ |
+| [3](https://wmfsljy-coder.github.io/climate-change-ecology-ux3gtk/3/) | 기후위기에 대응하는 우리의 노력 | 산호의 백화 · 기후 재해 · 탄소 수지 · 탄소예산 시계 | ○ | ○ |
 
 ## 한 단원의 구성
 
@@ -24,8 +24,8 @@
 ## 내 학교에서 쓰기
 
 1. 이 저장소를 **Fork** 하거나 *Use this template* 으로 복사합니다.
-2. Settings → Pages → Branch 를 `main` / `(root)` 로 두면 몇 분 뒤 `https://<내 계정>.github.io/climate-change-ecology/` 에 열립니다.
-3. **우리 반 공유**를 쓰려면 `assets/share-config.js` 의 주소를 내 Apps Script 웹 앱 주소로 바꿉니다(만드는 법: science-teacher-hub 의 [GUIDE.md](https://github.com/wmfsljy-coder/science-teacher-hub/blob/main/GUIDE.md)). 바꾸지 않으면 공유 기능만 꺼지고 나머지는 그대로 됩니다.
+2. Settings → Pages → Branch 를 `main` / `(root)` 로 두면 몇 분 뒤 `https://<내 계정>.github.io/climate-change-ecology-ux3gtk/` 에 열립니다.
+3. **우리 반 공유**를 쓰려면 `assets/share-config.js` 의 주소를 내 Apps Script 웹 앱 주소로 바꿉니다(만드는 법: science-teacher-hub 의 [GUIDE.md](https://github.com/wmfsljy-coder/science-teacher-hub-qtrqwc/blob/main/GUIDE.md)). 바꾸지 않으면 공유 기능만 꺼지고 나머지는 그대로 됩니다.
 4. 반 목록을 고르게 하려면 `assets/share-config.js` 에 `window.STH_CLASSES = [{ v: "1-1", t: "1학년 1반" }, …]` 를 적습니다.
 
 ## 라이선스
